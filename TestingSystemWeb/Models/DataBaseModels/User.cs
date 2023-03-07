@@ -28,12 +28,5 @@ namespace TestingSystemWeb.Models.DataBaseModels
 
         [MaxLength(20)]
         public string Group { get; set; }
-
-
-
-        public override string ToString()
-        {
-            return $"{Surname} {Name} {Patronymic}";
-        }
     }
 }

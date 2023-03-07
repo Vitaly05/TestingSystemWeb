@@ -16,35 +16,33 @@ namespace TestingSystemWeb.Repositories
 
         public void AddQuestions(List<Question> questions, int testId)
         {
-            var addedQuestions = new Questions
-            {
-                TestId = testId,
-                Data = JsonSerializer.Serialize(questions)
-            };
-            _context.Questions.Add(addedQuestions);
+            SetTestId(ref questions, testId);
+            _context.Questions.AddRange(questions);
             _context.SaveChanges();
         }
 
-        public void UpdateQuestions(List<Question> questions, int testId)
+        public void UpdateQuestions(List<Question> newQuestions, int testId)
+        {
+            var oldQuestions = GetTestQuestions(testId);
+            _context.Questions.RemoveRange(oldQuestions);
+
+            SetTestId(ref newQuestions, testId);
+
+            _context.Questions.UpdateRange(newQuestions);
+            _context.SaveChanges();
+        }
+
+        public List<Question> GetTestQuestions(int testId)
+        {
+            return _context.Questions.Where(q => q.TestId == testId).ToList();
+        }
+
+        private void SetTestId(ref List<Question> questions, int testId)
         {
             foreach (var question in questions)
             {
-                if (question.IncorrectAnswers?.Count == 0)
-                {
-                    question.IncorrectAnswers = null;
-                }
+                question.TestId = testId;
             }
-
-            var updatedQuestions = GetTestQuestions(testId);
-            updatedQuestions.Data = JsonSerializer.Serialize(questions);
-
-            _context.Questions.Update(updatedQuestions);
-            _context.SaveChanges();
-        }
-
-        public Questions GetTestQuestions(int testId)
-        {
-            return _context.Questions.FirstOrDefault(q => q.TestId == testId);
         }
     }
 }

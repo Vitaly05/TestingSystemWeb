@@ -27,16 +27,5 @@ namespace TestingSystemWeb.Models.DataBaseModels
         public int AmountOfAttampts { get; set; } = 1;
 
         public DateTime CreateDate { get; set; }
-
-        [JsonIgnore]
-        [NotMapped]
-        public TestResults TestInfoForThisStudent
-        {
-            get
-            {
-                //return DataBaseReader.GetTestInfoForThisStudent(id, Authorization.LoggedUser);
-                return null;
-            }
-        }
     }
 }

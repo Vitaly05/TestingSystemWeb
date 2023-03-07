@@ -171,36 +171,72 @@ namespace TestingSystemWeb.Controllers
             var test = _testsRepository.GetTest(id);
             var questions = _questionsRepository.GetTestQuestions(id);
 
+            if (_context.User.IsInRole(Role.Student))
+                return getQuestionsForStudent(test, questions);
+
             TestModel testModel = new TestModel
             {
-                Test = test
+                Test = test,
+                Questions = questions
             };
-
-            if (questions is not null)
-            {
-                var questionsList = JsonSerializer.Deserialize<List<Question>>(questions?.Data);
-                if (_context.User.IsInRole(Role.Student))
-                {
-                    foreach (var question in questionsList)
-                    {
-                        if (question.IncorrectAnswers is not null)
-                        {
-                            question.IncorrectAnswers?.Add(question.Answer);
-                            question.IncorrectAnswers = question.IncorrectAnswers?.OrderBy(q => Guid.NewGuid()).ToList();
-                        }
-                        question.Answer = null;
-                    }
-                }
-                testModel.Questions = questionsList;
-            }
 
             return Ok(testModel);
         }
+
+        /*[Authorize(Roles = $"{Role.Teacher}, {Role.Student}")]
+        [HttpGet("{testId}/questions")]
+        public IActionResult GetQuestions(int testId)
+        {
+            var test = _testsRepository.GetTest(testId);
+            var questions = _questionsRepository.GetTestQuestions(testId);
+
+            if (_context.User.IsInRole(Role.Student))
+                return getQuestionsForStudent(test, questions);
+
+            TestModel testModel = new TestModel
+            {
+                Test = test,
+                Questions = questions
+            };
+
+            return Ok(testModel);
+        }*/
+
 
 
         private int getCurrentUserId()
         {
             return int.Parse(_context.User.Claims.FirstOrDefault(c => c.Type == "id").Value);
+        }
+
+        private IActionResult getQuestionsForStudent(Test test, List<Question> questions)
+        {
+            TestModel testModel = new TestModel
+            {
+                Test = test
+            };
+
+            QuestionsModel questionsModel = new();
+
+            foreach (var question in questions)
+            {
+                QuestionModel questionModel = new QuestionModel
+                {
+                    Question = question.QuestionText
+                };
+
+                if (question?.IncorrectAnswers is not null)
+                {
+                    var incorrectAnswers = JsonSerializer.Deserialize<List<string>>(question.IncorrectAnswers);
+                    List<string> answersVariants = new();
+
+                    foreach (var incorrectAnswer in incorrectAnswers)
+                        questionModel.AnswersVariants.Add(incorrectAnswer);
+                }
+                questionsModel.Questions.Add(questionModel);
+            }
+
+            return Ok(questionsModel);
         }
     }
 }

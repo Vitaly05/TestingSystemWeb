@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TestingSystemWeb.Database;
 
@@ -11,9 +12,10 @@ using TestingSystemWeb.Database;
 namespace TestingSystemWeb.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20230307183030_Question_Edit")]
+    partial class Question_Edit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,8 +45,6 @@ namespace TestingSystemWeb.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("TestId");
 
                     b.ToTable("Questions");
                 });
@@ -107,8 +107,6 @@ namespace TestingSystemWeb.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TestId");
-
                     b.ToTable("Tests_Results");
                 });
 
@@ -151,28 +149,6 @@ namespace TestingSystemWeb.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("TestingSystemWeb.Models.DataBaseModels.Question", b =>
-                {
-                    b.HasOne("TestingSystemWeb.Models.DataBaseModels.Test", "Test")
-                        .WithMany()
-                        .HasForeignKey("TestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Test");
-                });
-
-            modelBuilder.Entity("TestingSystemWeb.Models.DataBaseModels.TestResults", b =>
-                {
-                    b.HasOne("TestingSystemWeb.Models.DataBaseModels.Test", "Test")
-                        .WithMany()
-                        .HasForeignKey("TestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Test");
                 });
 #pragma warning restore 612, 618
         }

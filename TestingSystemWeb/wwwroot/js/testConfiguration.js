@@ -110,11 +110,16 @@ function getTestData() {
         timeToPass: timeToPass,
         id: currentTest?.test?.id
     }
-    const questionsData = getQuestionsData()
+    const questions = getQuestionsData()
+
+    console.log({
+        test: testData,
+        questions: questions
+    })
     
     return {
         test: testData,
-        questions: questionsData
+        questions: questions
     }
 }
 
@@ -141,8 +146,11 @@ function getQuestionsData() {
                 incorrectAnswers.push(incorrectAnswer)
             })
 
-            question.incorrectAnswers = incorrectAnswers
+            question.incorrectAnswers = JSON.stringify(incorrectAnswers)
+        } else {
+            question.incorrectAnswers = null
         }
+
         questions.push(question)
     })
     
@@ -232,7 +240,9 @@ function fillCloseQuestionPanel(panel, question) {
 
     const incorrectAnswersPanel = panel.getElementById("incorrectAnswersPanel")
 
-    question?.incorrectAnswers.forEach(incorrectAnswer => {
+    const incorrectAnswers = JSON.parse(question.incorrectAnswers)
+
+    incorrectAnswers.forEach(incorrectAnswer => {
         const clone = getIncorrectAnswerClone()
         clone.querySelector(".incorrectAnswer").value = incorrectAnswer
         incorrectAnswersPanel.appendChild(clone)

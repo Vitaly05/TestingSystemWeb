@@ -1,7 +1,7 @@
 
 
-document.getElementById("candelButton").addEventListener("click", () => {
-    window.location.href = "/"
+document.getElementById("saveAnswersButton").addEventListener("click", () => {
+    
 })
 
 
@@ -24,26 +24,26 @@ function displayQuestion(question) {
     const clone = document.getElementById("questionTemplate").content.cloneNode(true)
     const answersPanel = clone.getElementById("answersPanel")
 
-    clone.getElementById("questionText").innerText = question.questionText
+    clone.getElementById("questionText").innerText = question.question
 
-    if (question.incorrectAnswers === null) {
+    if (question.answersVariants.length == 0) {
         const openAnswerClone = document.getElementById("openAnswerTemplate")
             .content.cloneNode(true)
         answersPanel.appendChild(openAnswerClone)
     } else {
-        question.incorrectAnswers.forEach(incorrectAnswer => {
-            answersPanel.appendChild(getCloseAnswerClone(incorrectAnswer, question.questionText))
+        question.answersVariants.forEach(answerVariant => {
+            answersPanel.appendChild(getCloseAnswerClone(answerVariant, question.questionText))
         })
     }
 
     questionsPanel.appendChild(clone)
 }
 
-function getCloseAnswerClone(incorrectAnswer, questionText) {
+function getCloseAnswerClone(answerVariant, questionText) {
     const clone = document.getElementById("closeAnswerTemplate")
         .content.cloneNode(true)
 
-    clone.getElementById("answer").innerText = incorrectAnswer
+    clone.getElementById("answer").innerText = answerVariant
     clone.getElementById("answerButton").name = questionText
 
     return clone

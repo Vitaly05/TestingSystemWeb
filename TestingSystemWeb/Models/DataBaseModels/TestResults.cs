@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Components;
 
 namespace TestingSystemWeb.Models.DataBaseModels
 {
@@ -10,28 +11,10 @@ namespace TestingSystemWeb.Models.DataBaseModels
 
         public int TestId { get; set; }
 
+        public Test Test { get; set; }
+        
         public int UserId { get; set; }
 
         public double? Mark { get; set; }
-
-        [NotMapped]
-        public Test Test
-        {
-            get
-            {
-                //return DataBaseReader.GetTestById(test_id);
-                return null;
-            }
-        }
-
-        [NotMapped]
-        public User Student
-        {
-            get
-            {
-                //return DataBaseReader.GetUserById(user_id);
-                return null;
-            }
-        }
     }
 }
