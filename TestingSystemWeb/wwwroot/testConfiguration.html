@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <title>Room</title>
+    
+    <template id="addQuestionTemplate">
+        <div class="questionPanel">
+            <select id="selectQuestionType">
+                <option value="openQuestion">Вопрос с вводом ответа</option>
+                <option value="closeQuestion">Вопрос с выбором ответа</option>
+            </select>
+            <button id="removeQuestionButton">Удалить вопрос</button>
+            <div id="questionSettings"></div>
+        </div>
+    </template>
+
+    <template id="openQuestionTemplate">
+        <div>
+            <input id="question" placeholder="Вопрос"><br>
+            <input id="answer" placeholder="Ответ">
+        </div>
+    </template>
+
+    <template id="closeQuestionTemplate">
+        <div class="closeQuestionPanel">
+            <input id="question" placeholder="Вопрос"><br>
+            <input id="answer" placeholder="Ответ"><br>
+            <div id="incorrectAnswersPanel"></div>
+            <button id="addIncorrectAnswerButton">Добавить неверный ответ</button>
+        </div>
+    </template>
+
+    <template id="incorrectAnswerTemplate">
+        <div class="incorrectAnswerPanel">
+            <input class="incorrectAnswer" placeholder="Неверный ответ">
+            <button id="removeIncorrectAnswer">Удалить</button>
+        </div>
+    </template>
+
+</head>
+<body onload="loadPage();">
+    <div>
+        <button id="cancelButton">Отмена</button>
+        
+        <div id="addTestPanel">
+            <div>
+                <span>Название</span>
+                <input id="testName">
+            </div>
+            <div>
+                <span>Описание</span>
+                <input id="testDescription">
+            </div>
+            <div>
+                <span>Макс. оценка</span>
+                <input id="testMaxMark">
+            </div>
+            <div id="timerSetupPanel">
+                <input type="checkbox" id="setTimerCheckbox"><span>Включить таймер</span>
+                <br>
+                <input id="minutes" placeholder="Минуты">
+                <input id="seconds" placeholder="Секунды">
+            </div>
+            <div>
+                <input type="checkbox" id="manualCheckCheckbox">
+                <span>Проверить вручную</span>
+            </div>
+
+            <div id="questionsPanel"></div>
+
+            <button id="addQuestionButton">Добавить вопрос</button>
+        </div>
+    </div>
+
+    <button id="saveTestButton">Сохранить тест</button>
+
+    <script src="js/testConfiguration.js"></script>
+</body>
+</html>

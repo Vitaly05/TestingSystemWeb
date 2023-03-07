@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <title>Room</title>
+
+    <template id="testRowTemplate">
+        <tr>
+            <td id="testName"></td>
+            <td id="testDescription"></td>
+            <td id="testMaxMark"></td>
+            <td><button class="startTestButton">Пройти тест</button></td>
+        </tr>
+    </template>
+</head>
+<body onload="loadPage();">
+    <div>
+        <button id="logoutButton">Выйти</button>
+    </div>
+    <table id="testsTable">
+        <thead>
+            <tr>
+                <th>Название теста</th>
+                <th>Описание теста</th>
+                <th>Макс. оценка</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <script src="js/default.js"></script>
+    <script src="js/student.js"></script>
+</body>
+</html>

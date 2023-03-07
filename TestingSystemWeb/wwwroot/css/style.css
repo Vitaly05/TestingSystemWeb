@@ -1,0 +1,35 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+button {
+    padding: 2px;
+}
+
+table {
+    border: 1px solid black;
+    border-spacing: 0 10px;
+}
+
+tbody > tr {
+    background-color: lightgray;
+}
+
+th {
+    min-width: 20vh;
+}
+
+td {
+    padding: 4px 10px;
+    text-align: center;
+}
+
+
+
+#studentsTables {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}

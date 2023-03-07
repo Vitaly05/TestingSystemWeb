@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <title>Room</title>
+
+    <template id="questionTemplate">
+        <div>
+            <b id="questionText"></b>
+            <div id="answersPanel"></div>
+        </div>
+    </template>
+
+    <template id="openAnswerTemplate">
+        <input id="answer" placeholder="Ваш ответ">
+    </template>
+
+    <template id="closeAnswerTemplate">
+        <input type="radio" id="answerButton">
+        <span id="answer"></span>
+        <br>
+    </template>
+</head>
+<body onload="loadPage();">
+    <div id="questionsPanel"></div>
+
+    <div>
+        <button id="saveAnswersButton">Сохранить ответы</button>
+    </div>
+
+    <script src="js/passingTest.js"></script>
+</body>
+</html>
