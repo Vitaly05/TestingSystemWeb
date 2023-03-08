@@ -136,7 +136,7 @@ namespace TestingSystemWeb.Controllers
 
         [Authorize(Roles = Role.Teacher)]
         [HttpPost("addStudent")]
-        public IActionResult AddStudentInTest(TestResults data)
+        public IActionResult AddStudentInTest(TestResult data)
         {
             try
             {
@@ -151,7 +151,7 @@ namespace TestingSystemWeb.Controllers
 
         [Authorize(Roles = Role.Teacher)]
         [HttpPost("removeStudent")]
-        public IActionResult RemoveStudentFromTest(TestResults data)
+        public IActionResult RemoveStudentFromTest(TestResult data)
         {
             try
             {
@@ -183,25 +183,6 @@ namespace TestingSystemWeb.Controllers
             return Ok(testModel);
         }
 
-        /*[Authorize(Roles = $"{Role.Teacher}, {Role.Student}")]
-        [HttpGet("{testId}/questions")]
-        public IActionResult GetQuestions(int testId)
-        {
-            var test = _testsRepository.GetTest(testId);
-            var questions = _questionsRepository.GetTestQuestions(testId);
-
-            if (_context.User.IsInRole(Role.Student))
-                return getQuestionsForStudent(test, questions);
-
-            TestModel testModel = new TestModel
-            {
-                Test = test,
-                Questions = questions
-            };
-
-            return Ok(testModel);
-        }*/
-
 
 
         private int getCurrentUserId()
@@ -211,12 +192,11 @@ namespace TestingSystemWeb.Controllers
 
         private IActionResult getQuestionsForStudent(Test test, List<Question> questions)
         {
-            TestModel testModel = new TestModel
+            QuestionsModel questionsModel = new QuestionsModel
             {
-                Test = test
+                TestId = test.Id,
+                TestName = test.Name
             };
-
-            QuestionsModel questionsModel = new();
 
             foreach (var question in questions)
             {

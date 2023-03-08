@@ -1,7 +1,7 @@
 
 
 document.getElementById("saveAnswersButton").addEventListener("click", () => {
-    
+    // TODO
 })
 
 
@@ -10,7 +10,7 @@ function loadPage() {
     const currentTest = JSON.parse(window.sessionStorage.getItem("test"))
     const questions = currentTest.questions
 
-    document.title = `Room - ${currentTest?.test?.name}`
+    document.title = `Room - ${currentTest?.testName ?? "Тест без названия"}`
 
     displayQuestions(questions)
 }

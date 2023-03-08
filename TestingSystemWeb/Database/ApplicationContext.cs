@@ -8,9 +8,10 @@ namespace TestingSystemWeb.Database
         public DbSet<User> Users { get; set; }
 
         public DbSet<Test> Tests { get; set; }
-        public DbSet<TestResults> Tests_Results { get; set; }
+        public DbSet<TestResult> Tests_Results { get; set; }
 
         public DbSet<Question> Questions { get; set; }
+        public DbSet<Answer> Answers { get; set; }
 
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options)

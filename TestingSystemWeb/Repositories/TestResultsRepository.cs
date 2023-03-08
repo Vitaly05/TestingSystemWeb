@@ -15,7 +15,7 @@ namespace TestingSystemWeb.Repositories
 
         public void AddStudentInTest(int testId, int studentId)
         {
-            _context.Tests_Results.Add(new TestResults
+            _context.Tests_Results.Add(new TestResult
             {
                 TestId = testId,
                 UserId = studentId
@@ -23,7 +23,7 @@ namespace TestingSystemWeb.Repositories
             _context.SaveChanges();
         }
 
-        public void RemoveStudentFromTest(TestResults testResults)
+        public void RemoveStudentFromTest(TestResult testResults)
         {
             var removableTestResult = _context.Tests_Results
                 .FirstOrDefault(x => x.UserId == testResults.UserId && 

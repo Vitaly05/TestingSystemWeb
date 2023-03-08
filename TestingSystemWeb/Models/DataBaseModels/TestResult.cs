@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace TestingSystemWeb.Models.DataBaseModels
 {
-    public class TestResults
+    public class TestResult
     {
         [Key]
         public int Id { get; set; }
