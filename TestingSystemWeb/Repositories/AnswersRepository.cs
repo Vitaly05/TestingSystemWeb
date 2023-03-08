@@ -13,10 +13,14 @@ namespace TestingSystemWeb.Repositories
         }
 
 
-        public void SaveAnswers(List<Answer> answers, int userId)
+        public void SaveAnswers(List<Answer> answers, int userId, int attempt)
         {
             foreach (var answer in answers)
+            {
                 answer.UserId = userId;
+                answer.Attempt = attempt;
+            }
+
             _context.Answers.AddRange(answers);
             _context.SaveChanges();
         }

@@ -208,15 +208,16 @@ namespace TestingSystemWeb.Controllers
         {
             try
             {
-                _accessesRepository.DecrementAttempts(answersModel.Test.Id, getCurrentUserId());
-
                 var currentUserId = getCurrentUserId();
+                var currentAttempt = _testSerivce.GetCurrentAttempt(answersModel.Test, currentUserId);
+
                 if (answersModel.Test.AutoCheck == true)
                 {
                     var mark = _testSerivce.GetMark(answersModel.Answers, answersModel.Test);
-                    _testResultsRepository.WriteMark(currentUserId, answersModel.Test.Id, mark);
+                    _testResultsRepository.WriteMark(currentUserId, answersModel.Test.Id, mark, currentAttempt);
                 }
-                _answersRepository.SaveAnswers(answersModel.Answers, currentUserId);
+                _answersRepository.SaveAnswers(answersModel.Answers, currentUserId, currentAttempt);
+                _accessesRepository.DecrementAttempts(answersModel.Test.Id, getCurrentUserId());
                 return Ok();
             }
             catch

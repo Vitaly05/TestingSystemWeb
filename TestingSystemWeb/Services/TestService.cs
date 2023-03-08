@@ -22,7 +22,7 @@ namespace TestingSystemWeb.Services
         }
 
 
-        public int GetAttempts(Test test, int userId)
+        public int GetCurrentAttempt(Test test, int userId)
         {
             var amountOfAttampts = test.AmountOfAttampts;
             var remainingAttemptsAmount = _testsAccessesRepository.GetRemainingAttempts(test.Id, userId);

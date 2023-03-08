@@ -13,13 +13,14 @@ namespace TestingSystemWeb.Repositories
         }
 
 
-        public void WriteMark(int userId, int testId, double mark)
+        public void WriteMark(int userId, int testId, double mark, int attempt)
         {
             TestResult testResult = new TestResult
             {
                 UserId = userId,
                 TestId = testId,
-                Mark = mark
+                Mark = mark,
+                Attempt = attempt
             };
 
             _context.TestsResults.Add(testResult);
