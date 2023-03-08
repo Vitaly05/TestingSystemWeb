@@ -190,7 +190,7 @@ namespace TestingSystemWeb.Controllers
             {
                 if (_accessesRepository.GetRemainingAttempts(test.Id, getCurrentUserId()) > 0)
                     return getQuestionsForStudent(test, questions);
-                else return BadRequest("У вас больше не можете пройти тест");
+                else return BadRequest();
             }
 
             TestModel testModel = new TestModel
@@ -208,6 +208,8 @@ namespace TestingSystemWeb.Controllers
         {
             try
             {
+                _accessesRepository.DecrementAttempts(answersModel.Test.Id, getCurrentUserId());
+
                 var currentUserId = getCurrentUserId();
                 if (answersModel.Test.AutoCheck == true)
                 {

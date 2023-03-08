@@ -50,6 +50,8 @@ async function startTest(test) {
         if (response.ok === true) {
             window.sessionStorage.setItem("test", JSON.stringify(await response.json()))
             window.location.href = "passingTest"
+        } else {
+            alert("Вы больше не можете пройти этот тест")
         }
     })
 }
