@@ -7,17 +7,27 @@ namespace TestingSystemWeb.Services
     {
         private QuestionsRepository _questionsRepository;
         private AnswersRepository _answersRepository;
+        private TestsAccessesRepository _testsAccessesRepository;
         private TestResultsRepository _testResultsRepository;
 
         public TestService(QuestionsRepository questionsRepository,
             AnswersRepository answersRepository,
+            TestsAccessesRepository testsAccessesRepository,
             TestResultsRepository testResultsRepository)
         {
             _questionsRepository = questionsRepository;
             _answersRepository = answersRepository;
+            _testsAccessesRepository = testsAccessesRepository;
             _testResultsRepository = testResultsRepository;
         }
 
+
+        public int GetAttempts(Test test, int userId)
+        {
+            var amountOfAttampts = test.AmountOfAttampts;
+            var remainingAttemptsAmount = _testsAccessesRepository.GetRemainingAttempts(test.Id, userId);
+            return amountOfAttampts - remainingAttemptsAmount + 1;
+        }
 
         public double GetMark(List<Answer> answers, Test test)
         {

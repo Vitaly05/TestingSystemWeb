@@ -58,5 +58,22 @@ namespace TestingSystemWeb.Repositories
                     where p.TestId == testId
                     select p.UserId).ToList();
         }
+
+        public int GetRemainingAttempts(int testId, int userId)
+        {
+            return _context.TestsAccesses.FirstOrDefault(
+                x => x.UserId == userId &&
+                x.TestId == testId).RemainingAttemptsAmount;
+        }
+
+        public void DecrementAttempts(int testId, int userId)
+        {
+            var access = _context.TestsAccesses.FirstOrDefault(
+                x => x.UserId == userId &&
+                x.TestId == testId);
+            --access.RemainingAttemptsAmount;
+            _context.TestsAccesses.Update(access);
+            _context.SaveChanges();
+        }
     }
 }

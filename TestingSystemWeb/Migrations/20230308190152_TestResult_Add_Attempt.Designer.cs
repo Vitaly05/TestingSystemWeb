@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TestingSystemWeb.Database;
 
@@ -11,9 +12,10 @@ using TestingSystemWeb.Database;
 namespace TestingSystemWeb.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20230308190152_TestResult_Add_Attempt")]
+    partial class TestResult_Add_Attempt
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,9 +34,6 @@ namespace TestingSystemWeb.Migrations
 
                     b.Property<string>("AnswerText")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Attempt")
-                        .HasColumnType("int");
 
                     b.Property<int>("QuestionId")
                         .HasColumnType("int");

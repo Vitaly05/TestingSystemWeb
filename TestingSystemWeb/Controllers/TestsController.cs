@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using TestingSystemWeb.Data.Structures;
@@ -186,7 +187,11 @@ namespace TestingSystemWeb.Controllers
             var questions = _questionsRepository.GetTestQuestions(id);
 
             if (_context.User.IsInRole(Role.Student))
-                return getQuestionsForStudent(test, questions);
+            {
+                if (_accessesRepository.GetRemainingAttempts(test.Id, getCurrentUserId()) > 0)
+                    return getQuestionsForStudent(test, questions);
+                else return BadRequest("У вас больше не можете пройти тест");
+            }
 
             TestModel testModel = new TestModel
             {

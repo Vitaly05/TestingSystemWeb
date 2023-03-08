@@ -14,5 +14,7 @@ namespace TestingSystemWeb.Models.DataBaseModels
         public Question Question { get; set; }
 
         public string AnswerText { get; set; }
+
+        public int Attempt { get; set; }
     }
 }
