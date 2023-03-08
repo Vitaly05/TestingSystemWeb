@@ -32,6 +32,11 @@ namespace TestingSystemWeb.Repositories
             _context.SaveChanges();
         }
 
+        public Question GetQuestion(int id)
+        {
+            return _context.Questions.FirstOrDefault(x => x.Id == id);
+        }
+
         public List<Question> GetTestQuestions(int testId)
         {
             return _context.Questions.Where(q => q.TestId == testId).ToList();

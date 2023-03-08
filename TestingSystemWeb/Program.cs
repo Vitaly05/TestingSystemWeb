@@ -5,6 +5,7 @@ using System.Security.Claims;
 using TestingSystemWeb.Data.Structures;
 using TestingSystemWeb.Database;
 using TestingSystemWeb.Repositories;
+using TestingSystemWeb.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,10 +14,14 @@ builder.Services.AddDbContext<ApplicationContext>(options => options.UseSqlServe
 
 
 builder.Services.AddScoped<ApplicationContext>();
+
 builder.Services.AddScoped<UsersRepository>();
 builder.Services.AddScoped<TestsRepository>();
 builder.Services.AddScoped<QuestionsRepository>();
 builder.Services.AddScoped<TestResultsRepository>();
+builder.Services.AddScoped<AnswersRepository>();
+
+builder.Services.AddScoped<TestService>();
 
 builder.Services.AddControllers();
 

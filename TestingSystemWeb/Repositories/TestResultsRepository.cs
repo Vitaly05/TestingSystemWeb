@@ -33,9 +33,16 @@ namespace TestingSystemWeb.Repositories
             _context.SaveChanges();
         }
 
+        public void WriteMark(int userId, double mark)
+        {
+            var result = _context.Tests_Results.FirstOrDefault(x => x.UserId == userId);
+            result.Mark = mark;
+            _context.Tests_Results.Update(result);
+            _context.SaveChanges();
+        }
+
         public List<int> GetStudentsIdInTest(int testId)
         {
-            //var f = _context.Tests_Results.Where(p => p.TestId == testId).ToList();
             return (from p in _context.Tests_Results
                    where p.TestId == testId
                    select p.UserId).ToList();

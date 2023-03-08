@@ -1,13 +1,13 @@
-
+let currentTest
 
 document.getElementById("saveAnswersButton").addEventListener("click", () => {
-    // TODO
+    saveAnswers()
 })
 
 
 
 function loadPage() {
-    const currentTest = JSON.parse(window.sessionStorage.getItem("test"))
+    currentTest = JSON.parse(window.sessionStorage.getItem("test"))
     const questions = currentTest.questions
 
     document.title = `Room - ${currentTest?.testName ?? "Тест без названия"}`
@@ -24,6 +24,8 @@ function displayQuestion(question) {
     const clone = document.getElementById("questionTemplate").content.cloneNode(true)
     const answersPanel = clone.getElementById("answersPanel")
 
+    clone.querySelector(".question").dataset.questionId = question.id
+
     clone.getElementById("questionText").innerText = question.question
 
     if (question.answersVariants.length == 0) {
@@ -32,19 +34,69 @@ function displayQuestion(question) {
         answersPanel.appendChild(openAnswerClone)
     } else {
         question.answersVariants.forEach(answerVariant => {
-            answersPanel.appendChild(getCloseAnswerClone(answerVariant, question.questionText))
+            answersPanel.appendChild(getCloseAnswerClone(answerVariant, question.id))
         })
     }
 
     questionsPanel.appendChild(clone)
 }
 
-function getCloseAnswerClone(answerVariant, questionText) {
+function getCloseAnswerClone(answerVariant, questionId) {
     const clone = document.getElementById("closeAnswerTemplate")
         .content.cloneNode(true)
 
-    clone.getElementById("answer").innerText = answerVariant
-    clone.getElementById("answerButton").name = questionText
+    clone.getElementById("answerVariantText").innerText = answerVariant
+    clone.querySelector(".answerVariantButton").dataset.answerVariant = answerVariant
+    clone.querySelector(".answerVariantButton").name = questionId
 
     return clone
+}
+
+
+
+async function saveAnswers() {
+    await fetch("tests/writeAnswers", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(getAnswersModel())
+    }).then(response => {
+        if (response.ok === true) {
+            window.location.href = "/"
+        }
+    })
+}
+function getAnswersModel() {
+    return {
+        test: currentTest.test,
+        answers: getAnswers()
+    }
+}
+function getAnswers() {
+    let answers = []
+
+    document.querySelectorAll(".question").forEach(questionPanel => {
+        const questionId = questionPanel.dataset.questionId
+        const answerText = getAnswer(questionPanel)
+        answers.push({
+            questionId: questionId,
+            answerText: answerText
+        })
+    })
+
+    return answers
+}
+function getAnswer(panel) {
+    const openAnswer = panel.querySelector("input.answer")
+
+    if (openAnswer !== null) {
+        return openAnswer.value
+    } else {
+        let answer
+        panel.querySelectorAll(".answerVariantButton").forEach(button => {
+            if (button.checked == true) {
+                answer = button.dataset.answerVariant
+            }
+        })
+        return answer
+    }
 }

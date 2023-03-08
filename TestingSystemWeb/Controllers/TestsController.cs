@@ -5,6 +5,7 @@ using TestingSystemWeb.Data.Structures;
 using TestingSystemWeb.Models;
 using TestingSystemWeb.Models.DataBaseModels;
 using TestingSystemWeb.Repositories;
+using TestingSystemWeb.Services;
 
 namespace TestingSystemWeb.Controllers
 {
@@ -16,6 +17,9 @@ namespace TestingSystemWeb.Controllers
         private QuestionsRepository _questionsRepository;
         private TestResultsRepository _testResultsRepository;
         private UsersRepository _usersRepository;
+        private AnswersRepository _answersRepository;
+
+        private TestService _testSerivce;
 
         private HttpContext _context;
 
@@ -23,12 +27,17 @@ namespace TestingSystemWeb.Controllers
             QuestionsRepository questionsRepository,
             TestResultsRepository testResultsRepository,
             UsersRepository usersRepository,
+            TestService testService,
+            AnswersRepository answersRepository,
             IHttpContextAccessor accessor)
         {
             _testsRepository = testsRepository;
             _questionsRepository = questionsRepository;
             _testResultsRepository = testResultsRepository;
             _usersRepository = usersRepository;
+            _answersRepository = answersRepository;
+
+            _testSerivce = testService;
 
             _context = accessor.HttpContext;
         }
@@ -183,6 +192,27 @@ namespace TestingSystemWeb.Controllers
             return Ok(testModel);
         }
 
+        [Authorize(Roles = Role.Student)]
+        [HttpPost("writeAnswers")]
+        public IActionResult WriteAnswers(AnswersModel answersModel)
+        {
+            try
+            {
+                var currentUserId = getCurrentUserId();
+                if (answersModel.Test.AutoCheck == true)
+                {
+                    var mark = _testSerivce.GetMark(answersModel.Answers, answersModel.Test);
+                    _testResultsRepository.WriteMark(currentUserId, mark);
+                }
+                _answersRepository.SaveAnswers(answersModel.Answers, currentUserId);
+                return Ok();
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
 
 
         private int getCurrentUserId()
@@ -194,15 +224,15 @@ namespace TestingSystemWeb.Controllers
         {
             QuestionsModel questionsModel = new QuestionsModel
             {
-                TestId = test.Id,
-                TestName = test.Name
+                Test = test
             };
 
             foreach (var question in questions)
             {
                 QuestionModel questionModel = new QuestionModel
                 {
-                    Question = question.QuestionText
+                    Question = question.QuestionText,
+                    Id = question.Id
                 };
 
                 if (question?.IncorrectAnswers is not null)
@@ -212,6 +242,9 @@ namespace TestingSystemWeb.Controllers
 
                     foreach (var incorrectAnswer in incorrectAnswers)
                         questionModel.AnswersVariants.Add(incorrectAnswer);
+
+                    questionModel.AnswersVariants.Add(question.Answer);
+                    questionModel.AnswersVariants = questionModel.AnswersVariants.OrderBy(x => Guid.NewGuid()).ToList();
                 }
                 questionsModel.Questions.Add(questionModel);
             }
