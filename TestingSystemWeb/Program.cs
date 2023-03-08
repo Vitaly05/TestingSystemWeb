@@ -18,6 +18,7 @@ builder.Services.AddScoped<ApplicationContext>();
 builder.Services.AddScoped<UsersRepository>();
 builder.Services.AddScoped<TestsRepository>();
 builder.Services.AddScoped<QuestionsRepository>();
+builder.Services.AddScoped<TestsAccessesRepository>();
 builder.Services.AddScoped<TestResultsRepository>();
 builder.Services.AddScoped<AnswersRepository>();
 

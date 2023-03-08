@@ -19,24 +19,6 @@ namespace TestingSystemWeb.Repositories
             return _context.Tests.Where(t => t.TeacherId == userId).ToList();
         }
 
-        public List<Test> GetAllTestsForStudent(int userId)
-        {
-            var accessList = _context.Tests_Results
-                .Where(t => t.UserId == userId).ToList();
-
-            List<Test> availableTests = new List<Test>();
-
-            foreach (var access in accessList)
-            {
-                var test = _context.Tests
-                    .FirstOrDefault(t => t.Id == access.TestId);
-
-                availableTests.Add(test);
-            }
-
-            return availableTests;
-        }
-
         public Test GetTest(int testId)
         {
             return _context.Tests.FirstOrDefault(t => t.Id == testId);

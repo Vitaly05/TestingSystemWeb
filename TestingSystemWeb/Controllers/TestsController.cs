@@ -15,6 +15,7 @@ namespace TestingSystemWeb.Controllers
     {
         private TestsRepository _testsRepository;
         private QuestionsRepository _questionsRepository;
+        private TestsAccessesRepository _accessesRepository;
         private TestResultsRepository _testResultsRepository;
         private UsersRepository _usersRepository;
         private AnswersRepository _answersRepository;
@@ -25,6 +26,7 @@ namespace TestingSystemWeb.Controllers
 
         public TestsController(TestsRepository testsRepository,
             QuestionsRepository questionsRepository,
+            TestsAccessesRepository accessesRepository,
             TestResultsRepository testResultsRepository,
             UsersRepository usersRepository,
             TestService testService,
@@ -33,6 +35,7 @@ namespace TestingSystemWeb.Controllers
         {
             _testsRepository = testsRepository;
             _questionsRepository = questionsRepository;
+            _accessesRepository = accessesRepository;
             _testResultsRepository = testResultsRepository;
             _usersRepository = usersRepository;
             _answersRepository = answersRepository;
@@ -58,7 +61,7 @@ namespace TestingSystemWeb.Controllers
         public IActionResult GetAllTestsForCurrentStudent()
         {
             int userId = getCurrentUserId();
-            var tests = _testsRepository.GetAllTestsForStudent(userId);
+            var tests = _accessesRepository.GetAllTestsForStudent(userId);
             if (tests is null) return NotFound();
             return Ok(tests);
         }
@@ -125,7 +128,8 @@ namespace TestingSystemWeb.Controllers
             StudentsInTestModel studentsInTestModel = new();
 
             var allStudents = _usersRepository.GetAllUsersWithRole(Role.Student);
-            var addedStudentsId = _testResultsRepository.GetStudentsIdInTest(testId);
+            
+            var addedStudentsId = _accessesRepository.GetStudentsIdInTest(testId);
 
             studentsInTestModel.NotAddedStudents = allStudents;
 
@@ -145,11 +149,12 @@ namespace TestingSystemWeb.Controllers
 
         [Authorize(Roles = Role.Teacher)]
         [HttpPost("addStudent")]
-        public IActionResult AddStudentInTest(TestResult data)
+        public IActionResult AddStudentInTest(TestAccess data)
         {
             try
             {
-                _testResultsRepository.AddStudentInTest(data.TestId, data.UserId);
+                data.Test = _testsRepository.GetTest(data.TestId);
+                _accessesRepository.AddStudentInTest(data.Test, data.UserId);
                 return Ok();
             }
             catch
@@ -160,11 +165,11 @@ namespace TestingSystemWeb.Controllers
 
         [Authorize(Roles = Role.Teacher)]
         [HttpPost("removeStudent")]
-        public IActionResult RemoveStudentFromTest(TestResult data)
+        public IActionResult RemoveStudentFromTest(TestAccess data)
         {
             try
             {
-                _testResultsRepository.RemoveStudentFromTest(data);
+                _accessesRepository.RemoveStudentFromTest(data);
                 return Ok();
             }
             catch
@@ -202,7 +207,7 @@ namespace TestingSystemWeb.Controllers
                 if (answersModel.Test.AutoCheck == true)
                 {
                     var mark = _testSerivce.GetMark(answersModel.Answers, answersModel.Test);
-                    _testResultsRepository.WriteMark(currentUserId, mark);
+                    _testResultsRepository.WriteMark(currentUserId, answersModel.Test.Id, mark);
                 }
                 _answersRepository.SaveAnswers(answersModel.Answers, currentUserId);
                 return Ok();

@@ -8,7 +8,8 @@ namespace TestingSystemWeb.Database
         public DbSet<User> Users { get; set; }
 
         public DbSet<Test> Tests { get; set; }
-        public DbSet<TestResult> Tests_Results { get; set; }
+        public DbSet<TestAccess> TestsAccesses { get; set; }
+        public DbSet<TestResult> TestsResults { get; set; }
 
         public DbSet<Question> Questions { get; set; }
         public DbSet<Answer> Answers { get; set; }

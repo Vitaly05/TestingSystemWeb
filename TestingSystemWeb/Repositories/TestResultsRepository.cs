@@ -13,39 +13,17 @@ namespace TestingSystemWeb.Repositories
         }
 
 
-        public void AddStudentInTest(int testId, int studentId)
+        public void WriteMark(int userId, int testId, double mark)
         {
-            _context.Tests_Results.Add(new TestResult
+            TestResult testResult = new TestResult
             {
+                UserId = userId,
                 TestId = testId,
-                UserId = studentId
-            });
+                Mark = mark
+            };
+
+            _context.TestsResults.Add(testResult);
             _context.SaveChanges();
-        }
-
-        public void RemoveStudentFromTest(TestResult testResults)
-        {
-            var removableTestResult = _context.Tests_Results
-                .FirstOrDefault(x => x.UserId == testResults.UserId && 
-                x.TestId == testResults.TestId);
-
-            _context.Tests_Results.Remove(removableTestResult);
-            _context.SaveChanges();
-        }
-
-        public void WriteMark(int userId, double mark)
-        {
-            var result = _context.Tests_Results.FirstOrDefault(x => x.UserId == userId);
-            result.Mark = mark;
-            _context.Tests_Results.Update(result);
-            _context.SaveChanges();
-        }
-
-        public List<int> GetStudentsIdInTest(int testId)
-        {
-            return (from p in _context.Tests_Results
-                   where p.TestId == testId
-                   select p.UserId).ToList();
         }
     }
 }
