@@ -32,8 +32,12 @@ function getTestTemplateClone(test) {
     clone.getElementById("testDescription").innerText = test.description
     clone.getElementById("testMaxMark").innerText = test.maxMark
 
-    clone.querySelector(".startTestButton").addEventListener("click", () => {
-        startTest(test)
+    clone.querySelector(".startTestButton").addEventListener("click", async () => {
+        await startTest(test)
+    })
+
+    clone.querySelector(".getResultsButton").addEventListener("click", async () => {
+        await getTestResult(test)
     })
 
     return clone
@@ -52,6 +56,17 @@ async function startTest(test) {
             window.location.href = "passingTest"
         } else {
             alert("Вы больше не можете пройти этот тест")
+        }
+    })
+}
+
+async function getTestResult(test) {
+    await fetch(`tests/${test.id}/results`).then(async response => {
+        if (response.ok === true) {
+            const testResults = JSON.stringify(await response.json())
+            window.sessionStorage.setItem("testResults", testResults)
+            window.sessionStorage.setItem("testName", test.name)
+            window.location.href = "/testResults"
         }
     })
 }

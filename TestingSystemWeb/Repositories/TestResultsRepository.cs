@@ -26,5 +26,12 @@ namespace TestingSystemWeb.Repositories
             _context.TestsResults.Add(testResult);
             _context.SaveChanges();
         }
+
+        public List<TestResult> GetTestResults(int testId, int userId)
+        {
+            return _context.TestsResults.Where(
+                x => x.TestId == testId &&
+                x.UserId == userId).ToList();
+        }
     }
 }

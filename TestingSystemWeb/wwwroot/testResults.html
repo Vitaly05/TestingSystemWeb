@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>Room</title>
+
+    <template id="resultRowTemplate">
+        <tr>
+            <td id="attempt"></td>
+            <td id="mark"></td>
+            <td><button id="checkAttemptButton">Посмотреть</button></td>
+        </tr>
+    </template>
+</head>
+<body>
+    <div>
+        <b id="testNameText"></b>
+        <br>
+        <span>Ваши попытки:</span>
+    </div>
+    <div>
+        <table id="resultsTable">
+            <thead>
+                <tr>
+                    <th>Номер попытки</th>
+                    <th>Оценка</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    
+    <script src="js/testResults.js"></script>
+</body>
+</html>

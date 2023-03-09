@@ -226,6 +226,14 @@ namespace TestingSystemWeb.Controllers
             }
         }
 
+        [Authorize(Roles = Role.Student)]
+        [HttpGet("{testId}/results")]
+        public IActionResult GetTestResults(int testId)
+        {
+            var testResults = _testResultsRepository.GetTestResults(testId, getCurrentUserId());
+            return Ok(testResults);
+        }
+
 
 
         private int getCurrentUserId()
