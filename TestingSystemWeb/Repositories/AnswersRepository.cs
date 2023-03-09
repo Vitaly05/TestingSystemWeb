@@ -24,5 +24,13 @@ namespace TestingSystemWeb.Repositories
             _context.Answers.AddRange(answers);
             _context.SaveChanges();
         }
+
+        public Answer GetAnswer(int questionId, int userId, int attempt)
+        {
+            return _context.Answers.FirstOrDefault(a => 
+                a.QuestionId == questionId &&
+                a.UserId == userId &&
+                a.Attempt == attempt);
+        }
     }
 }

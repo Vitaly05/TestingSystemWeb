@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="styelsheet" href="css/style.css">
+
+    <title>Room</title>
+
+    <template id="questionTemplate">
+        <div>
+            <span>Вопрос: </span>
+            <span id="question"></span>
+            <div id="answerPanel"></div>
+        </div>
+    </template>
+
+    <template id="correctUserAnswerTemplate">
+        <div style="background-color: green;">
+            <span>Ваш ответ: </span>
+            <span id="userAnswer"></span>
+        </div>
+    </template>
+
+    <template id="uncorrectUserAnswerTemplate">
+        <div style="background-color: red;">
+            <span>Ваш ответ: </span>
+            <span id="userAnswer"></span>
+            <br>
+            <span>Правильный ответ: </span>
+            <span id="correctAnswer"></span>
+        </div>
+    </template>
+</head>
+<body>
+    <div id="checkAttemptPanel"></div>
+    
+    <script src="js/viewingAttempt.js"></script>
+</body>
+</html>

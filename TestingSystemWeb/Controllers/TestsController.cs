@@ -234,6 +234,30 @@ namespace TestingSystemWeb.Controllers
             return Ok(testResults);
         }
 
+        [Authorize(Roles = Role.Student)]
+        [HttpGet("{testId}/{attempt}")]
+        public IActionResult GetStudentMistakes(int testId, int attempt)
+        {
+            var questions = _questionsRepository.GetTestQuestions(testId);
+            List<Answer> answers = new List<Answer>();
+            int currentUserId = getCurrentUserId();
+
+            try
+            {
+                foreach (var question in questions)
+                {
+                    var answer = _answersRepository.GetAnswer(question.Id, currentUserId, attempt);
+                    answers.Add(answer);
+                }
+
+                return Ok(answers);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
 
 
         private int getCurrentUserId()
