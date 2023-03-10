@@ -1,20 +1,40 @@
-const results = JSON.parse(window.sessionStorage.getItem("testResults"))
+const currentTest = JSON.parse(window.sessionStorage.getItem("test"))
+let results
 
 document.getElementById("testNameText").innerText = window.sessionStorage.getItem("testName")
 
-results?.forEach(result => {
-    displayResult(result)
+
+addEventListener("load", async () => {
+    results = await getTestResult(currentTest)
+    
+    results?.forEach(result => {
+        displayResult(result)
+    })
 })
 
+
+
+async function getTestResult(test) {
+    return await fetch(`tests/${test.id}/results`).then(async response => {
+        if (response.ok === true) {
+            return await response.json()
+        }
+    })
+}
 
 function displayResult(result) {
     const clone = document.getElementById("resultRowTemplate")
         .content.cloneNode(true)
     
     clone.getElementById("attempt").innerText = result.attempt
-    clone.getElementById("mark").innerText = result.mark
+    clone.getElementById("mark").innerText = result.mark ?? "Не проверено"
 
-    clone.getElementById("checkAttemptButton").addEventListener("click", async () => {
+    const checkAttemptButton = clone.getElementById("checkAttemptButton")
+    if (result.mark === null) {
+        checkAttemptButton.setAttribute("disabled", true)
+    }
+
+    checkAttemptButton.addEventListener("click", async () => {
         await checkAttempt(result.testId, result.attempt)
     })
 

@@ -13,7 +13,7 @@ namespace TestingSystemWeb.Repositories
         }
 
 
-        public void WriteMark(int userId, int testId, double mark, int attempt)
+        public void WriteMark(int userId, int testId, double? mark, int attempt)
         {
             TestResult testResult = new TestResult
             {

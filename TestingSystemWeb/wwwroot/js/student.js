@@ -61,12 +61,6 @@ async function startTest(test) {
 }
 
 async function getTestResult(test) {
-    await fetch(`tests/${test.id}/results`).then(async response => {
-        if (response.ok === true) {
-            const testResults = JSON.stringify(await response.json())
-            window.sessionStorage.setItem("testResults", testResults)
-            window.sessionStorage.setItem("testName", test.name)
-            window.location.href = "/testResults"
-        }
-    })
+    window.sessionStorage.setItem("test", JSON.stringify(test))
+    window.location.href = "/testResults"
 }

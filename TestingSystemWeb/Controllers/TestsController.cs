@@ -211,11 +211,13 @@ namespace TestingSystemWeb.Controllers
                 var currentUserId = getCurrentUserId();
                 var currentAttempt = _testSerivce.GetCurrentAttempt(answersModel.Test, currentUserId);
 
+                double? mark;
                 if (answersModel.Test.AutoCheck == true)
-                {
-                    var mark = _testSerivce.GetMark(answersModel.Answers, answersModel.Test);
-                    _testResultsRepository.WriteMark(currentUserId, answersModel.Test.Id, mark, currentAttempt);
-                }
+                    mark = _testSerivce.GetMark(answersModel.Answers, answersModel.Test);
+                else mark = null;
+
+                _testResultsRepository.WriteMark(currentUserId, answersModel.Test.Id, mark, currentAttempt);
+                
                 _answersRepository.SaveAnswers(answersModel.Answers, currentUserId, currentAttempt);
                 _accessesRepository.DecrementAttempts(answersModel.Test.Id, getCurrentUserId());
                 return Ok();

@@ -15,7 +15,7 @@ namespace TestingSystemWeb.Models.DataBaseModels
         
         public int UserId { get; set; }
 
-        public double Mark { get; set; }
+        public double? Mark { get; set; }
 
         public int Attempt { get; set; }
     }
