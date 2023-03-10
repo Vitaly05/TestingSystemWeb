@@ -228,12 +228,31 @@ namespace TestingSystemWeb.Controllers
             }
         }
 
-        [Authorize(Roles = Role.Student)]
+        [Authorize(Roles = $"{Role.Student}, {Role.Teacher}")]
         [HttpGet("{testId}/results")]
         public IActionResult GetTestResults(int testId)
         {
-            var testResults = _testResultsRepository.GetTestResults(testId, getCurrentUserId());
-            return Ok(testResults);
+            if (_context.User.IsInRole(Role.Student))
+            {
+                var testResults = _testResultsRepository.GetTestResults(testId, getCurrentUserId());
+                return Ok(testResults);
+
+            }
+            
+            List<StudentResultModel> studentsResults = new();
+
+            var allTestResults = _testResultsRepository.GetTestResults(testId);
+            foreach (var testResult in allTestResults)
+            {
+                var student = _usersRepository.GetUserById(testResult.UserId);
+                studentsResults.Add(new StudentResultModel
+                {
+                    Student = student,
+                    TestResult = testResult
+                });
+            }
+
+            return Ok(studentsResults);
         }
 
         [Authorize(Roles = Role.Student)]

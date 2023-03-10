@@ -53,6 +53,10 @@ function addButtonEvents(clone, test) {
     clone.getElementById("addStudentsButton").addEventListener("click", () => {
         addStudents(test)
     })
+
+    clone.getElementById("resultsButton").addEventListener("click", () => {
+        getResults(test)
+    })
 }
 
 async function removeTest(test) {
@@ -74,7 +78,12 @@ async function editTest(test) {
     })
 }
 
-async function addStudents(test) {
+function addStudents(test) {
     window.sessionStorage.setItem("test", JSON.stringify(test))
     window.location.href = "addStudents"
+}
+
+async function getResults(test) {
+    window.sessionStorage.setItem("test", JSON.stringify(test))
+    window.location.href = "studentsResults"
 }

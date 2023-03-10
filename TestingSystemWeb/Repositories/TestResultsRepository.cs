@@ -33,5 +33,11 @@ namespace TestingSystemWeb.Repositories
                 x => x.TestId == testId &&
                 x.UserId == userId).ToList();
         }
+
+        public List<TestResult> GetTestResults(int testId)
+        {
+            return _context.TestsResults.Where(
+                x => x.TestId == testId).ToList();
+        }
     }
 }
