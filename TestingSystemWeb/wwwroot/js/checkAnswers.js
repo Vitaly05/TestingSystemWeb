@@ -20,7 +20,7 @@ document.querySelector("#saveButton").addEventListener("click", async () => {
         })
     }).then(response => {
         if (response.ok === true) {
-            window.location.href = "/"
+            window.location.href = "studentsResults"
         }
     })
 })
@@ -49,6 +49,12 @@ function displayAnswer(answer) {
     const answerPanel = clone.querySelector("#answerPanel")
 
     questionPanel.dataset.id = answer.id
+
+    if (answer.isCorrect) {
+        answerPanel.setAttribute("class", "correctAnswer")
+    } else {
+        answerPanel.setAttribute("class", "uncorrectAnswer")
+    }
 
     clone.querySelector("#correctButton").addEventListener("click", () => {
         answerPanel.setAttribute("class", "correctAnswer")

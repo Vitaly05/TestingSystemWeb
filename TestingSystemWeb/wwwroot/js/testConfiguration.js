@@ -229,6 +229,10 @@ function fillTestInfo(test) {
         timerSetupPanel.querySelector("#minutes").value = minutes
         timerSetupPanel.querySelector("#seconds").value = seconds
     }
+
+    if (!test.autoCheck) {
+        document.querySelector("#manualCheckCheckbox").checked = true
+    }
 }
 
 function fillOpenQuestionPanel(panel, question) {
