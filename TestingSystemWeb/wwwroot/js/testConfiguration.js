@@ -100,6 +100,7 @@ function getTestData() {
     const maxMark = document.getElementById("testMaxMark").value
     const timeToPass = getTimerValue()
     const autoCheck = !(document.getElementById("manualCheckCheckbox").checked)
+    const amountOfAttampts = document.getElementById("amountOfAttampts").value
 
     
     const testData = {
@@ -108,6 +109,7 @@ function getTestData() {
         maxMark: maxMark,
         autoCheck: autoCheck,
         timeToPass: timeToPass,
+        amountOfAttampts: amountOfAttampts,
         id: currentTest?.test?.id
     }
     const questions = getQuestionsData()
@@ -218,6 +220,7 @@ function fillTestInfo(test) {
     document.getElementById("testName").value = test.name
     document.getElementById("testDescription").value = test.description
     document.getElementById("testMaxMark").value = test.maxMark
+    document.getElementById("amountOfAttampts").value = test.amountOfAttampts
 
     if (test.timeToPass !== null) {
         const timerSetupPanel = document.getElementById("timerSetupPanel")
