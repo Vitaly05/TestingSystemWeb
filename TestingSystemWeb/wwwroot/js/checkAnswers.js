@@ -50,10 +50,12 @@ function displayAnswer(answer) {
 
     questionPanel.dataset.id = answer.id
 
-    if (answer.isCorrect) {
-        answerPanel.setAttribute("class", "correctAnswer")
-    } else {
-        answerPanel.setAttribute("class", "uncorrectAnswer")
+    if (answer.isCorrect !== null) {
+        if (answer.isCorrect) {
+            answerPanel.setAttribute("class", "correctAnswer")
+        } else {
+            answerPanel.setAttribute("class", "uncorrectAnswer")
+        }
     }
 
     clone.querySelector("#correctButton").addEventListener("click", () => {

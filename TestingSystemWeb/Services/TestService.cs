@@ -27,10 +27,9 @@ namespace TestingSystemWeb.Services
         {
             var currentAttempt = getCurrentAttempt(test, userId);
 
-            if (test.AutoCheck)
-            {
-                CheckAnswers(ref answers);
-            }
+
+            CheckAnswers(ref answers, checkAll: test.AutoCheck);
+            
 
             _answersRepository.SaveAnswers(answers, userId, currentAttempt);
             _testsAccessesRepository.DecrementAttempts(test.Id, userId);
@@ -63,17 +62,25 @@ namespace TestingSystemWeb.Services
             return amountOfAttampts - remainingAttemptsAmount + 1;
         }
 
-        private void CheckAnswers(ref List<Answer> answers)
+        private void CheckAnswers(ref List<Answer> answers, bool checkAll)
         {
             foreach (var answer in answers)
             {
                 var question = _questionsRepository.GetQuestion(answer.QuestionId);
 
-                if (question.Answer == answer.AnswerText)
-                    answer.IsCorrect = true;
-                else
-                    answer.IsCorrect = false;
+                if (checkAll)
+                    answer.IsCorrect = CheckAnswer(answer, question);
+                else if (question.IncorrectAnswers?.Count() >= 0)
+                    answer.IsCorrect = CheckAnswer(answer, question);
             }
+        }
+
+        private bool CheckAnswer(Answer answer, Question question)
+        {
+            if (question.Answer == answer.AnswerText)
+                return true;
+            else
+                return false;
         }
 
         private void WriteMark(List<Answer> answers, Test test, int userId, int attempt)
