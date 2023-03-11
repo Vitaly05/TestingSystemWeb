@@ -1,7 +1,7 @@
 const currentTest = JSON.parse(window.sessionStorage.getItem("test"))
 let results
 
-document.getElementById("testNameText").innerText = window.sessionStorage.getItem("testName")
+document.getElementById("testNameText").innerText = currentTest.name
 
 
 addEventListener("load", async () => {

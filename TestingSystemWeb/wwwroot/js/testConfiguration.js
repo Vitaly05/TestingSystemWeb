@@ -9,10 +9,6 @@ const incorrectAnswerTemplate = document.getElementById("incorrectAnswerTemplate
 const questionsPanel = document.getElementById("questionsPanel")
 
 
-document.getElementById("cancelButton").addEventListener("click", () => {
-    window.location.href = "/"
-})
-
 document.getElementById("addQuestionButton").addEventListener("click", addQuestion)
 
 document.getElementById("saveTestButton").addEventListener("click", async () => {

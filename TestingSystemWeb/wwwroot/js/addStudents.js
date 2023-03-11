@@ -10,10 +10,6 @@ addEventListener("load", async () => {
 })
 
 
-document.getElementById("toHomeButton").addEventListener("click", () => {
-    window.location.href = "/"
-})
-
 
 async function getStudents() {
     await fetch(`tests/${currentTest.id}/getStudents`).then(async response => {
