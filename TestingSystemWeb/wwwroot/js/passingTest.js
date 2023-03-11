@@ -6,7 +6,7 @@ document.getElementById("saveAnswersButton").addEventListener("click", () => {
 
 
 
-function loadPage() {
+addEventListener("load", () => {
     questionsModel = JSON.parse(window.sessionStorage.getItem("questionsModel"))
     const questions = questionsModel.questions
 
@@ -14,8 +14,10 @@ function loadPage() {
 
     displayQuestions(questions)
 
-    setTimeout(saveAnswers, questionsModel.test.timeToPass * 1000);
-}
+    const timeToPass = questionsModel.test.timeToPass
+    if (!(timeToPass === null || timeToPass <= 0))
+        setTimeout(saveAnswers, timeToPass * 1000);
+})
 
 function displayQuestions(questions) {
     questions.forEach(question => {
