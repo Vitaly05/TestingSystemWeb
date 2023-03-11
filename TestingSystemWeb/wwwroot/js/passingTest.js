@@ -13,6 +13,8 @@ function loadPage() {
     document.title = `Room - ${questionsModel?.testName ?? "Тест без названия"}`
 
     displayQuestions(questions)
+
+    setTimeout(saveAnswers, questionsModel.test.timeToPass * 1000);
 }
 
 function displayQuestions(questions) {
