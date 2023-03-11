@@ -60,13 +60,15 @@ function addButtonEvents(clone, test) {
 }
 
 async function removeTest(test) {
-    await fetch(`tests/remove/${test.id}`, {
-        method: "DELETE"
-    }).then(response => {
-        if (response.ok === true) {
-            getAllTests()
-        }
-    })
+    if (confirm(`Вы уверены, что хотите удалить тест "${test.name}?"`)) {
+        await fetch(`tests/remove/${test.id}`, {
+            method: "DELETE"
+        }).then(response => {
+            if (response.ok === true) {
+                getAllTests()
+            }
+        })
+    }
 }
 
 async function editTest(test) {
