@@ -13,6 +13,13 @@ namespace TestingSystemWeb.Repositories
         }
 
 
+        public void RemoveResult(int userId, int testId)
+        {
+            var results = GetTestResults(userId, testId);
+            _context.TestsResults.RemoveRange(results);
+            _context.SaveChanges();
+        }
+
         public void WriteMark(int userId, int testId, double? mark, int attempt)
         {
             TestResult testResult = new TestResult

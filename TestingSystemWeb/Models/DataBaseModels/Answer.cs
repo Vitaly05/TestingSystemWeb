@@ -13,6 +13,9 @@ namespace TestingSystemWeb.Models.DataBaseModels
         public int QuestionId { get; set; }
         public Question Question { get; set; }
 
+        public int TestId { get; set; }
+        public Test Test { get; set; }
+
         public string AnswerText { get; set; }
 
         public bool? IsCorrect { get; set; }

@@ -7,8 +7,8 @@ answersModel.forEach(model => {
     const answerPanel = clone.querySelector("#answerPanel")
 
     const correctAnswer = model.question.answer
-    if (model.answerText == correctAnswer) {
-        answerPanel.appendChild(getCorrectAnswerClone(correctAnswer))
+    if (model.isCorrect) {
+        answerPanel.appendChild(getCorrectAnswerClone(model.answerText))
     } else {
         answerPanel.appendChild(getUncorrectAnswerClone(model.answerText, correctAnswer))
     }

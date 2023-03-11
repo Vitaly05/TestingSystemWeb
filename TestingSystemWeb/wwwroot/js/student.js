@@ -52,7 +52,7 @@ function appendTest(testRowClone) {
 async function startTest(test) {
     await fetch(`tests/${test.id}`).then(async response => {
         if (response.ok === true) {
-            window.sessionStorage.setItem("test", JSON.stringify(await response.json()))
+            window.sessionStorage.setItem("questionsModel", JSON.stringify(await response.json()))
             window.location.href = "passingTest"
         } else {
             alert("Вы больше не можете пройти этот тест")

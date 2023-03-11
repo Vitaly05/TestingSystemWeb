@@ -32,10 +32,10 @@ namespace TestingSystemWeb.Services
                 CheckAnswers(ref answers);
             }
 
-            WriteMark(answers, test, userId, currentAttempt);
-
             _answersRepository.SaveAnswers(answers, userId, currentAttempt);
             _testsAccessesRepository.DecrementAttempts(test.Id, userId);
+            
+            WriteMark(answers, test, userId, currentAttempt);
         }
 
         public void UpdateAnswers(List<Answer> answers, Test test, int userId, int attempt)

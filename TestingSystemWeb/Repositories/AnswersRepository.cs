@@ -42,6 +42,13 @@ namespace TestingSystemWeb.Repositories
             _context.SaveChanges();
         }
 
+        public void RemoveAnswers(int testId, int userId)
+        {
+            var answers = _context.Answers.Where(a => a.UserId == userId && a.TestId == testId).ToList();
+            _context.Answers.RemoveRange(answers);
+            _context.SaveChanges();
+        }
+
         public Answer GetAnswer(int questionId, int userId, int attempt)
         {
             return _context.Answers.FirstOrDefault(a => 

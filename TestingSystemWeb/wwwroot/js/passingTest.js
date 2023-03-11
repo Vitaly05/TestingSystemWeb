@@ -1,4 +1,4 @@
-let currentTest
+let questionsModel
 
 document.getElementById("saveAnswersButton").addEventListener("click", () => {
     saveAnswers()
@@ -7,10 +7,10 @@ document.getElementById("saveAnswersButton").addEventListener("click", () => {
 
 
 function loadPage() {
-    currentTest = JSON.parse(window.sessionStorage.getItem("test"))
-    const questions = currentTest.questions
+    questionsModel = JSON.parse(window.sessionStorage.getItem("questionsModel"))
+    const questions = questionsModel.questions
 
-    document.title = `Room - ${currentTest?.testName ?? "Тест без названия"}`
+    document.title = `Room - ${questionsModel?.testName ?? "Тест без названия"}`
 
     displayQuestions(questions)
 }
@@ -67,7 +67,7 @@ async function saveAnswers() {
 }
 function getAnswersModel() {
     return {
-        test: currentTest.test,
+        test: questionsModel.test,
         answers: getAnswers()
     }
 }
@@ -79,7 +79,8 @@ function getAnswers() {
         const answerText = getAnswer(questionPanel)
         answers.push({
             questionId: questionId,
-            answerText: answerText
+            answerText: answerText,
+            testId: questionsModel.test.id
         })
     })
 

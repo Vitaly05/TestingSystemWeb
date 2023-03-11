@@ -170,6 +170,8 @@ namespace TestingSystemWeb.Controllers
         {
             try
             {
+                _testResultsRepository.RemoveResult(data.TestId, data.UserId);
+                _answersRepository.RemoveAnswers(data.TestId, data.UserId);
                 _accessesRepository.RemoveStudentFromTest(data);
                 return Ok();
             }
