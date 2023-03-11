@@ -33,3 +33,13 @@ td {
     display: flex;
     justify-content: space-around;
 }
+
+
+
+.correctAnswer {
+    background-color: green;
+}
+
+.uncorrectAnswer {
+    background-color: red;
+}

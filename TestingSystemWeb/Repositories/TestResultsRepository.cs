@@ -27,6 +27,17 @@ namespace TestingSystemWeb.Repositories
             _context.SaveChanges();
         }
 
+        public void UpdateMark(int testId, int userId, int attempt, double newMark)
+        {
+            var oldResult = _context.TestsResults.FirstOrDefault(x => 
+                x.UserId == userId &&
+                x.TestId == testId &&
+                x.Attempt == attempt);
+            oldResult.Mark = newMark;
+            _context.TestsResults.Update(oldResult);
+            _context.SaveChanges();
+        }
+
         public List<TestResult> GetTestResults(int testId, int userId)
         {
             return _context.TestsResults.Where(

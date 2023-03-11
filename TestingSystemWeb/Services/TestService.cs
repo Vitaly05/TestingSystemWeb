@@ -1,5 +1,6 @@
 ﻿using TestingSystemWeb.Models.DataBaseModels;
 using TestingSystemWeb.Repositories;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace TestingSystemWeb.Services
 {
@@ -22,16 +23,67 @@ namespace TestingSystemWeb.Services
         }
 
 
-        public int GetCurrentAttempt(Test test, int userId)
+        public void WriteAnswers(List<Answer> answers, Test test, int userId)
+        {
+            var currentAttempt = getCurrentAttempt(test, userId);
+
+            if (test.AutoCheck)
+            {
+                CheckAnswers(ref answers);
+            }
+
+            WriteMark(answers, test, userId, currentAttempt);
+
+            _answersRepository.SaveAnswers(answers, userId, currentAttempt);
+            _testsAccessesRepository.DecrementAttempts(test.Id, userId);
+        }
+
+        public void UpdateAnswers(List<Answer> answers, Test test, int userId, int attempt)
+        {
+            List<Answer> newAnswers = new();
+
+            foreach (var answer in answers)
+            {
+                var oldAnswer = _answersRepository.GetAnswer(answer.Id);
+                oldAnswer.IsCorrect = answer.IsCorrect;
+                newAnswers.Add(oldAnswer);
+            }
+
+            _answersRepository.UpdateAnswers(answers);
+
+            var newMark = calculateMark(answers, test);
+            _testResultsRepository.UpdateMark(test.Id, userId, attempt, newMark);
+            
+        }
+
+        private int getCurrentAttempt(Test test, int userId)
         {
             var amountOfAttampts = test.AmountOfAttampts;
             var remainingAttemptsAmount = _testsAccessesRepository.GetRemainingAttempts(test.Id, userId);
             return amountOfAttampts - remainingAttemptsAmount + 1;
         }
 
-        public double GetMark(List<Answer> answers, Test test)
+        private void CheckAnswers(ref List<Answer> answers)
         {
-            return calculateMark(answers, test);
+            foreach (var answer in answers)
+            {
+                var question = _questionsRepository.GetQuestion(answer.QuestionId);
+
+                if (question.Answer == answer.AnswerText)
+                    answer.IsCorrect = true;
+                else
+                    answer.IsCorrect = false;
+            }
+        }
+
+        private void WriteMark(List<Answer> answers, Test test, int userId, int attempt)
+        {
+            double? mark = null;
+
+            if (test.AutoCheck)
+                mark = calculateMark(answers, test);
+
+            _testResultsRepository.WriteMark(userId, test.Id, mark, attempt);
         }
 
         private double calculateMark(List<Answer> answers, Test test)
@@ -40,12 +92,8 @@ namespace TestingSystemWeb.Services
             int correctAnswersAmount = 0;
 
             foreach (var answer in answers)
-            {
-                var question = _questionsRepository.GetQuestion(answer.QuestionId);
-
-                if (answer.AnswerText == question.Answer)
+                if (answer.IsCorrect == true)
                     ++correctAnswersAmount;
-            }
 
             if (correctAnswersAmount == 0) return 0;
 

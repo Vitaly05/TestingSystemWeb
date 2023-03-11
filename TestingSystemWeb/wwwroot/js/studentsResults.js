@@ -1,6 +1,6 @@
+const currentTest = JSON.parse(window.sessionStorage.getItem("test"))
+
 addEventListener("load", async () => {
-    const currentTest = JSON.parse(window.sessionStorage.getItem("test"))
-    
     document.querySelector("#testNameText").innerText = currentTest.name
     
     await getStudentsResults(currentTest)
@@ -27,6 +27,19 @@ function displayStudentResult(result) {
     clone.querySelector("#attempt").innerText = result.testResult.attempt
     clone.querySelector("#mark").innerText = result.testResult.mark ?? "Не проверено"
 
+    clone.querySelector("#checkButton").addEventListener("click", () => {
+        checkAnswers(result.student.id, result.testResult.attempt)
+    })
+
     document.querySelector("#studentsResultsTable").querySelector("tbody")
         .appendChild(clone)
+}
+
+function checkAnswers(userId, attempt) {
+    sessionStorage.setItem("attemptData", JSON.stringify({
+        test: currentTest,
+        userId: userId,
+        attempt: attempt
+    }))
+    location.href = "checkAnswers"
 }
