@@ -7,12 +7,73 @@ addEventListener("load", async () => {
 })
 
 
+
+
+let allResults
+const searchResultsInput = document.querySelector("#searchInput")
+
+let resultsFilter = (result) => true
+
+function setResultsFilter(searchMethod) {
+    searchText = searchResultsInput.value
+
+    switch (searchMethod) {
+        case "bySurname":
+            resultsFilter = (student) => {
+                if (student.surname.search(searchText) === -1) {
+                    return false
+                }
+                return true
+            }
+            break
+        case "byGroup":
+        resultsFilter = (student) => {
+            if (student.group.search(searchText) === -1) {
+                return false
+            }
+            return true
+        }
+        break
+        default:
+            resultsFilter = (student) => true
+    }
+
+    displayStudentsResults(allResults)
+}
+
+searchResultsInput.addEventListener("input", () => {
+    const searchMethod = document.querySelector("#searchUsersSelect").value
+
+    setResultsFilter(searchMethod)
+})
+
+document.getElementById("resetButton").addEventListener("click", () => {
+    searchResultsInput.value = ""
+    setResultsFilter()
+})
+
+document.querySelector("#searchUsersSelect").addEventListener("change", e => {
+    setResultsFilter(e.target.value)
+})
+
+
+
+
 async function getStudentsResults(test) {
     await fetch(`tests/${test.id}/results`).then(async response => {
-        const studentsResult = await response.json()
-        studentsResult.forEach(result => {
+        allResults = await response.json()
+        displayStudentsResults(allResults)
+    })
+}
+
+function displayStudentsResults(results) {
+    document.querySelector("#studentsResultsTable").querySelector("tbody")
+        .innerHTML = ""
+
+    results.forEach(result => {
+        if (resultsFilter(result.student)) {
             displayStudentResult(result)
-        })
+        }
     })
 }
 
