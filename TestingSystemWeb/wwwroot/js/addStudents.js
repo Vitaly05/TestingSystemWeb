@@ -8,6 +8,7 @@ document.getElementById("testName").innerText = currentTest.name
 
 addEventListener("load", async () => {
     await getStudents()
+    await getAllGroups()
 })
 
 
@@ -60,6 +61,30 @@ document.querySelector("#searchUsersSelect").addEventListener("change", e => {
 })
 
 
+document.querySelector("#addGroup").addEventListener("click", async () => {
+    const group = document.querySelector("#groupsSelect").value
+    
+    await fetch(`tests/${currentTest.id}/addGroup`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({group})
+    }).then(response => {
+        console.log(response.status)
+        if (response.ok === true) {
+            getStudents()
+        }
+    })
+})
+
+
+async function getAllGroups() {
+    await fetch("users/allGroups").then(async response => {
+        if (response.ok === true) {
+            const groups = await response.json()
+            displayGroups(groups)
+        }
+    })
+}
 
 async function getStudents() {
     await fetch(`tests/${currentTest.id}/getStudents`).then(async response => {
@@ -67,6 +92,18 @@ async function getStudents() {
             allStudents = await response.json()
             displayStudents(allStudents)
         }
+    })
+}
+
+
+function displayGroups(groups) {
+    groups.forEach(group => {
+        const clone = document.querySelector("#groupOptionTemplate").content
+            .cloneNode(true)
+
+        clone.querySelector("#group").innerText = group
+
+        document.querySelector("#groupsSelect").appendChild(clone)
     })
 }
 

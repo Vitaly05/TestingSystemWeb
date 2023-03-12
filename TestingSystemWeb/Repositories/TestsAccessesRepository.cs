@@ -34,6 +34,15 @@ namespace TestingSystemWeb.Repositories
             _context.SaveChanges();
         }
 
+        public bool HasAccess(int userId, int testId)
+        {
+            var user = _context.TestsAccesses.FirstOrDefault(a =>
+                a.UserId == userId &&
+                a.TestId == testId);
+            if (user is null) return false;
+            return true;
+        }
+
         public List<Test> GetAllTestsForStudent(int userId)
         {
             var accessList = _context.TestsAccesses

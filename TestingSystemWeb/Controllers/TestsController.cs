@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using TestingSystemWeb.Data.Structures;
 using TestingSystemWeb.Models;
 using TestingSystemWeb.Models.DataBaseModels;
@@ -129,7 +130,7 @@ namespace TestingSystemWeb.Controllers
             StudentsInTestModel studentsInTestModel = new();
 
             var allStudents = _usersRepository.GetAllUsersWithRole(Role.Student);
-            
+
             var addedStudentsId = _accessesRepository.GetStudentsIdInTest(testId);
 
             studentsInTestModel.NotAddedStudents = allStudents;
@@ -146,6 +147,26 @@ namespace TestingSystemWeb.Controllers
             }
 
             return Ok(studentsInTestModel);
+        }
+
+        [Authorize(Roles = Role.Teacher)]
+        [HttpPost("{testId}/addGroup")]
+        public IActionResult AddGroupInTest(int testId, [FromBody] JsonObject group)
+        {
+            try
+            {
+                var g = (string)group["group"];
+                var users = _usersRepository.GetAllStudentsWithGroup(g);
+                var test = _testsRepository.GetTest(testId);
+
+                foreach (var user in users)
+                {
+                    if (!_accessesRepository.HasAccess(user.Id, test.Id))
+                        _accessesRepository.AddStudentInTest(test, user.Id);
+                }
+                return Ok();
+            }
+            catch { return BadRequest(); }
         }
 
         [Authorize(Roles = Role.Teacher)]
