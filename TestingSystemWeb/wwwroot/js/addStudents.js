@@ -18,12 +18,12 @@ const searchStudentsInput = document.querySelector("#searchInput")
 let studentsFilter = (student) => true
 
 function setResultsFilter(searchMethod) {
-    searchText = searchStudentsInput.value
+    searchText = searchStudentsInput.value.toLowerCase()
 
     switch (searchMethod) {
         case "bySurname":
             studentsFilter = (student) => {
-                if (student.surname.search(searchText) === -1) {
+                if (student.surname.toLowerCase().search(searchText) === -1) {
                     return false
                 }
                 return true
@@ -31,7 +31,7 @@ function setResultsFilter(searchMethod) {
             break
         case "byGroup":
         studentsFilter = (student) => {
-            if (student.group.search(searchText) === -1) {
+            if (student.group.toLowerCase().search(searchText) === -1) {
                 return false
             }
             return true
