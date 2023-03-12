@@ -64,35 +64,6 @@ namespace TestingSystemWeb.Repositories
             return user;
         }
 
-        public User GetUserByLogin(string login)
-        {
-            var user = _context.Users.FirstOrDefault(user => user.Login == login);
-            removePassword(ref user);
-            return user;
-        }
-
-
-        public List<User> FindByLogin(string login)
-        {
-            var user = _context.Users.Where(user => EF.Functions.Like(user.Login, $"%{login}%")).ToList();
-            removePassword(ref user);
-            return user;
-        }
-
-        public List<User> FindBySurname(string surname)
-        {
-            var user = _context.Users.Where(user => EF.Functions.Like(user.Surname, $"%{surname}%")).ToList();
-            removePassword(ref user);
-            return user;
-        }
-
-        public List<User> FindByGroup(string group)
-        {
-            var users = _context.Users.Where(user => EF.Functions.Like(user.Group, $"%{group}%")).ToList();
-            removePassword(ref users);
-            return users;
-        }
-
         public List<string> GetAllGroups()
         {
             var result = GetAllUsersWithRole(Role.Student);

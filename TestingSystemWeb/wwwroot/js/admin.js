@@ -22,39 +22,82 @@ document.getElementById("addUserButton").addEventListener("click", async e => {
     })
 })
 
+
+
+
+let allUsers
+const searchUserInput = document.querySelector("#searchInput")
+
+let usersFilter = (user) => true
+let rolesFilter = (user) => true
+
+function setUsersFilter(searchMethod) {
+    searchText = searchUserInput.value.toLowerCase()
+
+    switch (searchMethod) {
+        case "byLogin":
+            usersFilter = (user) => {
+                if (user.login.toLowerCase().search(searchText) === -1) {
+                    return false
+                }
+                return true
+            }
+            break
+        case "bySurname":
+            usersFilter = (useer) => {
+                if (useer.surname.toLowerCase().search(searchText) === -1) {
+                    return false
+                }
+                return true
+            }
+            break
+        case "byGroup":
+        usersFilter = (user) => {
+            if (user.group.toLowerCase().search(searchText) === -1) {
+                return false
+            }
+            return true
+        }
+        break
+        default:
+            usersFilter = (user) => true
+    }
+
+    displayUsers(allUsers)
+}
+function setRolesFilter(role) {
+    if (role === "all") {
+        rolesFilter = (user) => true
+    } else {
+        rolesFilter = (user) => {
+            if (user.role.toLowerCase() === role) {
+                return true
+            }
+            return false
+        }
+    }
+
+    displayUsers(allUsers)
+}
+
+searchUserInput.addEventListener("input", () => {
+    const searchMethod = document.querySelector("#searchUsersSelect").value
+
+    setUsersFilter(searchMethod)
+})
+
+document.getElementById("resetButton").addEventListener("click", () => {
+    searchUserInput.value = ""
+    setUsersFilter()
+})
+
+document.querySelector("#searchUsersSelect").addEventListener("change", e => {
+    setUsersFilter(e.target.value)
+})
+
 document.getElementById("filterUsersSelect").addEventListener("change", async (e) => {
     const role = e.target.value
-    await fetch(`users/${role}`).then(async response => {
-        if (response.ok === true) {
-            const users = await response.json()
-            displayUsers(users)
-        }
-    })
-})
-
-document.getElementById("searchButton").addEventListener("click", async e => {
-    e.preventDefault()
-
-    const filter = document.getElementById("searchUsersSelect").value
-    const searchText = document.getElementById("searchInput").value
-
-    await fetch("users/search", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            filter: filter,
-            searchText: searchText
-        })
-    }).then(async response => {
-        if (response.ok === true) {
-            const users = await response.json()
-            displayUsers(users)
-        }
-    })
-})
-
-document.getElementById("resetButton").addEventListener("click", (e) => {
-    loadUsers()
+    setRolesFilter(role)
 })
 
 
@@ -62,8 +105,8 @@ document.getElementById("resetButton").addEventListener("click", (e) => {
 async function loadUsers() {
     await fetch("users").then(async response => {
         if (response.ok === true) {
-            const users = await response.json()
-            displayUsers(users)
+            allUsers = await response.json()
+            displayUsers(allUsers)
         }
     })
 }
@@ -72,7 +115,9 @@ function displayUsers(users) {
     usersTable.innerHTML = ""
     
     users.forEach(user => {
-        displayUser(user)
+        if (usersFilter(user) && rolesFilter(user)) {
+            displayUser(user)
+        }
     })
 }
 

@@ -30,13 +30,13 @@
         <div>
             <span>Показать</span>
             <select id="filterUsersSelect">
-                <option selected value="">Всех</option>
-                <option value="Student">Студентов</option>
-                <option value="Teacher">Преподавателей</option>
-                <option value="Admin">Администраторов</option>
+                <option selected value="all">Всех</option>
+                <option value="student">Студентов</option>
+                <option value="teacher">Преподавателей</option>
+                <option value="admin">Администраторов</option>
             </select>
         </div>
-        <form>
+        <div>
             <span>Поиск</span>
             <select id="searchUsersSelect">
                 <option value="byLogin">По логину</option>
@@ -44,9 +44,8 @@
                 <option value="byGroup">По группе</option>
             </select>
             <input id="searchInput">
-            <button id="searchButton" type="submit">Найти</button>
-            <button id="resetButton" type="reset">Сброс</button>
-        </form>
+            <button id="resetButton">Сброс</button>
+        </div>
         <table>
             <thead>
                 <tr>

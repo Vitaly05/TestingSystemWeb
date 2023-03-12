@@ -29,39 +29,6 @@ namespace TestingSystemWeb.Controllers
             return Ok(users);
         }
 
-        [Authorize(Roles = $"{Role.Admin}, {Role.Teacher}")]
-        [HttpGet("{role}")]
-        public IActionResult GetUsersWithRole(string role)
-        {
-            var users = _usersRepository.GetAllUsersWithRole(role);
-            if (users is null) return NotFound();
-            return Ok(users);
-        }
-
-        [Authorize(Roles = Role.Admin)]
-        [HttpPost("search")]
-        public IActionResult SearchUser([FromBody] SearchUserModel model)
-        {
-            List<User> users = new();
-            string searchText = model.SearchText.Trim();
-
-            switch (model.Filter)
-            {
-                case "byLogin":
-                    users = _usersRepository.FindByLogin(searchText);
-                    break;
-                case "bySurname":
-                    users = _usersRepository.FindBySurname(searchText);
-                    break;
-                case "byGroup":
-                    users = _usersRepository.FindByGroup(searchText);
-                    break;
-                default:
-                    return BadRequest();
-            }
-            return Ok(users);
-        }
-
         [Authorize(Roles = Role.Admin)]
         [HttpPost("add")]
         public IActionResult AddUser(User user)
