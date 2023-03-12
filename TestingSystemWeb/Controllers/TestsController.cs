@@ -170,6 +170,30 @@ namespace TestingSystemWeb.Controllers
         }
 
         [Authorize(Roles = Role.Teacher)]
+        [HttpPost("{testId}/removeGroup")]
+        public IActionResult RemoveGroupInTest(int testId, [FromBody] JsonObject group)
+        {
+            try
+            {
+                var g = (string)group["group"];
+                var users = _usersRepository.GetAllStudentsWithGroup(g);
+                var test = _testsRepository.GetTest(testId);
+
+                foreach (var user in users)
+                {
+                    if (_accessesRepository.HasAccess(user.Id, test.Id))
+                        removeUserFromTest(new TestAccess
+                        {
+                            TestId = testId,
+                            UserId = user.Id,
+                        });
+                }
+                return Ok();
+            }
+            catch { return BadRequest(); }
+        }
+
+        [Authorize(Roles = Role.Teacher)]
         [HttpPost("addStudent")]
         public IActionResult AddStudentInTest(TestAccess data)
         {
@@ -191,9 +215,7 @@ namespace TestingSystemWeb.Controllers
         {
             try
             {
-                _testResultsRepository.RemoveResult(data.TestId, data.UserId);
-                _answersRepository.RemoveAnswers(data.TestId, data.UserId);
-                _accessesRepository.RemoveStudentFromTest(data);
+                removeUserFromTest(data);
                 return Ok();
             }
             catch
@@ -364,6 +386,13 @@ namespace TestingSystemWeb.Controllers
             }
 
             return Ok(questionsModel);
+        }
+
+        private void removeUserFromTest(TestAccess data)
+        {
+            _testResultsRepository.RemoveResult(data.TestId, data.UserId);
+            _answersRepository.RemoveAnswers(data.TestId, data.UserId);
+            _accessesRepository.RemoveStudentFromTest(data);
         }
     }
 }

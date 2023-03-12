@@ -76,6 +76,21 @@ document.querySelector("#addGroup").addEventListener("click", async () => {
     })
 })
 
+document.querySelector("#removeGroup").addEventListener("click", async () => {
+    const group = document.querySelector("#groupsSelect").value
+    
+    await fetch(`tests/${currentTest.id}/removeGroup`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({group})
+    }).then(response => {
+        console.log(response.status)
+        if (response.ok === true) {
+            getStudents()
+        }
+    })
+})
+
 
 async function getAllGroups() {
     await fetch("users/allGroups").then(async response => {
