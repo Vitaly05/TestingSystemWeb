@@ -23,6 +23,7 @@ builder.Services.AddScoped<TestResultsRepository>();
 builder.Services.AddScoped<AnswersRepository>();
 
 builder.Services.AddScoped<TestService>();
+builder.Services.AddScoped<AccountService>();
 
 builder.Services.AddControllers();
 

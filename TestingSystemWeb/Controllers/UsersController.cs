@@ -4,6 +4,7 @@ using TestingSystemWeb.Data.Structures;
 using TestingSystemWeb.Models;
 using TestingSystemWeb.Models.DataBaseModels;
 using TestingSystemWeb.Repositories;
+using TestingSystemWeb.Services;
 
 namespace TestingSystemWeb.Controllers
 {
@@ -14,10 +15,13 @@ namespace TestingSystemWeb.Controllers
     public class UsersController : ControllerBase
     {
         private UsersRepository _usersRepository;
+        private AccountService _accountService;
 
-        public UsersController(UsersRepository usersRepository)
+        public UsersController(UsersRepository usersRepository,
+            AccountService accountService)
         {
             _usersRepository = usersRepository;
+            _accountService = accountService;
         }
 
         [Authorize(Roles = Role.Admin)]
@@ -35,6 +39,7 @@ namespace TestingSystemWeb.Controllers
         {
             try
             {
+                user.Password = _accountService.EncryptPassword(user.Password);
                 _usersRepository.AddUser(user);
                 return Ok();
             }

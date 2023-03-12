@@ -57,7 +57,7 @@ namespace TestingSystemWeb.Repositories
 
         public User GetUserById(int id)
         {
-            var user = _context.Users.Single(user => user.Id == id);
+            var user = _context.Users.AsNoTracking().Single(user => user.Id == id);
             return removePassword(user);
         }
 

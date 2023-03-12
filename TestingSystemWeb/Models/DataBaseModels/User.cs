@@ -12,7 +12,6 @@ namespace TestingSystemWeb.Models.DataBaseModels
         [MaxLength(20)]
         public string Login { get; set; }
 
-        [MaxLength(20)]
         public string Password { get; set; }
 
         [MaxLength(45)]
