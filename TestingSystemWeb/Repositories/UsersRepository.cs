@@ -32,22 +32,20 @@ namespace TestingSystemWeb.Repositories
         public List<User> GetAllUsers()
         {
             var users = _context.Users.ToList();
-            removePassword(ref users);
-            return users;
+            return removePassword(users);
         }
 
         public List<User> GetAllUsersWithRole(string role)
         {
             var users = _context.Users.Where(user => user.Role == role).ToList();
-            removePassword(ref users);
-            return users;
+            return removePassword(users);
         }
 
-        public List<User> GetAllUsersWithGroup(string group)
+        public List<User> GetAllStudentsWithGroup(string group)
         {
-            var users = _context.Users.Where(user => user.Group == group).ToList();
-            removePassword(ref users);
-            return users;
+            var allStudents = GetAllUsersWithRole(Role.Student);
+            var students = allStudents.Where(user => user.Group == group).ToList();
+            return removePassword(students);
         }
 
         public User Login(LoginModel verificableUser)
@@ -60,8 +58,7 @@ namespace TestingSystemWeb.Repositories
         public User GetUserById(int id)
         {
             var user = _context.Users.Single(user => user.Id == id);
-            removePassword(ref user);
-            return user;
+            return removePassword(user);
         }
 
         public List<string> GetAllGroups()
@@ -83,15 +80,18 @@ namespace TestingSystemWeb.Repositories
         }
 
 
-        private void removePassword(ref List<User> users)
+        private List<User> removePassword(List<User> users)
         {
+            var usersWithoutPassword = new List<User>();
             foreach (var user in users)
-                if (user is not null) user.Password = string.Empty;
-
+                if (user is not null) usersWithoutPassword.Add(removePassword(user));
+            return usersWithoutPassword;
         }
-        private void removePassword(ref User user)
+        private User removePassword(User user)
         {
-            if (user is not null) user.Password = string.Empty;
+            var userWithoutPassword = new User(user);
+            if (userWithoutPassword is not null) userWithoutPassword.Password = string.Empty;
+            return userWithoutPassword;
         }
     }
 }

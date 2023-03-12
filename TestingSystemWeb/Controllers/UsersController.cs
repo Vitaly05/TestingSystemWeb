@@ -58,5 +58,17 @@ namespace TestingSystemWeb.Controllers
                 return BadRequest();
             }
         }
+
+        [Authorize(Roles = Role.Teacher)]
+        [HttpGet("allGroups")]
+        public IActionResult GetAllGroups()
+        {
+            try
+            {
+                var groups = _usersRepository.GetAllGroups();
+                return Ok(groups);
+            }
+            catch { return BadRequest(); }
+        }
     }
 }
