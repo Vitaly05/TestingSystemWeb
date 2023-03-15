@@ -62,6 +62,7 @@ document.querySelector("#searchUsersSelect").addEventListener("change", e => {
 async function getStudentsResults(test) {
     await fetch(`tests/${test.id}/results`).then(async response => {
         allResults = await response.json()
+        allResults.reverse()
         displayStudentsResults(allResults)
     })
 }

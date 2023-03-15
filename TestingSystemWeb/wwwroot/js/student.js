@@ -15,6 +15,7 @@ async function getTestsInfos() {
 }
 
 function displayTests(testsInfos) {
+    testsInfos.reverse()
     testsInfos.forEach(testInfo => {
         displayTest(testInfo)
     })

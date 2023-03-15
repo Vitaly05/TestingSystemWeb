@@ -106,6 +106,7 @@ async function loadUsers() {
     await fetch("users").then(async response => {
         if (response.ok === true) {
             allUsers = await response.json()
+            allUsers.reverse()
             displayUsers(allUsers)
         }
     })

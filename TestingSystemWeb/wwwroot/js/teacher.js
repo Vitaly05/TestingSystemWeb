@@ -16,6 +16,7 @@ async function getAllTests() {
         method: "GET"
     }).then(async response => {
         const tests = await response.json()
+        tests.reverse()
         displayTests(tests)
     })
 }

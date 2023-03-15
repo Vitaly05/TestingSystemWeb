@@ -105,6 +105,10 @@ async function getStudents() {
     await fetch(`tests/${currentTest.id}/getStudents`).then(async response => {
         if (response.ok === true) {
             allStudents = await response.json()
+            
+            allStudents.addedStudents.reverse()
+            allStudents.notAddedStudents.reverse()
+
             displayStudents(allStudents)
         }
     })

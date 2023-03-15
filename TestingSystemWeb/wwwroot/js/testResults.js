@@ -6,6 +6,8 @@ document.getElementById("testNameText").innerText = currentTest.name
 
 addEventListener("load", async () => {
     results = await getTestResult(currentTest)
+
+    results?.reverse()
     
     results?.forEach(result => {
         displayResult(result)
