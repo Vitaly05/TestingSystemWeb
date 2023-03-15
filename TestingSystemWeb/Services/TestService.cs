@@ -25,7 +25,7 @@ namespace TestingSystemWeb.Services
 
         public void WriteAnswers(List<Answer> answers, Test test, int userId)
         {
-            var currentAttempt = getCurrentAttempt(test, userId);
+            var currentAttempt = GetCurrentAttempt(test, userId);
 
 
             CheckAnswers(ref answers, checkAll: test.AutoCheck);
@@ -55,13 +55,30 @@ namespace TestingSystemWeb.Services
             
         }
 
-        private int getCurrentAttempt(Test test, int userId)
+        public int GetCurrentAttempt(Test test, int userId)
         {
             var amountOfAttampts = test.AmountOfAttampts;
             var remainingAttemptsAmount = _testsAccessesRepository.GetRemainingAttempts(test.Id, userId);
             return amountOfAttampts - remainingAttemptsAmount + 1;
         }
 
+        public double? GetStudentMaxMark(int testId, int userId)
+        {
+            var testResults = _testResultsRepository.GetTestResults(testId, userId);
+
+            double? maxMark = null;
+            foreach (var result in testResults)
+            {
+                if (maxMark is null && result is not null)
+                    maxMark = result.Mark;
+                if (result.Mark > maxMark)
+                    maxMark = result.Mark;
+            }
+
+            return maxMark;
+        }
+        
+        
         private void CheckAnswers(ref List<Answer> answers, bool checkAll)
         {
             foreach (var answer in answers)

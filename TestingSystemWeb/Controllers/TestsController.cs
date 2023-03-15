@@ -64,8 +64,23 @@ namespace TestingSystemWeb.Controllers
         {
             int userId = getCurrentUserId();
             var tests = _accessesRepository.GetAllTestsForStudent(userId);
+
             if (tests is null) return NotFound();
-            return Ok(tests);
+
+
+            List<TestInfo> testsInfos = new List<TestInfo>();
+
+            foreach (var test in tests)
+            {
+                testsInfos.Add(new TestInfo
+                {
+                    Test = test,
+                    PassedOnce = _testSerivce.GetCurrentAttempt(test, userId) - 1,
+                    MaxMark = _testSerivce.GetStudentMaxMark(test.Id, userId)
+                });
+            }
+            
+            return Ok(testsInfos);
         }
 
 
