@@ -19,23 +19,31 @@ function setResultsFilter(searchMethod) {
 
     switch (searchMethod) {
         case "bySurname":
-            resultsFilter = (student) => {
-                if (student.surname.toLowerCase().search(searchText) === -1) {
+            resultsFilter = (result) => {
+                if (result.student.surname.toLowerCase().search(searchText) === -1) {
                     return false
                 }
                 return true
             }
             break
         case "byGroup":
-        resultsFilter = (student) => {
-            if (student.group.toLowerCase().search(searchText) === -1) {
+            resultsFilter = (result) => {
+                if (result.student.group.toLowerCase().search(searchText) === -1) {
+                    return false
+                }
+                return true
+            }
+            break
+        case "onlyUnchecked":
+            resultsFilter = (result) => {
+                if (result.testResult.mark === null) {
+                    return true
+                }
                 return false
             }
-            return true
-        }
-        break
+            break
         default:
-            resultsFilter = (student) => true
+            resultsFilter = (result) => true
     }
 
     displayStudentsResults(allResults)
@@ -57,6 +65,15 @@ document.querySelector("#searchUsersSelect").addEventListener("change", e => {
 })
 
 
+document.querySelector("#onlyUnchecked").addEventListener("change", e => {
+    if (e.target.checked) {
+        setResultsFilter("onlyUnchecked")
+    } else {
+        setResultsFilter()
+    }
+})
+
+
 
 
 async function getStudentsResults(test) {
@@ -72,7 +89,7 @@ function displayStudentsResults(results) {
         .innerHTML = ""
 
     results.forEach(result => {
-        if (resultsFilter(result.student)) {
+        if (resultsFilter(result)) {
             displayStudentResult(result)
         }
     })
