@@ -1,4 +1,5 @@
 let questionsModel
+let timeToPassTest
 
 document.getElementById("saveAnswersButton").addEventListener("click", () => {
     saveAnswers()
@@ -15,9 +16,26 @@ addEventListener("load", () => {
     displayQuestions(questions)
 
     const timeToPass = questionsModel.test.timeToPass
-    if (!(timeToPass === null || timeToPass <= 0))
+    if (!(timeToPass === null || timeToPass <= 0)) {
+        timeToPassTest = timeToPass
+        showTime()
         setTimeout(saveAnswers, timeToPass * 1000);
+        setInterval(showTime, 1000)
+    }
 })
+
+
+function showTime() {
+    const minuts = Math.floor(timeToPassTest / 60)
+    const minutsText = minuts > 9 ? `${minuts}` : `0${minuts}`
+    const seconds = timeToPassTest % 60
+    const secondsText = seconds > 9 ? `${seconds}` : `0${seconds}`
+
+    document.querySelector("#minuts").innerText = minutsText
+    document.querySelector("#seconds").innerText = secondsText
+
+    --timeToPassTest
+}
 
 function displayQuestions(questions) {
     questions.forEach(question => {
