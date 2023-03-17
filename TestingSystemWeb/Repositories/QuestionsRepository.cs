@@ -23,8 +23,18 @@ namespace TestingSystemWeb.Repositories
 
         public void UpdateQuestions(List<Question> newQuestions, int testId)
         {
-            var oldQuestions = GetTestQuestions(testId);
-            _context.Questions.RemoveRange(oldQuestions);
+            List<Question> removableQuestions = new();
+            foreach (var question in newQuestions)
+            {
+                try
+                {
+                    var removableQuestion = _context.Questions.First(q => q.Id != question.Id);
+                    removableQuestions.Add(removableQuestion);
+                }
+                catch { }
+            }
+
+            _context.Questions.RemoveRange(removableQuestions);
 
             SetTestId(ref newQuestions, testId);
 

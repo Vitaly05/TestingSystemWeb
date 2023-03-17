@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Net;
 using TestingSystemWeb.Database;
 using TestingSystemWeb.Models.DataBaseModels;
 
@@ -16,12 +17,12 @@ namespace TestingSystemWeb.Repositories
 
         public List<Test> GetAllTestsCreatedThisTeacher(int userId)
         {
-            return _context.Tests.Where(t => t.TeacherId == userId).ToList();
+            return _context.Tests.AsNoTracking().Where(t => t.TeacherId == userId).ToList();
         }
 
         public Test GetTest(int testId)
         {
-            return _context.Tests.FirstOrDefault(t => t.Id == testId);
+            return _context.Tests.AsNoTracking().FirstOrDefault(t => t.Id == testId);
         }
 
 

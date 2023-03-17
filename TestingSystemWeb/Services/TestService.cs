@@ -25,7 +25,7 @@ namespace TestingSystemWeb.Services
 
         public void WriteAnswers(List<Answer> answers, Test test, int userId)
         {
-            var currentAttempt = GetCurrentAttempt(test, userId);
+            var currentAttempt = _testResultsRepository.GetAttemptsAmount(test.Id, userId) + 1;
 
 
             CheckAnswers(ref answers, checkAll: test.AutoCheck);

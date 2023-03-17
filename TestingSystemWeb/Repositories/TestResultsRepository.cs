@@ -57,5 +57,10 @@ namespace TestingSystemWeb.Repositories
             return _context.TestsResults.Where(
                 x => x.TestId == testId).ToList();
         }
+
+        public int GetAttemptsAmount(int testId, int userId)
+        {
+            return GetTestResults(testId, userId).Count();
+        }
     }
 }

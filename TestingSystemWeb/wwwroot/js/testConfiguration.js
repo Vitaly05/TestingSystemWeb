@@ -109,11 +109,6 @@ function getTestData() {
         id: currentTest?.test?.id
     }
     const questions = getQuestionsData()
-
-    console.log({
-        test: testData,
-        questions: questions
-    })
     
     return {
         test: testData,
@@ -128,10 +123,12 @@ function getQuestionsData() {
         const questionType = questionPanel.querySelector("#selectQuestionType").value
         const questionSettings = questionPanel.querySelector("#questionSettings")
         const questionText = questionSettings.querySelector("#question").value 
+        const questionId = questionSettings.querySelector("#question").dataset.questionId
         const answer = questionSettings.querySelector("#answer").value 
 
         let question = {
             questionText: questionText,
+            Id: questionId,
             answer: answer
         }
 
@@ -236,6 +233,7 @@ function fillTestInfo(test) {
 
 function fillOpenQuestionPanel(panel, question) {
     panel.getElementById("question").value = question.questionText
+    panel.getElementById("question").dataset.questionId = question.id
     panel.getElementById("answer").value = question.answer
 }
 function fillCloseQuestionPanel(panel, question) {

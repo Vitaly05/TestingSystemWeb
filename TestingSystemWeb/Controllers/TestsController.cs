@@ -75,7 +75,7 @@ namespace TestingSystemWeb.Controllers
                 testsInfos.Add(new TestInfo
                 {
                     Test = test,
-                    PassedOnce = _testSerivce.GetCurrentAttempt(test, userId) - 1,
+                    PassedOnce = _testResultsRepository.GetAttemptsAmount(test.Id, userId),
                     MaxMark = _testSerivce.GetStudentMaxMark(test.Id, userId)
                 });
             }
@@ -111,8 +111,13 @@ namespace TestingSystemWeb.Controllers
             var test = testModel.Test;
             test.TeacherId = getCurrentUserId();
             test.CreateDate = DateTime.Now;
+
             try
             {
+                int oldAmountOfAttempts = _testsRepository.GetTest(test.Id).AmountOfAttampts;
+                int differenceOfAmountOfAttempts = test.AmountOfAttampts - oldAmountOfAttempts;
+                
+                _accessesRepository.UpdateAmountOfAttempts(test.Id, differenceOfAmountOfAttempts);
                 _testsRepository.UpdateTest(test);
                 _questionsRepository.UpdateQuestions(testModel.Questions, test.Id);
                 return Ok();
@@ -246,9 +251,12 @@ namespace TestingSystemWeb.Controllers
             var test = _testsRepository.GetTest(id);
             var questions = _questionsRepository.GetTestQuestions(id);
 
+            var currentUserId = getCurrentUserId();
+
             if (_context.User.IsInRole(Role.Student))
             {
-                if (_accessesRepository.GetRemainingAttempts(test.Id, getCurrentUserId()) > 0)
+                if (_accessesRepository.GetRemainingAttempts(test.Id, currentUserId) > 0 &&
+                    _testResultsRepository.GetAttemptsAmount(test.Id, currentUserId) < test.AmountOfAttampts)
                     return getQuestionsForStudent(test, questions);
                 else return BadRequest();
             }

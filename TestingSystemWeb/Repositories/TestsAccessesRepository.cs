@@ -68,6 +68,19 @@ namespace TestingSystemWeb.Repositories
                     select p.UserId).ToList();
         }
 
+        public void UpdateAmountOfAttempts(int testId, int differenceOfAmountOfAttempts)
+        {
+            List<TestAccess> accesses = _context.TestsAccesses.Where(a => a.TestId == testId).ToList();
+            foreach (var access in accesses)
+            {
+                access.RemainingAttemptsAmount += differenceOfAmountOfAttempts;
+                if (access.RemainingAttemptsAmount < 0)
+                    access.RemainingAttemptsAmount = 0;
+            }
+            _context.TestsAccesses.UpdateRange(accesses);
+            _context.SaveChanges();
+        }
+
         public int GetRemainingAttempts(int testId, int userId)
         {
             return _context.TestsAccesses.FirstOrDefault(
