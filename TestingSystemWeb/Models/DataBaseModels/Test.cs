@@ -12,7 +12,7 @@ namespace TestingSystemWeb.Models.DataBaseModels
 
         public int TeacherId { get; set; }
 
-        [MaxLength(45)]
+        [MaxLength(60)]
         public string Name { get; set; }
 
         [MaxLength(100)]
