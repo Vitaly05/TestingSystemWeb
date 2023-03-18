@@ -9,20 +9,42 @@
     
     <title>Room</title>
 
-    <template id="testsTableRowTemplate">
-        <div>
-            <div>
-                <div id="name"></div>
-                <div id="maxMark"></div>
-                <div id="description"></div>
+    <template id="testTemplate">
+        <div class="test">
+            <div class="test-info">
+                <div class="test-name">Название</div>
+                <div class="test-max-mark">Максимальная оценка: </div>
+                <div class="test-description">Описание</div>
             </div>
-            <!-- <td id="name"></td>
-            <td id="description"></td>
-            <td id="maxMark"></td>
-            <td><button id="editTestButton">Редактироать</button></td>
-            <td><button id="removeTestButton">Удалить</button></td>
-            <td><button id="addStudentsButton">Добавить учеников</button></td>
-            <td><button id="resultsButton">Результаты</button></td> -->
+            <div class="test-actions">
+                <div class="group-div space-between-div">
+                    <div>
+                        <input type="image" src="img/edit.png" alt="Редактироать" 
+                            class="iconButton" id="editTestButton" title="Редактироать тест">
+                        <input type="image" src="img/user-multiple-add.png" alt="Добавить студентов" 
+                            class="iconButton" id="addStudentsButton" title="Добавить студентов">
+                    </div>
+                    <div>
+                        <input type="image" src="img/trash.png" alt="Удалить" 
+                            class="iconButton" id="removeTestButton" title="Удалить тест">
+                    </div>
+                </div>
+                <div>
+                    <button class="default-button" id="resultsButton">
+                        <div>
+                            <img src="img/result.png" alt="logout">
+                            <hr>
+                            <span>Результаты</span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="noOneTestTemplate">
+        <div id="noOneTest">
+            Вы не создали ни одного теста
         </div>
     </template>
 </head>
@@ -46,24 +68,7 @@
                 <div class="center-content-div">
                     <button class="text-button" id="addTestButton">+ Добавить тест</button>
                 </div>
-                <div class="list-div">
-                    <div class="test">
-                        <div class="test-info">
-                            <div class="test-name">Название</div>
-                            <div class="test-max-mark">Максимальная оценка: </div>
-                            <div class="test-description">Описание</div>
-                        </div>
-                        <div class="test-actions">
-                            <button class="default-button" id="logoutButton">
-                                <div>
-                                    <img src="img/result.png" alt="logout">
-                                    <hr>
-                                    <span>Результаты</span>
-                                </div>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                <div class="list-div" id="testsPanel"></div>
             </div>
         </div>
     </div>

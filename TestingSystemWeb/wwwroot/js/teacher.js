@@ -1,5 +1,4 @@
-const testsTable = document.getElementById("testsTable")
-const addTestForm = document.getElementById("addTestForm")
+const testsPanel = document.querySelector("#testsPanel")
 
 
 addEventListener("load", async () => {
@@ -26,7 +25,12 @@ async function getAllTests() {
 }
 
 function displayTests(tests) {
-    testsTable.innerHTML = ""
+    testsPanel.innerHTML = ""
+
+    if (tests.length === 0 || tests === null) {
+        const clone = document.querySelector("#noOneTestTemplate").content.cloneNode(true)
+        testsPanel.appendChild(clone)
+    }
 
     tests.forEach(test => {
         displayTest(test)
@@ -34,32 +38,32 @@ function displayTests(tests) {
 }
 
 function displayTest(test) {
-    const testsTableRowTemplate = document.getElementById("testsTableRowTemplate")
-    const clone = testsTableRowTemplate.content.cloneNode(true)
+    const testTemplate = document.getElementById("testTemplate")
+    const clone = testTemplate.content.cloneNode(true)
 
-    clone.getElementById("name").innerText = test.name
-    clone.getElementById("description").innerText = test.description
-    clone.getElementById("maxMark").innerText = test.maxMark
+    clone.querySelector(".test-name").innerText = test.name
+    clone.querySelector(".test-max-mark").innerText = `Максимальная оценка: ${test.maxMark}`
+    clone.querySelector(".test-description").innerText = test.description
 
     addButtonEvents(clone, test)
 
-    testsTable.appendChild(clone)
+    testsPanel.appendChild(clone)
 }
 
 function addButtonEvents(clone, test) {
-    clone.getElementById("removeTestButton").addEventListener("click", async () => {
+    clone.querySelector("#removeTestButton").addEventListener("click", async () => {
         await removeTest(test)
     })
 
-    clone.getElementById("editTestButton").addEventListener("click", async () => {
+    clone.querySelector("#editTestButton").addEventListener("click", async () => {
         await editTest(test)
     })
 
-    clone.getElementById("addStudentsButton").addEventListener("click", () => {
+    clone.querySelector("#addStudentsButton").addEventListener("click", () => {
         addStudents(test)
     })
 
-    clone.getElementById("resultsButton").addEventListener("click", () => {
+    clone.querySelector("#resultsButton").addEventListener("click", () => {
         getResults(test)
     })
 }
