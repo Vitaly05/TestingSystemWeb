@@ -42,5 +42,11 @@ namespace TestingSystemWeb.Models.DataBaseModels
             Role = user.Role;
             Group = user.Group;
         }
+
+
+        public override string ToString()
+        {
+            return $"{Surname} {Name} {Patronymic}";
+        }
     }
 }

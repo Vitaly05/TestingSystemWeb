@@ -4,36 +4,140 @@
     box-sizing: border-box;
 }
 
-button {
-    padding: 2px;
+@font-face {
+    font-family: 'UbuntuBold';
+    src: url(/fonts/Ubuntu-Bold.ttf);
+}
+@font-face {
+    font-family: 'UbuntuRegular';
+    src: url(/fonts/Ubuntu-Regular.ttf);
 }
 
-table {
-    border: 1px solid black;
-    border-spacing: 0 10px;
+body {
+    background-color: #D0D0D0;
 }
 
-tbody > tr {
-    background-color: lightgray;
+.default-button {
+    background-color: #EEEEEE;
+    border: 1px solid #949494;
+    box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.25);
+    border-radius: 6px;
 }
 
-th {
-    min-width: 20vh;
-}
-
-td {
-    padding: 4px 10px;
-    text-align: center;
-}
-
-
-
-#studentsTables {
-    width: 100%;
+.default-button div {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
 }
+
+.default-button hr {
+    width: 0px;
+    height: 25px;
+    border: 1px solid #102A49;
+}
+
+.default-button img {
+    font-family: 'UbuntuRegular';
+    margin: 0 10px;
+}
+
+.default-button span {
+    font-family: 'UbuntuRegular';
+    font-size: 20px;
+    margin: 0 20px;
+    color: #102A49;
+    display: flex;
+    align-items: center;
+}
+
+
+.text-button {
+    background: transparent;
+    border: none;
+    font-family: 'UbuntuRegular';
+    font-size: 20px;
+    color: #5C5C5C;
+}
+
+
+.default-block {
+    width: 80%;
+    margin: 20px;
+    background-color: #FFFFFF;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    margin-left: auto;
+    margin-right: auto;
+}
+.default-block:first-of-type {
+    border-radius: 6px 6px 0 0;
+}
+.default-block:last-of-type {
+    border-radius: 0 0 6px 6px;
+}
+
+.account-info {
+    padding: 24px 34px;
+}
+
+.group-div {
+    display: flex;
+}
+
+.content-block {
+    display: block;
+    width: 100%;
+    margin: 20px;
+}
+
+.center-content-div {
+    display: flex;
+    justify-content: center;
+}
+
+
+.test {
+    border-width: 1px 0px;
+    border-style: solid;
+    border-color: #A6A6A6;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.test-name {
+    font-family: 'UbuntuRegular';
+    font-size: 24px;
+    color: #102A49;
+}
+
+.test-max-mark {
+    font-family: 'UbuntuRegular';
+    font-size: 20px;
+    color: #868686; 
+}
+
+.test-description {
+    font-family: 'UbuntuRegular';
+    font-size: 20px;
+    color: #BABABA;
+}
+
+
+
+
+
+
+#username {
+    font-family: 'UbuntuBold';
+    font-size: 24px;
+    display: flex;
+    margin-left: 100px;
+    align-items: center;
+    color: #5C5C5C;
+}
+
+
+
 
 
 

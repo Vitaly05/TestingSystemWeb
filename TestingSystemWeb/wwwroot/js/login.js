@@ -11,8 +11,9 @@ document.getElementById("loginButton").addEventListener("click", async (e) => {
             login: loginInput.value,
             password: passwordInput.value
         })
-    }).then(response => {
+    }).then(async response => {
         if (response.ok === true) {
+            window.localStorage.setItem("username", await response.text())
             window.location.href = getReturnUrl() ?? "/"
         }
     })

@@ -1,7 +1,11 @@
 const testsTable = document.getElementById("testsTable")
-
 const addTestForm = document.getElementById("addTestForm")
 
+
+addEventListener("load", async () => {
+    document.querySelector("#username").innerText = window.localStorage.getItem("username")
+    await getAllTests()
+})
 
 document.getElementById("addTestButton").addEventListener("click", () => {
     if (window.sessionStorage.getItem("test") !== null)

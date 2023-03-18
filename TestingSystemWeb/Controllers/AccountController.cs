@@ -34,7 +34,7 @@ namespace TestingSystemWeb.Controllers
             if (user is null) return Unauthorized();
 
             await signInAsync(user);
-            return Ok();
+            return Ok(user.ToString());
         }
 
         [HttpGet("logout")]
