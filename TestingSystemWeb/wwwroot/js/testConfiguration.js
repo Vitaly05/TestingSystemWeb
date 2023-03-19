@@ -1,13 +1,18 @@
 let testConfigurationType = "add"
 let currentTest
+let allQuestions
 
-const addQuestionTemplate = document.getElementById("addQuestionTemplate")
-const openQuestionTemplate = document.getElementById("openQuestionTemplate")
-const closeQuestionTemplate = document.getElementById("closeQuestionTemplate")
+const questionTemplate = document.getElementById("questionTemplate")
 const incorrectAnswerTemplate = document.getElementById("incorrectAnswerTemplate")
 
-const questionsPanel = document.getElementById("questionsPanel")
+const questionsPanel = document.querySelector(".main-div")
 
+
+
+addEventListener("load", () => {
+    loadPage()
+    setInputsEvents()
+})
 
 document.getElementById("addQuestionButton").addEventListener("click", addQuestion)
 
@@ -27,30 +32,21 @@ document.getElementById("saveTestButton").addEventListener("click", async () => 
 
 
 function addQuestion() {
-    const clone = getQuestionPanelClone(getOpenQuestionClone())
+    const clone = getQuestionPanelClone()
 
     questionsPanel.appendChild(clone)
+
+    setQuestionsNumbers()
 }
 
 
-function getQuestionPanelClone(qustionTypeClone) {
-    const clone = addQuestionTemplate.content.cloneNode(true)
-    
-    const questionSettings = clone.getElementById("questionSettings")
+function getQuestionPanelClone() {
+    const clone = questionTemplate.content.cloneNode(true)
 
-    questionSettings.appendChild(qustionTypeClone)
+    clone.getElementById("addIncorrectAnswerButton").addEventListener("click", (e) => {
+        const incorrectAnswerClone = getIncorrectAnswerClone()
 
-    clone.getElementById("selectQuestionType").addEventListener("change", (e) => {
-        const oldChild = questionSettings.querySelector("div")
-
-        switch (e.target.value) {
-            case "openQuestion":
-                questionSettings.replaceChild(getOpenQuestionClone(), oldChild)
-                break;
-            case "closeQuestion":
-                questionSettings.replaceChild(getCloseQuestionClone(), oldChild)
-                break;
-        }
+        e.target.parentNode.querySelector("#incorrectAnswersPanel").appendChild(incorrectAnswerClone)
     })
 
     clone.getElementById("removeQuestionButton").addEventListener("click", e => removeCurrentChild(".questionPanel", e))
@@ -58,20 +54,17 @@ function getQuestionPanelClone(qustionTypeClone) {
     return clone
 }
 
-function getOpenQuestionClone() {
-    return openQuestionTemplate.content.cloneNode(true)
-}
-function getCloseQuestionClone() {
-    const clone = closeQuestionTemplate.content.cloneNode(true)
+function setQuestionsNumbers() {
+    const questionsPanels = document.querySelectorAll(".questionPanel")
+    const questionsNumber = questionsPanels.length
+    document.querySelector("#questionsNumber").innerText = questionsNumber
 
-    clone.getElementById("addIncorrectAnswerButton").addEventListener("click", (e) => {
-        const incorrectAnswerClone = getIncorrectAnswerClone()
+    questionsPanels.forEach(questionPanel => {
+        const questionsPanels = Array.from(document.querySelectorAll(".questionPanel"))
+        const questionNumber = questionsPanels.indexOf(questionPanel) + 1
+        questionPanel.querySelector(".questionNumber").innerText = questionNumber
 
-        e.target.closest(".closeQuestionPanel").querySelector("#incorrectAnswersPanel")
-            .appendChild(incorrectAnswerClone)
     })
-
-    return clone
 }
 
 function getIncorrectAnswerClone() {
@@ -88,6 +81,8 @@ function getIncorrectAnswerClone() {
 function removeCurrentChild(parentSelector, e) {
     const child = e.target.closest(parentSelector)
     child.parentNode.removeChild(child)
+
+    setQuestionsNumbers()
 }
 
 function getTestData() {
@@ -120,11 +115,14 @@ function getQuestionsData() {
     let questions = []
 
     document.querySelectorAll(".questionPanel").forEach(questionPanel => {
-        const questionType = questionPanel.querySelector("#selectQuestionType").value
-        const questionSettings = questionPanel.querySelector("#questionSettings")
-        const questionText = questionSettings.querySelector("#question").value 
-        const questionId = questionSettings.querySelector("#question").dataset.questionId
-        const answer = questionSettings.querySelector("#answer").value 
+        const questionText = questionPanel.querySelector("#question").value 
+        const questionId = questionPanel.querySelector("#question").dataset.questionId
+        const answer = questionPanel.querySelector("#answer").value 
+
+        if (questionText.trim().length === 0 ||
+            answer.trim().length === 0) {
+                return
+            }
 
         let question = {
             questionText: questionText,
@@ -132,18 +130,20 @@ function getQuestionsData() {
             answer: answer
         }
 
-        if (questionType == "closeQuestion") {
-            let incorrectAnswers = []
+        let incorrectAnswers = []
 
-            const incorrectAnswersPanel = questionPanel.querySelector("#incorrectAnswersPanel")
-            incorrectAnswersPanel.querySelectorAll(".incorrectAnswerPanel").forEach(incorrectAnswerPanel => {
-                const incorrectAnswer = incorrectAnswerPanel.querySelector(".incorrectAnswer").value
+        const incorrectAnswersPanel = questionPanel.querySelector("#incorrectAnswersPanel")
+        incorrectAnswersPanel.querySelectorAll(".incorrectAnswerPanel").forEach(incorrectAnswerPanel => {
+            const incorrectAnswer = incorrectAnswerPanel.querySelector("#incorrectAnswer").value
+            if (incorrectAnswer.trim().length !== 0) {
                 incorrectAnswers.push(incorrectAnswer)
-            })
-
-            question.incorrectAnswers = JSON.stringify(incorrectAnswers)
-        } else {
+            }
+        })
+        
+        if (incorrectAnswers.length === 0) {
             question.incorrectAnswers = null
+        } else {
+            question.incorrectAnswers = JSON.stringify(incorrectAnswers)
         }
 
         questions.push(question)
@@ -173,29 +173,30 @@ function loadPage() {
         fillTestInfo(currentTest.test)
     
         if (currentTest.questions !== null) {
-            displayQuestions(currentTest.questions)
+            allQuestions = currentTest.questions
+            displayQuestions(allQuestions)
         }
+
+        setQuestionsNumbers()
     }
 }
 
 function displayQuestions(questions) {
     questions.forEach(question => {
-        if (question.incorrectAnswers === null) {
-            displayOpenQuestion(question)
-        } else {
-            displayCloseQuestion(question)
-        }
+        const questionClone = getQuestionPanelClone()
+        fillQuestionPanel(questionClone, question)
+        
+        questionsPanel.appendChild(questionClone)
     })
 }
 
 function displayOpenQuestion(question) {
-    const openQuestionClone = getOpenQuestionClone()
-    fillOpenQuestionPanel(openQuestionClone, question)
+    const questionClone = questionTemplate.content.cloneNode(true)
+    fillQuestionPanel(questionClone, question)
 
-    const addQuestionClone = getQuestionPanelClone(openQuestionClone)
-    addQuestionClone.getElementById("selectQuestionType").value = "openQuestion"
+    const addQuestionClone = getQuestionPanelClone(questionClone)
     
-    addQuestionClone.appendChild(openQuestionClone)
+    addQuestionClone.appendChild(questionClone)
     questionsPanel.appendChild(addQuestionClone)
 }
 function displayCloseQuestion(question) {
@@ -203,7 +204,6 @@ function displayCloseQuestion(question) {
     fillCloseQuestionPanel(closeQuestionClone, question)
 
     const addQuestionClone = getQuestionPanelClone(closeQuestionClone)
-    addQuestionClone.getElementById("selectQuestionType").value = "closeQuestion"
     
     addQuestionClone.appendChild(closeQuestionClone)
     questionsPanel.appendChild(addQuestionClone)
@@ -231,21 +231,48 @@ function fillTestInfo(test) {
     }
 }
 
-function fillOpenQuestionPanel(panel, question) {
+function fillQuestionPanel(panel, question) {
+    panel.querySelector(".questionNumber").innerText = allQuestions.indexOf(question) + 1
     panel.getElementById("question").value = question.questionText
     panel.getElementById("question").dataset.questionId = question.id
     panel.getElementById("answer").value = question.answer
-}
-function fillCloseQuestionPanel(panel, question) {
-    fillOpenQuestionPanel(panel, question)
 
     const incorrectAnswersPanel = panel.getElementById("incorrectAnswersPanel")
 
     const incorrectAnswers = JSON.parse(question.incorrectAnswers)
 
-    incorrectAnswers.forEach(incorrectAnswer => {
+    incorrectAnswers?.forEach(incorrectAnswer => {
         const clone = getIncorrectAnswerClone()
-        clone.querySelector(".incorrectAnswer").value = incorrectAnswer
+        clone.querySelector("#incorrectAnswer").value = incorrectAnswer
         incorrectAnswersPanel.appendChild(clone)
     })
+}
+
+
+
+
+function setInputsEvents() {
+    document.querySelectorAll(".js-input").forEach(jsInput => {
+        const input = jsInput.querySelector("input")
+        const clearButton = jsInput.querySelector("input[type='image']")
+    
+        checkInputState(input, clearButton)
+        
+        clearButton.addEventListener("click", () => {
+            input.value = ""
+            clearButton.style.display = "none"
+        })
+    
+        input.addEventListener("input", () => {
+            checkInputState(input, clearButton)
+        })
+    })
+}
+
+function checkInputState(input, clearButton) {
+    if (input.value === "") {
+        clearButton.style.display = "none"
+    } else {
+        clearButton.style.display = "inline-block"
+    }
 }

@@ -5,82 +5,169 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="img/favicon.png">
+    <link rel="stylesheet" href="css/style.css">
+
     <title>Room</title>
     
-    <template id="addQuestionTemplate">
-        <div class="questionPanel">
-            <select id="selectQuestionType">
-                <option value="openQuestion">Вопрос с вводом ответа</option>
-                <option value="closeQuestion">Вопрос с выбором ответа</option>
-            </select>
-            <button id="removeQuestionButton">Удалить вопрос</button>
-            <div id="questionSettings"></div>
-        </div>
-    </template>
+    <template id="questionTemplate">
+        <div class="default-block questionPanel">
+            <div class="content-block">
+                <div class="space-between-div">
+                    <span class="questionNumber">1</span>
+                    <input type="image" src="img/trash.png" 
+                        alt="Удалить вопрос" title="Удалить вопрос"
+                        class="icon-button" id="removeQuestionButton">
+                </div>
+                <div class="center-content-div main-params">
 
-    <template id="openQuestionTemplate">
-        <div>
-            <input id="question" placeholder="Вопрос"><br>
-            <input id="answer" placeholder="Ответ">
-        </div>
-    </template>
+                    <span>Вопрос</span>
+                    <div class="input-div space-between-div js-input">
+                        <input id="question">
+                        <input type="image" src="img/cross.png" 
+                            alt="Отчистить поле" title="Отчистить поле">
+                    </div>
 
-    <template id="closeQuestionTemplate">
-        <div class="closeQuestionPanel">
-            <input id="question" placeholder="Вопрос"><br>
-            <input id="answer" placeholder="Ответ"><br>
-            <div id="incorrectAnswersPanel"></div>
-            <button id="addIncorrectAnswerButton">Добавить неверный ответ</button>
+                    <span>Ответ</span>
+                    <div class="input-div space-between-div js-input">
+                        <input id="answer">
+                        <input type="image" src="img/cross.png" 
+                            alt="Отчистить поле" title="Отчистить поле">
+                    </div>
+
+                    <div id="incorrectAnswersPanel"></div>
+                    <button class="text-button" id="addIncorrectAnswerButton">+ Добавить неверный ответ</button>
+                </div>
+            </div>
         </div>
     </template>
 
     <template id="incorrectAnswerTemplate">
-        <div class="incorrectAnswerPanel">
-            <input class="incorrectAnswer" placeholder="Неверный ответ">
-            <button id="removeIncorrectAnswer">Удалить</button>
+        <div class="incorrectAnswerPanel center-content-div main-params">
+            <div class="group-div">
+                <span>Неверный ответ</span>
+                <input type="image" src="img/trash.png"
+                    alt="Удалить ответ" title="Удалить ответ"
+                    class="icon-button" id="removeIncorrectAnswer">
+            </div>
+            <div class="input-div space-between-div js-input">
+                <input id="incorrectAnswer">
+                <input type="image" src="img/cross.png" 
+                    alt="Отчистить поле" title="Отчистить поле">
+            </div>
         </div>
     </template>
 
 </head>
-<body onload="loadPage();">
-    <div>
-        <button id="homeButton">На главную</button>
-        
-        <div id="addTestPanel">
-            <div>
-                <span>Название</span>
-                <input id="testName">
-            </div>
-            <div>
-                <span>Описание</span>
-                <input id="testDescription">
-            </div>
-            <div>
-                <span>Макс. оценка</span>
-                <input id="testMaxMark">
-            </div>
-            <div>
-                <span>Количество попыток на прохождение</span>
-                <input id="amountOfAttampts" value="1">
-            </div>
-            <div id="timerSetupPanel">
-                <input type="checkbox" id="setTimerCheckbox"><span>Включить таймер</span>
-                <br>
-                <input id="minutes" placeholder="Минуты">
-                <input id="seconds" placeholder="Секунды">
-            </div>
-            <div>
-                <input type="checkbox" id="manualCheckCheckbox">
-                <span>Проверить вручную</span>
-            </div>
 
-            <div id="questionsPanel"></div>
 
-            <button id="addQuestionButton">Добавить вопрос</button>
+<body>
+
+    <div class="center-content-div">
+        <div class="top-panel space-between-div">
+            <div class="group-div">
+                <span>Количество вопросов:</span>
+                <span id="questionsNumber">0</span>
+            </div>
+            <div>
+                <button class="outlined-button" id="saveTestButton">
+                    <div>
+                        <span>Сохранить</span>
+                        <hr>
+                        <img src="img/save.png" alt="logout">
+                    </div>
+                </button>
+            </div>
         </div>
     </div>
 
-    <button id="saveTestButton">Сохранить тест</button>
+    <div class="top-panel-spacer"></div>
+
+    <div class="main-div">
+
+        <div class="default-block account-info">
+            <div class="group-div">
+                <img src="img/logo.png" alt="logo" width="38" height="38">
+                <span id="username"></span>
+            </div>
+            <button class="default-button" id="homeButton">
+                <div>
+                    <img src="img/home.png" alt="На главную">
+                    <hr>
+                    <span>На главную</span>
+                </div>
+            </button>
+        </div>
+
+        <div class="default-block test-params">
+            <div class="content-block center-content-div" id="addTestPanel">
+                <div class="main-params">
+                    <div class="center-content-div">
+                        <span>Название</span>
+                        <div class="input-div space-between-div js-input">
+                            <input id="testName" maxlength="60">
+                            <input type="image" src="img/cross.png" 
+                                alt="Отчистить поле" title="Отчистить поле">
+                        </div>
+                    </div>
+                    <div class="center-content-div">
+                        <span>Описание</span>
+                        <div class="input-div space-between-div js-input">
+                            <input id="testDescription" maxlength="100">
+                            <input type="image" src="img/cross.png" 
+                                alt="Отчистить поле" title="Отчистить поле">
+                        </div>
+                    </div>
+                </div>
+                <div class="horizontal-test-params space-between-div">
+                    <div class="center-content-div">
+                        <span>Максимальная<br>оценка</span>
+                        <div class="small-input-div space-between-div js-input">
+                            <input id="testMaxMark" maxlength="4">
+                            <input type="image" src="img/cross.png" 
+                                alt="Отчистить поле" title="Отчистить поле">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="center-content-div">
+                        <span>Количество<br>попыток</span>
+                        <div class="small-input-div space-between-div js-input">
+                            <input id="amountOfAttampts" value="1" maxlength="3">
+                            <input type="image" src="img/cross.png" 
+                                alt="Отчистить поле" title="Отчистить поле">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="center-content-div" id="timerSetupPanel">
+                        <div>
+                            <input type="checkbox" id="setTimerCheckbox">
+                            <label></label>
+                            <span>Таймер</span>
+                        </div>
+                        <div class="small-input-div space-between-div js-input">
+                            <input id="minutes" placeholder="Минуты">
+                            <input type="image" src="img/cross.png" 
+                                alt="Отчистить поле" title="Отчистить поле">
+                        </div>
+                        <div class="small-input-div space-between-div js-input">
+                            <input id="seconds" placeholder="Секунды">
+                            <input type="image" src="img/cross.png" 
+                                alt="Отчистить поле" title="Отчистить поле">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="center-content-div">
+                        <span>Проверить<br>вручную</span>
+                        <input type="checkbox" id="manualCheckCheckbox">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="center-content-div">
+        <button class="text-button" id="addQuestionButton">+ Добавить вопрос</button>
+    </div>
 
     <script src="js/default.js"></script>
     <script src="js/testConfiguration.js"></script>

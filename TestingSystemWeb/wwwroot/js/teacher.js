@@ -2,7 +2,6 @@ const testsPanel = document.querySelector("#testsPanel")
 
 
 addEventListener("load", async () => {
-    document.querySelector("#username").innerText = window.localStorage.getItem("username")
     await getAllTests()
 })
 

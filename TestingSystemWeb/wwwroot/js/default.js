@@ -1,3 +1,7 @@
+addEventListener("load", async () => {
+    document.querySelector("#username").innerText = window.localStorage.getItem("username")
+})
+
 document.querySelector("#logoutButton")?.addEventListener("click", async () => {
     await fetch("logout").then(() => {
         window.location.href = "/"
