@@ -34,11 +34,85 @@
     </template>
 </head>
 <body>
-    <div>
-        <button id="homeButton">На главную</button>
-    </div>
 
-    <span id="testName"></span>
+    <div class="main-div">
+        <div class="default-block account-info">
+            <div class="group-div">
+                <img src="img/logo.png" alt="logo" width="38" height="38">
+                <span id="username"></span>
+            </div>
+            <button class="default-button" id="homeButton">
+                <div>
+                    <img src="img/home.png" alt="На главную">
+                    <hr>
+                    <span>На главную</span>
+                </div>
+            </button>
+        </div>
+
+        <div class="default-block">
+            <div class="content-block center-content-div">
+                <div class="group-div search-panel">
+                    <div class="default-select">
+                        <select id="searchUsersSelect">
+                            <option selected value="bySurname">По фамилии</option>
+                            <option value="byGroup">По группе</option>
+                        </select>
+                    </div>
+                    <div class="input-div space-between-div js-input">
+                        <input id="searchInput" placeholder="Поиск">
+                        <input type="image" src="img/cross.png" id="clearButton"
+                            alt="Отчистить поле" title="Отчистить поле">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="default-block">
+            <div class="content-block">
+
+                <div class="center-content-div">
+                    <div class="group-div radio-select">
+                        <label><input type="radio" name="type">Не добавленные</label>
+                        <hr class="vert-line">
+                        <label><input type="radio" name="type">Добавленные</label>
+                    </div>
+                </div>
+    
+                <div id="studentsTables">
+                    <div id="notAddedStudents">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Фамилия</th>
+                                    <th>Имя</th>
+                                    <th>Отчество</th>
+                                    <th>Группа</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                
+                    <div id="addedStudents">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Фамилия</th>
+                                    <th>Имя</th>
+                                    <th>Отчество</th>
+                                    <th>Группа</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
 
     <div>
         <span>Группа </span>
@@ -47,45 +121,6 @@
         <button id="removeGroup">Удалить</button>
     </div>
 
-    <div>
-        <span>Поиск</span>
-        <select id="searchUsersSelect">
-            <option selected value="bySurname">По фамилии</option>
-            <option value="byGroup">По группе</option>
-        </select>
-        <input id="searchInput">
-        <button id="resetButton">Сброс</button>
-    </div>
-    
-    <div id="studentsTables">
-        <div id="notAddedStudents">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Фамилия</th>
-                        <th>Имя</th>
-                        <th>Отчество</th>
-                        <th>Группа</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </div>
-    
-        <div id="addedStudents">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Фамилия</th>
-                        <th>Имя</th>
-                        <th>Отчество</th>
-                        <th>Группа</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </div>
-    </div>
 
     <script src="js/default.js"></script>
     <script src="js/addStudents.js"></script>

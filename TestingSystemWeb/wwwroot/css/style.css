@@ -142,10 +142,7 @@ span {
 }
 
 .input-div {
-    width: 60vw;
     height: 45px;
-    margin-top: 10px;
-    margin-bottom: 25px;
     padding: 10px;
 }
 
@@ -199,6 +196,25 @@ input[type="checkbox"] {
 }
 
 
+.default-select {
+    background: #EEEEEE;
+    border: 1px solid #C7C7C7;
+    border-radius: 6px 0px 0px 6px;
+}
+
+.default-select select {
+    border: none;
+    background-color: transparent;
+    padding: 10px;
+
+    font-family: 'UbuntuRegular';
+    font-size: 20px;
+    color: #102A49;
+}
+
+
+
+
 .default-block {
     width: 80%;
     margin: 20px;
@@ -223,6 +239,7 @@ input[type="checkbox"] {
 
 .group-div {
     display: flex;
+    align-items: center;
 }
 
 .content-block {
@@ -335,6 +352,12 @@ input[type="checkbox"] {
 }
 
 
+.test-params .input-div, .questionPanel .input-div {
+    margin-top: 10px;
+    margin-bottom: 25px;
+    width: 60vw;
+}
+
 .main-params {
     font-family: 'UbuntuBold';
     font-size: 24px;
@@ -402,6 +425,45 @@ input[type="checkbox"] {
 #addQuestionButton {
     margin-top: 35px;
     margin-bottom: 100px;
+}
+
+
+.search-panel {
+    width: 60vw;
+}
+
+.search-panel .input-div {
+    width: 100%;
+    margin-left: 5px;
+    background: #E9E9E9;
+    border: 1px solid #C7C7C7;
+    border-radius: 0px 6px 6px 0px;
+}
+
+.search-panel ::placeholder {
+    color: #636F7C;
+    font-size: 20px;
+}
+
+
+.radio-select {
+    font-family: 'UbuntuRegular';
+    font-size: 20px;
+    color: #5C5C5C;
+}
+
+.radio-select input {
+    appearance: none;
+}
+
+.radio-select input:checked {
+    width: 100px;
+}
+
+.radio-select .vert-line {
+    width: 0px;
+    height: 35px;
+    border: 1px solid #102A49;
 }
 
 

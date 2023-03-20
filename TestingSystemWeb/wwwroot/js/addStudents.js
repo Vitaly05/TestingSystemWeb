@@ -4,7 +4,6 @@ const addedStudentsTBody = document.getElementById("addedStudents").querySelecto
 const notAddedStudentsTBody = document.getElementById("notAddedStudents").querySelector("tbody")
 
 
-document.getElementById("testName").innerText = currentTest.name
 
 addEventListener("load", async () => {
     await getStudents()
@@ -47,12 +46,9 @@ function setResultsFilter(searchMethod) {
 
 searchStudentsInput.addEventListener("input", () => {
     const searchMethod = document.querySelector("#searchUsersSelect").value
-
     setResultsFilter(searchMethod)
 })
-
-document.getElementById("resetButton").addEventListener("click", () => {
-    searchStudentsInput.value = ""
+const clearButton = document.querySelector("#clearButton").addEventListener("click", () => {
     setResultsFilter()
 })
 
