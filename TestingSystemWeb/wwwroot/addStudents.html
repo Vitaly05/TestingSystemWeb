@@ -9,24 +9,50 @@
 
     <title>Room</title>
 
-    <template id="notAddedStudentsTableRowTemplate">
-        <tr>
-            <td id="surname"></td>
-            <td id="name"></td>
-            <td id="patronymic"></td>
-            <td id="group"></td>
-            <td><button id="addButton">Добавить</button></td>
-        </tr>
+    <template id="notAddedStudentTemplate">
+        <div class="student">
+            <div class="group-div user-full-name">
+                <div id="surname"></div>
+                <div id="name"></div>
+                <div id="patronymic"></div>
+            </div>
+            <div class="space-between-div">
+                <div class="space-between-div group">
+                    <div>Группа: </div>
+                    <div id="group"></div>
+                </div>
+                <button class="default-button" id="addButton">
+                    <div>
+                        <img src="img/user-add.png" alt="Добавить">
+                        <hr>
+                        <span>Добавить</span>
+                    </div>
+                </button>
+            </div>
+        </div>
     </template>
 
-    <template id="addedStudentsTableRowTemplate">
-        <tr>
-            <td id="surname"></td>
-            <td id="name"></td>
-            <td id="patronymic"></td>
-            <td id="group"></td>
-            <td><button id="removeButton">Удалить</button></td>
-        </tr>
+    <template id="addedStudentTemplate">
+        <div class="student">
+            <div class="group-div user-full-name">
+                <div id="surname"></div>
+                <div id="name"></div>
+                <div id="patronymic"></div>
+            </div>
+            <div class="space-between-div">
+                <div class="space-between-div group">
+                    <div>Группа: </div>
+                    <div id="group"></div>
+                </div>
+                <button class="default-button" id="removeButton">
+                    <div>
+                        <img src="img/user-remove.png" alt="Удалить">
+                        <hr>
+                        <span>Удалить</span>
+                    </div>
+                </button>
+            </div>
+        </div>
     </template>
 
     <template id="groupOptionTemplate">
@@ -34,7 +60,6 @@
     </template>
 </head>
 <body>
-
     <div class="main-div">
         <div class="default-block account-info">
             <div class="group-div">
@@ -72,53 +97,49 @@
             <div class="content-block">
 
                 <div class="center-content-div">
-                    <div class="group-div radio-select">
-                        <label><input type="radio" name="type">Не добавленные</label>
+                    <div class="group-div type-select">
+                        <div class="radio-select">
+                            <input type="radio" name="type" 
+                                checked id="notAddedStudents"><label 
+                                    for="notAddedStudents" 
+                                    class="radio-label">Не добавленные</label>
+                        </div>
                         <hr class="vert-line">
-                        <label><input type="radio" name="type">Добавленные</label>
+                        <div class="radio-select">
+                            <input type="radio" name="type" 
+                                id="addedStudents"><label 
+                                    for="addedStudents" 
+                                    class="radio-label">Добавленные</label>
+                        </div>
                     </div>
                 </div>
-    
-                <div id="studentsTables">
-                    <div id="notAddedStudents">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Фамилия</th>
-                                    <th>Имя</th>
-                                    <th>Отчество</th>
-                                    <th>Группа</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
+
+                <div class="center-content-div">
+                    <div class="group-div sort-div">
+                        <div>Фамилия</div>
+                        <input type="image" src="img/sort_1-2.svg"
+                            class="icon-button" id="sortInAscending">
+                        <input type="image" src="img/sort_2.svg"
+                            class="icon-button" id="sortInDescending">
                     </div>
+                </div>
                 
-                    <div id="addedStudents">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Фамилия</th>
-                                    <th>Имя</th>
-                                    <th>Отчество</th>
-                                    <th>Группа</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
+                <div class="list-div students-list" id="notAddedStudentsPanel"></div>
+                <div class="list-div students-list" id="addedStudentsPanel"></div>
+
+                <div class="center-content-div group-actions-div">
+                    <div class="group-div">
+                        <div class="default-select">
+                            <select id="groupsSelect"></select>
+                        </div>
+                        <button class="center-button" id="addGroup">Добавить</button>
+                        <button id="removeGroup">Удалить</button>
                     </div>
                 </div>
 
             </div>
         </div>
 
-    </div>
-
-    <div>
-        <span>Группа </span>
-        <select id="groupsSelect"></select>
-        <button id="addGroup">Добавить</button>
-        <button id="removeGroup">Удалить</button>
     </div>
 
 

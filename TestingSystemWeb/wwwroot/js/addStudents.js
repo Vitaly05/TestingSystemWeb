@@ -1,18 +1,21 @@
 const currentTest = JSON.parse(window.sessionStorage.getItem("test"))
 
-const addedStudentsTBody = document.getElementById("addedStudents").querySelector("tbody")
-const notAddedStudentsTBody = document.getElementById("notAddedStudents").querySelector("tbody")
+const addedStudentsPanel = document.getElementById("addedStudentsPanel")
+const notAddedStudentsPanel = document.getElementById("notAddedStudentsPanel")
 
 
 
 addEventListener("load", async () => {
     await getStudents()
     await getAllGroups()
+
+    addedStudentsPanel.style.display = "none"
 })
 
 
 
 let allStudents
+let sortMethod
 const searchStudentsInput = document.querySelector("#searchInput")
 
 let studentsFilter = (student) => true
@@ -41,7 +44,7 @@ function setResultsFilter(searchMethod) {
             studentsFilter = (student) => true
     }
 
-    displayStudents(allStudents)
+    displayStudents()
 }
 
 searchStudentsInput.addEventListener("input", () => {
@@ -54,6 +57,38 @@ const clearButton = document.querySelector("#clearButton").addEventListener("cli
 
 document.querySelector("#searchUsersSelect").addEventListener("change", e => {
     setResultsFilter(e.target.value)
+})
+
+
+document.querySelectorAll(".radio-select").forEach(select => {
+    select.addEventListener("change", e => {
+        if (e.target.id === "notAddedStudents") {
+            addedStudentsPanel.style.display = "none"
+            notAddedStudentsPanel.style.display = "flex"
+        } else if (e.target.id === "addedStudents") {
+            addedStudentsPanel.style.display = "flex"
+            notAddedStudentsPanel.style.display = "none"
+        }
+    })
+})
+
+
+const sortInAscendingButton = document.querySelector("#sortInAscending")
+const sortInDescendingButton = document.querySelector("#sortInDescending")
+
+sortInAscendingButton.addEventListener("click", () => {
+    sortInAscendingButton.src = "img/sort_1-2.svg"
+    sortInDescendingButton.src = "img/sort_2.svg"
+
+    sortMethod = "sortInAscending"
+    displayStudents()
+})
+sortInDescendingButton.addEventListener("click", () => {
+    sortInDescendingButton.src = "img/sort_2-2.svg"
+    sortInAscendingButton.src = "img/sort_1.svg"
+
+    sortMethod = "sortInDescending"
+    displayStudents()
 })
 
 
@@ -122,15 +157,56 @@ function displayGroups(groups) {
     })
 }
 
-function displayStudents(allStudents) {
-    addedStudentsTBody.innerHTML = ""
-    notAddedStudentsTBody.innerHTML = ""
+function displayStudents() {
+    addedStudentsPanel.innerHTML = ""
+    notAddedStudentsPanel.innerHTML = ""
 
+    if (sortMethod === "sortInAscending") {
+        allStudents.notAddedStudents.sort(sortInAscending)
+        allStudents.addedStudents.sort(sortInAscending)
+    } else if (sortMethod === "sortInDescending") {
+        allStudents.notAddedStudents.sort(sortInDescending)
+        allStudents.addedStudents.sort(sortInDescending)
+    }
+
+    displayNotAddedStudents(allStudents)
+    displayAddedStudents(allStudents)
+}
+
+function sortInAscending(a, b) {
+    const surnameA = a.surname.toLowerCase()
+    const surnameB = b.surname.toLowerCase()
+
+    if (surnameA < surnameB) {
+        return -1
+    }
+    if (surnameA > surnameB) {
+        return 1
+    }
+    return 0
+}
+function sortInDescending(a, b) {
+    const surnameA = a.surname.toLowerCase()
+    const surnameB = b.surname.toLowerCase()
+
+    if (surnameA < surnameB) {
+        return 1
+    }
+    if (surnameA > surnameB) {
+        return -1
+    }
+    return 0
+}
+
+function displayNotAddedStudents(allStudents) {
     allStudents.notAddedStudents.forEach(student => {
         if (studentsFilter(student)) {
             displayNotAddedStudent(student)
         }
     })
+}
+function displayAddedStudents(allStudents) {
+
     allStudents.addedStudents.forEach(student => {
         if (studentsFilter(student)) {
             displayAddedStudent(student)
@@ -139,7 +215,7 @@ function displayStudents(allStudents) {
 }
 
 function displayNotAddedStudent(student) {
-    const clone = document.getElementById("notAddedStudentsTableRowTemplate")
+    const clone = document.getElementById("notAddedStudentTemplate")
         .content.cloneNode(true)
 
     setStudentInfo(clone, student)
@@ -148,10 +224,10 @@ function displayNotAddedStudent(student) {
         await addStudent(student)
     })
 
-    notAddedStudentsTBody.appendChild(clone)
+    notAddedStudentsPanel.appendChild(clone)
 }
 function displayAddedStudent(student) {
-    const clone = document.getElementById("addedStudentsTableRowTemplate")
+    const clone = document.getElementById("addedStudentTemplate")
         .content.cloneNode(true)
 
     setStudentInfo(clone, student)
@@ -160,7 +236,7 @@ function displayAddedStudent(student) {
         await removeStudent(student)
     })
 
-    addedStudentsTBody.appendChild(clone)
+    addedStudentsPanel.appendChild(clone)
 }
 
 function setStudentInfo(clone, student) {
