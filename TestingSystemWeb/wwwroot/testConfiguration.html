@@ -118,7 +118,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="horizontal-test-params space-between-div">
+                <div class="horizontal-params space-between-div">
                     <div class="center-content-div">
                         <span>Максимальная<br>оценка</span>
                         <div class="small-input-div space-between-div js-input">
@@ -139,9 +139,10 @@
                     <hr>
                     <div class="center-content-div" id="timerSetupPanel">
                         <div>
-                            <input type="checkbox" id="setTimerCheckbox">
-                            <label></label>
-                            <span>Таймер</span>
+                            <label>
+                                <input type="checkbox" id="setTimerCheckbox">
+                                <span>Таймер</span>
+                            </label>
                         </div>
                         <div class="small-input-div space-between-div js-input">
                             <input id="minutes" placeholder="Минуты">
@@ -156,8 +157,12 @@
                     </div>
                     <hr>
                     <div class="center-content-div">
-                        <span>Проверить<br>вручную</span>
-                        <input type="checkbox" id="manualCheckCheckbox">
+                        <label>
+                            <div class="center-content-div manual-check">
+                                <span>Проверить<br>вручную</span>
+                                <input type="checkbox" id="manualCheckCheckbox">
+                            </div>
+                        </label>
                     </div>
                 </div>
             </div>

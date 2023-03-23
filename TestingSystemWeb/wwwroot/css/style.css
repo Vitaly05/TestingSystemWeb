@@ -298,14 +298,17 @@ input[type="checkbox"] {
 
 .list-div {
     min-height: 100px;
-    max-height: 70vh;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
 }
 
+.student-results .list-div {
+    max-height: 60vh;
+}
 
-.test, .student {
+
+.list-item {
     border-width: 1px 0px;
     border-style: solid;
     border-color: #A6A6A6;
@@ -315,11 +318,17 @@ input[type="checkbox"] {
 
     display: flex;
     justify-content: space-between;
+    align-items: center;
 
     transition: background 0.5s ease 0s; 
 }
-.test:hover, .student:hover {
+.list-item:hover {
     background: #EEF6FF;
+}
+
+
+#testsPanel {
+    max-height: 75vh;
 }
 
 .test-name {
@@ -365,26 +374,33 @@ input[type="checkbox"] {
     color: #5C5C5C;
 }
 
-.horizontal-test-params {
+.test-params .horizontal-params {
     width: 65vw;
 }
 
-.horizontal-test-params hr {
+.horizontal-params hr {
     width: 0px;
-    height: 130px;
     border: 1px solid #102A49;
 }
 
-.horizontal-test-params span {
+.test-params .horizontal-params hr {
+    height: 130px;
+}
+
+.horizontal-params span {
     font-family: 'UbuntuRegular';
     font-size: 20px;
     color: #868686;
 }
 
-.horizontal-test-params .center-content-div {
+.horizontal-params .center-content-div {
     width: 25%;
     margin: 15px 0;
     justify-content: space-evenly;
+}
+
+.manual-check input {
+    margin-top: 15px;
 }
 
 
@@ -481,7 +497,7 @@ input[type="checkbox"] {
 
 .students-list {
     font-family: 'UbuntuRegular';
-    height: 50vh;
+    max-height: 40vh;
 }
 
 .student {
@@ -489,11 +505,12 @@ input[type="checkbox"] {
 }
 
 .user-full-name {
-    gap: 10px;
-    flex-wrap: wrap;
-
+    font-family: 'UbuntuRegular';
     font-size: 24px;
     color: #102A49;
+
+    gap: 10px;
+    flex-wrap: wrap;    
 }
 
 .student .space-between-div {
@@ -547,6 +564,40 @@ input[type="checkbox"] {
     margin-bottom: 30px;
 }
 
+
+.unchecked-filter {
+    margin-left: 50px;
+}
+
+.unchecked-filter input {
+    margin-right: 8px;
+}
+
+.result {
+    padding: 20px 30px;
+}
+
+.result .user-full-name {
+    width: 300px;
+}
+
+.result .horizontal-params {
+    font-family: 'UbuntuRegular';
+    font-size: 20px;
+    color: #868686;
+}
+
+.result .horizontal-params .center-content-div {
+    width: 150px;
+}
+
+.result .horizontal-params div {
+    text-align: center;
+}
+
+.result .horizontal-params hr {
+    height: 100px;
+}
 
 
 

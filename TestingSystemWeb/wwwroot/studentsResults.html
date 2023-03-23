@@ -9,52 +9,98 @@
 
     <title>Room</title>
 
-    <template id="studentResultRowTemplate">
-        <tr>
-            <td id="surname"></td>
-            <td id="name"></td>
-            <td id="patronymic"></td>
-            <td id="group"></td>
-            <td id="attempt"></td>
-            <td id="mark"></td>
-            <td><button id="checkButton">Проверить</button></td>
-        </tr>
+    <template id="studentResultTemplate">
+        <div class="list-item result space-between-div">
+            <div class="user-full-name">
+                <div id="surname"></div>
+                <div id="name"></div>
+                <div id="patronymic"></div>
+            </div>
+            <div class="horizontal-params space-between-div">
+                <div class="center-content-div">
+                    <div>Группа</div>
+                    <div id="group"></div>
+                </div>
+                <hr>
+                <div class="center-content-div">
+                    <div>Попытка</div>
+                    <div id="attempt"></div>
+                </div>
+                <hr>
+                <div class="center-content-div">
+                    <div>Оценка</div>
+                    <div id="mark"></div>
+                </div>
+            </div>
+            <button class="default-button" id="checkButton">
+                <div>
+                    <img src="img/check.svg" alt="Проверить">
+                    <hr>
+                    <span>Проверить</span>
+                </div>
+            </button>
+        </div>
     </template>
 </head>
 <body>
-    <div>
-        <button id="homeButton">На главную</button>
+    <div class="main-div student-results">
+
+        <div class="default-block account-info">
+            <div class="group-div">
+                <img src="img/logo.png" alt="logo" width="38" height="38">
+                <span id="username"></span>
+            </div>
+            <button class="default-button" id="homeButton">
+                <div>
+                    <img src="img/home.png" alt="На главную">
+                    <hr>
+                    <span>На главную</span>
+                </div>
+            </button>
+        </div>
+
+        <div class="default-block">
+            <div class="content-block center-content-div">
+                <div class="group-div search-panel">
+                    <div class="default-select">
+                        <select id="searchUsersSelect">
+                            <option selected value="bySurname">По фамилии</option>
+                            <option value="byGroup">По группе</option>
+                        </select>
+                    </div>
+                    <div class="input-div space-between-div js-input">
+                        <input id="searchInput" placeholder="Поиск">
+                        <input type="image" src="img/cross.png" id="clearButton"
+                            alt="Отчистить поле" title="Отчистить поле">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="default-block">
+            <div class="content-block">
+                <div class="center-content-div">
+                    <div class="space-between-div sort-div">
+                        <div class="group-div">
+                            <div>Фамилия</div>
+                            <input type="image" src="img/sort_1-2.svg"
+                                class="icon-button" id="sortInAscending">
+                            <input type="image" src="img/sort_2.svg"
+                                class="icon-button" id="sortInDescending">
+                        </div>
+                        <div class="group-div unchecked-filter">
+                            <label><input type="checkbox" id="onlyUnchecked">
+                            <span>Только непроверенные</span></label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="list-div" id="studentsResultsPanel"></div>
+            </div>
+        </div>
+
     </div>
 
-    <div>
-        <span>Поиск</span>
-        <select id="searchUsersSelect">
-            <option selected value="bySurname">По фамилии</option>
-            <option value="byGroup">По группе</option>
-        </select>
-        <input id="searchInput">
-        <button id="resetButton">Сброс</button>
-        <br>
-        <input type="checkbox" id="onlyUnchecked">
-        <span>Только непроверенные</span>
-    </div>
-
-    <span id="testNameText"></span>
-    <div>
-        <table id="studentsResultsTable">
-            <thead>
-                <tr>
-                    <th>Фамилия</th>
-                    <th>Имя</th>
-                    <th>Отчество</th>
-                    <th>Группа</th>
-                    <th>Попытка</th>
-                    <th>Оценка</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-    </div>
 
     <script src="js/default.js"></script>
     <script src="js/studentsResults.js"></script>

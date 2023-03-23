@@ -15,12 +15,12 @@ addEventListener("load", async () => {
 
 
 let allStudents
-let sortMethod
+let sortMethod = "sortInAscending"
 const searchStudentsInput = document.querySelector("#searchInput")
 
 let studentsFilter = (student) => true
 
-function setResultsFilter(searchMethod) {
+function setStudentsFilter(searchMethod) {
     searchText = searchStudentsInput.value.toLowerCase()
 
     switch (searchMethod) {
@@ -49,14 +49,14 @@ function setResultsFilter(searchMethod) {
 
 searchStudentsInput.addEventListener("input", () => {
     const searchMethod = document.querySelector("#searchUsersSelect").value
-    setResultsFilter(searchMethod)
+    setStudentsFilter(searchMethod)
 })
 const clearButton = document.querySelector("#clearButton").addEventListener("click", () => {
-    setResultsFilter()
+    setStudentsFilter()
 })
 
 document.querySelector("#searchUsersSelect").addEventListener("change", e => {
-    setResultsFilter(e.target.value)
+    setStudentsFilter(e.target.value)
 })
 
 
