@@ -1,12 +1,17 @@
 const attemptData = JSON.parse(sessionStorage.getItem("attemptData"))
+let answers
+let answersAmount
 
 
 addEventListener("load", async () => {
-    const answers = await getAnswers(attemptData)
+    answers = await getAnswers(attemptData)
+    answersAmount = answers.length
 
     answers.forEach(answer => {
         displayAnswer(answer)
     })
+    
+    calculateNotCheckedAnswersAmount()
 })
 
 
@@ -40,6 +45,7 @@ function displayAnswer(answer) {
     const clone = document.querySelector("#questionTemplate")
         .content.cloneNode(true)
     
+    clone.querySelector("#questionNumber").innerText = `${answers.indexOf(answer) + 1}/${answersAmount}`
     clone.querySelector("#question").innerText = answer.question.questionText
 
     const hasAnswer = !(answer?.answerText === null || answer.answerText.length == 0)
@@ -49,20 +55,29 @@ function displayAnswer(answer) {
     const answerPanel = clone.querySelector("#answerPanel")
 
     questionPanel.dataset.id = answer.id
+    questionPanel.dataset.isCorrect = answer.isCorrect
 
     if (answer.isCorrect !== null) {
         if (answer.isCorrect) {
-            answerPanel.setAttribute("class", "correctAnswer")
+            answerPanel.classList.add("correctAnswer")
+            answerPanel.classList.remove("uncorrectAnswer")
         } else {
-            answerPanel.setAttribute("class", "uncorrectAnswer")
+            answerPanel.classList.add("uncorrectAnswer")
+            answerPanel.classList.remove("correctAnswer")
         }
     }
 
     clone.querySelector("#correctButton").addEventListener("click", () => {
-        answerPanel.setAttribute("class", "correctAnswer")
+        answerPanel.classList.add("correctAnswer")
+        answerPanel.classList.remove("uncorrectAnswer")
+        questionPanel.dataset.isCorrect = "true"
+        calculateNotCheckedAnswersAmount()
     })
     clone.querySelector("#uncorrectButton").addEventListener("click", () => {
-        answerPanel.setAttribute("class", "uncorrectAnswer")
+        answerPanel.classList.add("uncorrectAnswer")
+        answerPanel.classList.remove("correctAnswer")
+        questionPanel.dataset.isCorrect = "false"
+        calculateNotCheckedAnswersAmount()
     })
 
     document.querySelector("#checkAnswersPanel").appendChild(clone)
@@ -74,7 +89,7 @@ function getAnswersData() {
     document.querySelectorAll(".questionPanel").forEach(panel => {
         let isCorrect
 
-        if (panel.querySelector("#answerPanel").getAttribute("class") == "correctAnswer") {
+        if (panel.querySelector("#answerPanel").classList.contains("correctAnswer")) {
             isCorrect = true
         } else {
             isCorrect = false
@@ -87,4 +102,16 @@ function getAnswersData() {
     })
 
     return answers
+}
+
+function calculateNotCheckedAnswersAmount() {
+    let notCheckedAnswersAmount = 0
+
+    document.querySelectorAll(".questionPanel").forEach(panel => {
+        if (panel.dataset.isCorrect === "null") {
+            ++notCheckedAnswersAmount
+        }
+    })
+
+    document.querySelector("#notCheckedAnswersAmount").innerText = notCheckedAnswersAmount
 }

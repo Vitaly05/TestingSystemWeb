@@ -10,24 +10,67 @@
     <title>Room</title>
 
     <template id="questionTemplate">
-        <div class="questionPanel">
-            <span>Вопрос: </span>
-            <span id="question"></span>
-            <div id="answerPanel">
-                <span>Ответ студента: </span>
-                <span id="studentAnswer"></span>
-            </div>
-            <div>
-                <button id="correctButton">Правильно</button>
-                <button id="uncorrectButton">Неправильно</button>
+        <div class="default-block questionPanel check-answer-panel">
+            <div class="content-block center-content-div">
+                <div class="space-between-div question-number">
+                    <span id="questionNumber"></span>
+                </div>
+                <span id="question"></span>
+                <div class="studentAnswerPanel center-content-div" id="answerPanel">
+                    <span id="studentAnswer"></span>
+                </div>
+                <div class="space-between-div check-answers-buttons">
+                    <input type="image" src="img/correct_answer.svg"
+                        alt="Верный ответ" title="Верный ответ"
+                        class="icon-button" id="correctButton">
+                    <input type="image" src="img/incorrect_answer.svg"
+                        alt="Неверный ответ" title="Неверный ответ"
+                        class="icon-button" id="uncorrectButton">
+                </div>
             </div>
         </div>
     </template>
 </head>
 <body>
-    <button id="homeButton">На главную</button>
+    <div class="center-content-div">
+        <div class="top-panel space-between-div">
+            <div class="group-div">
+                <span>Не проверено:</span>
+                <span id="notCheckedAnswersAmount"></span>
+            </div>
+            <div>
+                <button class="outlined-button" id="saveButton">
+                    <div>
+                        <span>Сохранить</span>
+                        <hr>
+                        <img src="img/save.svg" alt="logout">
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
 
-    <div id="checkAnswersPanel"></div>
+    <div class="top-panel-spacer"></div>
+
+
+    <div class="main-div">
+        <div class="default-block account-info">
+            <div class="group-div">
+                <img src="img/logo.svg" alt="logo" width="38" height="38">
+                <span id="username"></span>
+            </div>
+            <button class="default-button" id="homeButton">
+                <div>
+                    <img src="img/home.svg" alt="На главную">
+                    <hr>
+                    <span>На главную</span>
+                </div>
+            </button>
+        </div>
+
+        <div id="checkAnswersPanel"></div>
+    </div>
+    
 
     <button id="saveButton">Сохранить</button>
 

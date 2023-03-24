@@ -601,10 +601,47 @@ input[type="checkbox"] {
 
 
 
+.questionPanel {
+    font-family: 'UbuntuBold';
+    font-size: 24px;
+    color: #424242;
+}
+
+.question-number {
+    width: 100%;
+}
+
+.check-answers-buttons {
+    width: 200px;
+}
+
+.studentAnswerPanel {
+    margin: 40px 0;
+    width: 60vw;
+    padding: 50px;
+    border-radius: 10px;
+
+    background-color: #E4F1FF;
+}
+
+.check-answer-panel .icon-button {
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), inset 0px 1px 4px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    padding: 10px;
+    height: 50px;
+    width: 50px;
+}
+
+.top-panel #notCheckedAnswersAmount {
+    margin-left: 5px;
+}
+
+
 .correctAnswer {
-    background-color: green;
+    background-color: #DCFEA4;
 }
 
 .uncorrectAnswer {
-    background-color: red;
+    background-color: #FFDFDF;
 }
