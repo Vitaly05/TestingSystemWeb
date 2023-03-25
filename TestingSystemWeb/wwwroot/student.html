@@ -9,34 +9,67 @@
 
     <title>Room</title>
 
-    <template id="testRowTemplate">
-        <tr>
-            <td id="testName"></td>
-            <td id="testDescription"></td>
-            <td id="testMaxMark"></td>
-            <td id="passedOnce"></td>
-            <td id="maxMark"></td>
-            <td><button class="getResultsButton">Результаты</button></td>
-            <td><button class="startTestButton">Пройти тест</button></td>
-        </tr>
+    <template id="testTemplate">
+        <div class="list-item test">
+            <div class="test-main-info">
+                <div id="testName"></div>
+                <div id="testMaxMark"></div>
+                <div id="testDescription"></div>
+            </div>
+            <div class="horizontal-params space-between-div additional-info">
+                <div class="center-content-div">
+                    <span>Пройдено<br>раз:</span>
+                    <span id="passedOnce"></span>
+                </div>
+                <hr>
+                <div class="center-content-div">
+                    <span>Лучший<br>балл</span>
+                    <span id="maxMark"></span>
+                </div>
+            </div>
+            <div class="center-content-div buttons">
+                <button class="default-button startTestButton">
+                    <div>
+                        <img src="img/start.svg" alt="Пройти тест">
+                        <hr>
+                        <span>Пройти тест</span>
+                    </div>
+                </button> 
+                <button class="default-button getResultsButton">
+                    <div>
+                        <img src="img/s_result.svg" alt="Результаты">
+                        <hr>
+                        <span>Результаты</span>
+                    </div>
+                </button>  
+            </div>
+        </div>
     </template>
 </head>
-<body onload="loadPage();">
-    <div>
-        <button id="logoutButton">Выйти</button>
+<body>
+    <div class="main-div">
+        <div class="default-block account-info">
+            <div class="group-div">
+                <img src="img/logo.svg" alt="logo" width="38" height="38">
+                <span id="username"></span>
+            </div>
+            <button class="default-button" id="logoutButton">
+                <div>
+                    <img src="img/logout.svg" alt="Выйти">
+                    <hr>
+                    <span>Выйти</span>
+                </div>
+            </button>
+        </div>
+
+        <div class="default-block">
+            <div class="content-block">
+                <div class="list-div tests"></div>
+            </div>
+        </div>
+
     </div>
-    <table id="testsTable">
-        <thead>
-            <tr>
-                <th>Название теста</th>
-                <th>Описание теста</th>
-                <th>Макс. оценка</th>
-                <th>Пройдено раз</th>
-                <th>Максимальный балл</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+
 
     <script src="js/default.js"></script>
     <script src="js/student.js"></script>

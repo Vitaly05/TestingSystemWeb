@@ -1,10 +1,8 @@
-
-
-
-async function loadPage() {
+addEventListener("load", async () => {
     const testsInfos = await getTestsInfos()
     displayTests(testsInfos)
-}
+})
+
 
 async function getTestsInfos() {
     return await fetch("tests/forMe").then(async response => {
@@ -21,13 +19,13 @@ function displayTests(testsInfos) {
     })
 }
 function displayTest(testInfo) {
-    const testRowClone = getTestTemplateClone(testInfo)
-    appendTest(testRowClone)
+    const testClone = getTestTemplateClone(testInfo)
+    appendTest(testClone)
 }
 
 function getTestTemplateClone(testInfo) {
-    const testRowTemplate = document.getElementById("testRowTemplate")
-    const clone = testRowTemplate.content.cloneNode(true)
+    const testTemplate = document.getElementById("testTemplate")
+    const clone = testTemplate.content.cloneNode(true)
 
     clone.getElementById("testName").innerText = testInfo.test.name
     clone.getElementById("testDescription").innerText = testInfo.test.description
@@ -48,9 +46,8 @@ function getTestTemplateClone(testInfo) {
     return clone
 }
 
-function appendTest(testRowClone) {
-    document.getElementById("testsTable").querySelector("tbody")
-        .appendChild(testRowClone)
+function appendTest(testClone) {
+    document.querySelector(".tests").appendChild(testClone)
 }
 
 

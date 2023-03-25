@@ -645,3 +645,67 @@ input[type="checkbox"] {
 .uncorrectAnswer {
     background-color: #FFDFDF;
 }
+
+
+
+.test {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+}
+
+#passedOnce {
+    width: 100%;
+}
+
+.test .buttons {
+    gap: 15px;
+}
+
+.test .additional-info {
+    justify-content: center;
+}
+
+.test .additional-info hr {
+    margin: 0 20px;
+}
+
+.test .additional-info .center-content-div {
+    width: auto;
+}
+
+.test-main-info {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    align-items: strart;
+
+    font-family: 'UbuntuRegular';
+}
+
+.test #testName {
+    font-size: 24px;
+    color: #102A49;
+}
+
+.test #testMaxMark {
+    font-size: 20px;
+    color: #868686;
+}
+
+.test #testDescription {
+    font-size: 20px;
+    color: #BABABA;
+}
+
+.startTestButton {
+    width: 190px;
+    border-radius: 10px 10px 0px 0px;
+}
+
+.getResultsButton {
+    width: 190px;
+    border-radius: 0px 0px 10px 10px;
+}
