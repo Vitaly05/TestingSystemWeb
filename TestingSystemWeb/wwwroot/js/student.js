@@ -32,8 +32,7 @@ function getTestTemplateClone(testInfo) {
     clone.getElementById("testMaxMark").innerText = testInfo.test.maxMark
 
     clone.querySelector("#passedOnce").innerText = `${testInfo.passedOnce} из ${testInfo.test.amountOfAttampts}`
-    clone.querySelector("#maxMark").innerText = testInfo.maxMark ?? 
-        (testInfo.passedOnce > 0 ? "Ни одна попытка ещё не проверена" : "Вы ещё не проходили тест")
+    clone.querySelector("#maxMark").innerText = testInfo.maxMark ?? "Нет"
 
     clone.querySelector(".startTestButton").addEventListener("click", async () => {
         await startTest(testInfo.test)

@@ -671,6 +671,7 @@ input[type="checkbox"] {
 
 .test .additional-info .center-content-div {
     width: auto;
+    gap: 10px;
 }
 
 .test-main-info {
