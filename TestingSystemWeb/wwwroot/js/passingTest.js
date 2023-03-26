@@ -1,6 +1,8 @@
 let questionsModel
 let timeToPassTest
 
+let questionsAmount
+
 document.getElementById("saveAnswersButton").addEventListener("click", () => {
     saveAnswers()
 })
@@ -10,6 +12,7 @@ document.getElementById("saveAnswersButton").addEventListener("click", () => {
 addEventListener("load", () => {
     questionsModel = JSON.parse(window.sessionStorage.getItem("questionsModel"))
     const questions = questionsModel.questions
+    questionsAmount = questions.length
 
     document.title = `Room - ${questionsModel?.testName ?? "Тест без названия"}`
 
@@ -21,6 +24,8 @@ addEventListener("load", () => {
         showTime()
         setTimeout(saveAnswers, timeToPass * 1000);
         setInterval(showTime, 1000)
+    } else {
+        document.querySelector("#time-separator").innerText = "--:--"
     }
 })
 
@@ -46,6 +51,7 @@ function displayQuestion(question) {
     const clone = document.getElementById("questionTemplate").content.cloneNode(true)
     const answersPanel = clone.getElementById("answersPanel")
 
+    clone.querySelector("#questionNumber").innerText = `${questionsModel.questions.indexOf(question) + 1}/${questionsAmount}`
     clone.querySelector(".question").dataset.questionId = question.id
 
     clone.getElementById("questionText").innerText = question.question

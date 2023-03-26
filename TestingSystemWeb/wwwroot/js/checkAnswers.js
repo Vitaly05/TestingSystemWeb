@@ -5,7 +5,7 @@ let answersAmount
 
 addEventListener("load", async () => {
     answers = await getAnswers(attemptData)
-    answersAmount = answers.length
+    questionsAmount = answers.length
 
     answers.forEach(answer => {
         displayAnswer(answer)
@@ -45,7 +45,7 @@ function displayAnswer(answer) {
     const clone = document.querySelector("#questionTemplate")
         .content.cloneNode(true)
     
-    clone.querySelector("#questionNumber").innerText = `${answers.indexOf(answer) + 1}/${answersAmount}`
+    clone.querySelector("#questionNumber").innerText = `${answers.indexOf(answer) + 1}/${questionsAmount}`
     clone.querySelector("#question").innerText = answer.question.questionText
 
     const hasAnswer = !(answer?.answerText === null || answer.answerText.length == 0)

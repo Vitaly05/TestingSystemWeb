@@ -4,18 +4,29 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <link rel="icon" type="image/svg" href="img/logo.svg">
+    <link rel="stylesheet" href="css/style.css">
     <title>Room</title>
 
     <template id="questionTemplate">
-        <div class="question">
-            <b id="questionText"></b>
-            <div id="answersPanel"></div>
+        <div class="default-block question questionPanel">
+            <div class="content-block center-content-div">
+                <div class="space-between-div question-number">
+                    <span id="questionNumber"></span>
+                </div>
+                <span id="questionText"></span>
+                <div id="answersPanel"></div>
+            </div>
         </div>
     </template>
 
     <template id="openAnswerTemplate">
-        <input class="answer" placeholder="Ваш ответ">
+        <div class="input-div space-between-div js-input answer-input">
+            <input class="answer" placeholder="Ответ">
+            <input type="image" src="img/cross.svg" 
+                alt="Отчистить поле" title="Отчистить поле">
+        </div>
     </template>
 
     <template id="closeAnswerTemplate">
@@ -25,18 +36,56 @@
     </template>
 </head>
 <body>
-    <div>
-        <span>Осталось время: </span>
-        <span id="minuts"></span>
-        <span>:</span>
-        <span id="seconds"></span>
+    <div class="center-content-div">
+        <div class="top-panel passing-test-top space-between-div">
+            <div class="space-between-div timer-panel">
+                <img src="img/timer.svg" alt="timer">
+                <img src="img/arrow.svg" alt="arrow">
+                <div class="timer">
+                    <span id="minuts"></span>
+                    <span id="time-separator">:</span>
+                    <span id="seconds"></span>
+                </div>
+            </div>
+            <div>
+                <button class="outlined-button" id="saveAnswersButton">
+                    <div>
+                        <span>Закончить</span>
+                        <hr>
+                        <img src="img/finish_test.svg" alt="finish test">
+                    </div>
+                </button>
+            </div>
+        </div>
     </div>
-    <div id="questionsPanel"></div>
 
-    <div>
-        <button id="saveAnswersButton">Сохранить ответы</button>
+    <div class="top-panel-spacer"></div>
+
+    <div class="main-div">
+
+        <div class="default-block account-info">
+            <div class="group-div">
+                <img src="img/logo.svg" alt="logo" width="38" height="38">
+                <span id="username"></span>
+            </div>
+            <button class="default-button" id="homeButton">
+                <div>
+                    <img src="img/home.svg" alt="На главную">
+                    <hr>
+                    <span>На главную</span>
+                </div>
+            </button>
+        </div>
+
+        <div id="questionsPanel"></div>
+
     </div>
 
+
+    
+
+    
+    <script src="js/default.js"></script>
     <script src="js/passingTest.js"></script>
 </body>
 </html>

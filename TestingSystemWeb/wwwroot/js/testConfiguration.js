@@ -62,7 +62,6 @@ function setQuestionsNumbers() {
         const questionsPanels = Array.from(document.querySelectorAll(".questionPanel"))
         const questionNumber = questionsPanels.indexOf(questionPanel) + 1
         questionPanel.querySelector(".questionNumber").innerText = questionNumber
-
     })
 }
 
