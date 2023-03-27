@@ -9,32 +9,47 @@
 
     <title>Room</title>
 
-    <template id="resultRowTemplate">
-        <tr>
-            <td id="attempt"></td>
-            <td id="mark"></td>
-            <td><button id="checkAttemptButton">Посмотреть</button></td>
-        </tr>
+    <template id="resultTemplate">
+        <div class="list-item student-result">
+            <div class="center-content-div">
+                <div id="attempt"></div>
+                <div id="mark"></div>
+                <div class="button">
+                    <button class="default-button" id="checkAttemptButton">
+                        <div>
+                            <img src="img/check-attempt.svg" alt="Посмотреть">
+                            <hr>
+                            <span>Посмотреть</span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
     </template>
 </head>
 <body>
-    <button id="homeButton">На главную</button>
+    <div class="main-div">
 
-    <div>
-        <b id="testNameText"></b>
-        <br>
-        <span>Ваши попытки:</span>
-    </div>
-    <div>
-        <table id="resultsTable">
-            <thead>
-                <tr>
-                    <th>Номер попытки</th>
-                    <th>Оценка</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+        <div class="default-block account-info">
+            <div class="group-div">
+                <img src="img/logo.svg" alt="logo" width="38" height="38">
+                <span id="username"></span>
+            </div>
+            <button class="default-button" id="homeButton">
+                <div>
+                    <img src="img/home.svg" alt="На главную">
+                    <hr>
+                    <span>На главную</span>
+                </div>
+            </button>
+        </div>
+
+        <div class="default-block">
+            <div class="content-block">
+                <div class="list-div results-list" id="results-panel"></div>
+            </div>
+        </div>
+        
     </div>
     
     <script src="js/default.js"></script>

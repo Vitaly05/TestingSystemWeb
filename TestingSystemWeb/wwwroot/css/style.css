@@ -823,3 +823,67 @@ input[class="answer"]::placeholder {
 #questionsPanel .questionPanel:nth-child(2n + 1) input[type='radio']:checked::after {
     background-color: #102A49;
 }
+
+
+
+.results-list {
+    max-height: 75vh;
+    background: #F2F2F2;
+    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 6px 6px;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 260px);
+    grid-auto-rows: 140px;
+    justify-content: center;
+
+    gap: 60px 50px;
+
+    padding: 30px;
+
+    font-family: 'UbuntuRegular';
+    font-size: 20px;
+    color: #5C5C5C;
+}
+
+.student-result {
+    padding: 15px 20px;
+
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 6px;
+    border: none;
+}
+
+.student-result:nth-child(2n + 1) {
+    background-color: #E4F1FF;
+}
+.student-result:nth-child(2n) {
+    background-color: #FFDFDF;
+}
+
+.student-result .center-content-div {
+    justify-content: space-between;
+    align-items: start;
+    height: 100%;
+    width: 100%;
+}
+
+.student-result #attempt {
+    font-family: 'UbuntuBold';
+    font-weight: 500;
+    color: #5C5C5C;
+}
+
+.student-result #mark {
+    color: #5C5C5C;
+}
+
+.student-result .button {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.student-result button {
+    width: 100%;
+}

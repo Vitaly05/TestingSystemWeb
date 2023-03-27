@@ -1,13 +1,9 @@
 const currentTest = JSON.parse(window.sessionStorage.getItem("test"))
 let results
 
-document.getElementById("testNameText").innerText = currentTest.name
-
 
 addEventListener("load", async () => {
     results = await getTestResult(currentTest)
-
-    results?.reverse()
     
     results?.forEach(result => {
         displayResult(result)
@@ -25,11 +21,11 @@ async function getTestResult(test) {
 }
 
 function displayResult(result) {
-    const clone = document.getElementById("resultRowTemplate")
+    const clone = document.getElementById("resultTemplate")
         .content.cloneNode(true)
     
-    clone.getElementById("attempt").innerText = result.attempt
-    clone.getElementById("mark").innerText = result.mark ?? "Не проверено"
+    clone.getElementById("attempt").innerText = `Попытка: ${result.attempt}`
+    clone.getElementById("mark").innerText = `Оценка: ${result.mark ?? "Не проверено"}`
 
     const checkAttemptButton = clone.getElementById("checkAttemptButton")
     if (result.mark === null) {
@@ -40,8 +36,7 @@ function displayResult(result) {
         await checkAttempt(result.testId, result.attempt)
     })
 
-    document.getElementById("resultsTable").querySelector("tbody")
-        .appendChild(clone)
+    document.getElementById("results-panel").appendChild(clone)
 }
 
 async function checkAttempt(testId, attempt) {
