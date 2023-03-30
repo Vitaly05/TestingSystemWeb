@@ -887,3 +887,86 @@ input[class="answer"]::placeholder {
 .student-result button {
     width: 100%;
 }
+
+
+
+.login-main {
+    height: 100%;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login {
+    width: 70%;
+    height: 70%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+}
+
+.login img {
+    height: 100%;
+}
+
+.login .fields {
+    height: 70%;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    gap: 30px;
+}
+
+.login input {
+    width: 560px;
+    padding: 30px;
+
+    background-color: transparent;
+    border: 3px solid #102A49;
+    border-radius: 10px;
+
+    font-family: 'UbuntuRegular';
+    font-size: 32px;
+    color: #102A49;
+}
+
+.login input::placeholder {
+    font-size: 32px;
+    color: #102A49;
+}
+
+.login hr {
+    border: 3px solid #102A49;
+    width: 0;
+    height: 64px;
+}
+
+.login button {
+    background: #973737;
+    border-radius: 10px;
+    border: none;
+
+    width: 560px;
+    padding: 30px;
+
+    font-family: 'UbuntuRegular';
+    font-size: 32px;
+    letter-spacing: 0.27em;
+    text-transform: uppercase;
+    color: white;
+}
+
+@media (max-width: 1350px) or (max-height: 750px) {
+    .login img {
+        display: none;
+    }
+}

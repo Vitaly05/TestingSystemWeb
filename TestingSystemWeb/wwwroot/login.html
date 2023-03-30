@@ -1,20 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html style="height: 100%;">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/svg" href="img/logo.svg">
+    <link rel="stylesheet" href="css/style.css">
     
-    <title>Авторизация</title>
+    <title>Room - Авторизация</title>
 </head>
-<body>
-    <div>
-        <p>Логин</p>
-        <input id="login">
-        <p>Пароль</p>
-        <input id="password" type="password">
-        <button type="submit" id="loginButton">Войти</button>
+<body style="height: 100%; background-color: white;">
+    <div class="login-main">
+        <div class="login">
+            <div>
+                <img src="img/login_logo.svg" alt="logo" draggable="false">
+            </div>
+            <div class="fields">
+                <input id="login" placeholder="Логин">
+                <input id="password" type="password" placeholder="Пароль">
+                <hr>
+                <button type="submit" id="loginButton">Войти</button>
+            </div>
+        </div>
     </div>
 
     <script src="js/login.js"></script>
