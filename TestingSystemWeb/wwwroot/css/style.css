@@ -970,3 +970,8 @@ input[class="answer"]::placeholder {
         display: none;
     }
 }
+
+
+.top-panel #mark {
+    margin-left: 5px;
+}

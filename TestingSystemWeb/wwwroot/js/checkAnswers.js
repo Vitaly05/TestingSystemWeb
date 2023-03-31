@@ -80,7 +80,7 @@ function displayAnswer(answer) {
         calculateNotCheckedAnswersAmount()
     })
 
-    document.querySelector("#checkAnswersPanel").appendChild(clone)
+    document.querySelector(".main-div").appendChild(clone)
 }
 
 function getAnswersData() {

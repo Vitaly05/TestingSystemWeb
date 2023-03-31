@@ -1,34 +1,30 @@
 const answersModel = JSON.parse(window.sessionStorage.getItem("answersModel"))
 
-answersModel.forEach(model => {
-    const clone = document.querySelector("#questionTemplate").content.cloneNode(true)
-
-    clone.querySelector("#question").innerText = model.question.questionText
-    const answerPanel = clone.querySelector("#answerPanel")
-
-    const correctAnswer = model.question.answer
-    if (model.isCorrect) {
-        answerPanel.appendChild(getCorrectAnswerClone(model.answerText))
-    } else {
-        answerPanel.appendChild(getUncorrectAnswerClone(model.answerText, correctAnswer))
-    }
-
-    document.querySelector("#checkAttemptPanel").appendChild(clone)
+addEventListener("load", () => {
+    const mark = window.sessionStorage.getItem("mark")
+    document.querySelector("#mark").innerText = mark
 })
 
-function getCorrectAnswerClone(answer) {
-    const clone = document.querySelector("#correctUserAnswerTemplate").content.cloneNode(true)
+answersModel.forEach(model => {
+    const clone = document.querySelector("#questionTemplate")
+        .content.cloneNode(true)
+    clone.querySelector("#question").innerText = model.question.questionText
 
-    clone.querySelector("#userAnswer").innerText = answer
-    
-    return clone
-}
-function getUncorrectAnswerClone(userAnswer, correctAnswer) {
-    const clone = document.querySelector("#uncorrectUserAnswerTemplate").content.cloneNode(true)
+    const hasAnswer = !(model?.answerText === null || model.answerText.length == 0)
+    clone.querySelector("#studentAnswer").innerText = hasAnswer ? model.answerText : "Ответ не дан"
 
-    const hasAnswer = !(userAnswer === null || userAnswer.length == 0)
-    clone.querySelector("#userAnswer").innerText = hasAnswer ? userAnswer : "Вы не дали ответ"
-    clone.querySelector("#correctAnswer").innerText = correctAnswer
-    
-    return clone
-}
+    const questionPanel = clone.querySelector(".questionPanel")
+    const answerPanel = clone.querySelector("#answerPanel")
+    questionPanel.dataset.isCorrect = model.isCorrect
+
+    if (model.isCorrect !== null) {
+        if (model.isCorrect) {
+            answerPanel.classList.add("correctAnswer")
+            answerPanel.classList.remove("uncorrectAnswer")
+        } else {
+            answerPanel.classList.add("uncorrectAnswer")
+            answerPanel.classList.remove("correctAnswer")
+        }
+    }
+    document.querySelector(".main-div").appendChild(clone)
+})

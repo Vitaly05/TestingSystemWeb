@@ -33,17 +33,18 @@ function displayResult(result) {
     }
 
     checkAttemptButton.addEventListener("click", async () => {
-        await checkAttempt(result.testId, result.attempt)
+        await checkAttempt(result.testId, result.attempt, result?.mark)
     })
 
     document.getElementById("results-panel").appendChild(clone)
 }
 
-async function checkAttempt(testId, attempt) {
+async function checkAttempt(testId, attempt, mark) {
     await fetch(`tests/${testId}/${attempt}`).then(async response => {
         if (response.ok === true) {
             const answersModel = JSON.stringify(await response.json())
             window.sessionStorage.setItem("answersModel", answersModel)
+            window.sessionStorage.setItem("mark", mark)
             window.location.href = "/viewingAttempt"
         }
     })

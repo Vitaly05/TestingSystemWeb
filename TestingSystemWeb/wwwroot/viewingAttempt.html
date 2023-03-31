@@ -9,7 +9,7 @@
 
     <title>Room</title>
 
-    <template id="questionTemplate">
+    <!-- <template id="questionTemplate">
         <div>
             <span>Вопрос: </span>
             <span id="question"></span>
@@ -32,12 +32,53 @@
             <span>Правильный ответ: </span>
             <span id="correctAnswer"></span>
         </div>
+    </template> -->
+
+    <template id="questionTemplate">
+        <div class="default-block questionPanel check-answer-panel">
+            <div class="content-block center-content-div">
+                <div class="space-between-div question-number">
+                    <span id="questionNumber"></span>
+                </div>
+                <span id="question"></span>
+                <div class="studentAnswerPanel center-content-div" id="answerPanel">
+                    <span id="studentAnswer"></span>
+                </div>
+            </div>
+        </div>
     </template>
 </head>
 <body>
-    <button id="homeButton">На главную</button>
+    <div class="center-content-div">
+        <div class="top-panel space-between-div">
+            <div class="group-div">
+                <span>Оценка:</span>
+                <span id="mark"></span>
+            </div>
+            <div>
+                <button class="outlined-button" id="homeButton">
+                    <div>
+                        <span>На главную</span>
+                        <hr>
+                        <img src="img/home.svg" alt="home">
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
 
-    <div id="checkAttemptPanel"></div>
+    <div class="top-panel-spacer"></div>
+
+
+    <div class="main-div">
+        <div class="default-block account-info">
+            <div class="group-div">
+                <img src="img/logo.svg" alt="logo" width="38" height="38">
+                <span id="username"></span>
+            </div>
+        </div>
+    </div>
+
     
     <script src="js/default.js"></script>
     <script src="js/viewingAttempt.js"></script>
