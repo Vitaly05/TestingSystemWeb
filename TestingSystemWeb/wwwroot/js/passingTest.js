@@ -18,6 +18,8 @@ addEventListener("load", () => {
 
     displayQuestions(questions)
 
+    setInputsEvents()
+
     const timeToPass = questionsModel.test.timeToPass
     if (!(timeToPass === null || timeToPass <= 0)) {
         timeToPassTest = timeToPass

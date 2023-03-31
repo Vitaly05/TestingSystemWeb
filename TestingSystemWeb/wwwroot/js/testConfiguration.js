@@ -36,6 +36,7 @@ function addQuestion() {
     questionsPanel.appendChild(clone)
 
     setQuestionsNumbers()
+    setInputsEvents()
 }
 
 
@@ -46,6 +47,8 @@ function getQuestionPanelClone() {
         const incorrectAnswerClone = getIncorrectAnswerClone()
 
         e.target.parentNode.querySelector("#incorrectAnswersPanel").appendChild(incorrectAnswerClone)
+
+        setInputsEvents()
     })
 
     clone.getElementById("removeQuestionButton").addEventListener("click", e => removeCurrentChild(".questionPanel", e))
@@ -188,24 +191,6 @@ function displayQuestions(questions) {
     })
 }
 
-function displayOpenQuestion(question) {
-    const questionClone = questionTemplate.content.cloneNode(true)
-    fillQuestionPanel(questionClone, question)
-
-    const addQuestionClone = getQuestionPanelClone(questionClone)
-    
-    addQuestionClone.appendChild(questionClone)
-    questionsPanel.appendChild(addQuestionClone)
-}
-function displayCloseQuestion(question) {
-    const closeQuestionClone = getCloseQuestionClone()
-    fillCloseQuestionPanel(closeQuestionClone, question)
-
-    const addQuestionClone = getQuestionPanelClone(closeQuestionClone)
-    
-    addQuestionClone.appendChild(closeQuestionClone)
-    questionsPanel.appendChild(addQuestionClone)
-}
 
 function fillTestInfo(test) {
     document.getElementById("testName").value = test.name
