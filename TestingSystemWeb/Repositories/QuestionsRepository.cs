@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 using TestingSystemWeb.Database;
 using TestingSystemWeb.Models;
 using TestingSystemWeb.Models.DataBaseModels;
@@ -23,19 +24,28 @@ namespace TestingSystemWeb.Repositories
 
         public void UpdateQuestions(List<Question> newQuestions, int testId)
         {
-            List<Question> removableQuestions = new();
-            foreach (var question in newQuestions)
+            List<Question> oldQuestions = GetTestQuestions(testId);
+            List<int> removableQuestionsIds = new();
+
+            int oldQuestionsCount = oldQuestions.Count();
+            for (int iii = 0; iii < oldQuestionsCount; ++iii)
             {
-                try
+                bool isUpdated = false;
+                foreach (var newQuestion in newQuestions)
                 {
-                    var removableQuestion = _context.Questions.First(q => q.Id != question.Id);
-                    removableQuestions.Add(removableQuestion);
+                    if (oldQuestions[iii].Id == newQuestion.Id)
+                        isUpdated = true;
+
                 }
-                catch { }
+                if (!isUpdated)
+                    removableQuestionsIds.Add(oldQuestions[iii].Id);
             }
 
-            _context.Questions.RemoveRange(removableQuestions);
-
+            foreach (int id in removableQuestionsIds)
+            {
+                _context.Questions.Remove(GetQuestion(id));
+            }
+            
             SetTestId(ref newQuestions, testId);
 
             _context.Questions.UpdateRange(newQuestions);
@@ -44,12 +54,12 @@ namespace TestingSystemWeb.Repositories
 
         public Question GetQuestion(int id)
         {
-            return _context.Questions.FirstOrDefault(x => x.Id == id);
+            return _context.Questions.AsNoTracking().FirstOrDefault(x => x.Id == id);
         }
 
         public List<Question> GetTestQuestions(int testId)
         {
-            return _context.Questions.Where(q => q.TestId == testId).ToList();
+            return _context.Questions.AsNoTracking().Where(q => q.TestId == testId).ToList();
         }
 
         private void SetTestId(ref List<Question> questions, int testId)
