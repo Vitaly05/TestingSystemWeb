@@ -937,6 +937,8 @@ input[class="answer"]::placeholder {
     font-family: 'UbuntuRegular';
     font-size: 32px;
     color: #102A49;
+
+    outline: none;
 }
 
 .login input::placeholder {
@@ -963,6 +965,19 @@ input[class="answer"]::placeholder {
     letter-spacing: 0.27em;
     text-transform: uppercase;
     color: white;
+
+    outline: none;
+
+    transition: box-shadow 0.5s ease 0s, letter-spacing 0.5s ease 0s;
+}
+
+.login input:focus {
+    border: 3px solid #868686;
+}
+
+.login button:hover, .login button:focus {
+    box-shadow: 0 0 20px #868686;
+    letter-spacing: 0.1em;
 }
 
 @media (max-width: 1350px) or (max-height: 750px) {
