@@ -326,6 +326,7 @@ namespace TestingSystemWeb.Controllers
                 foreach (var question in questions)
                 {
                     var answer = _answersRepository.GetAnswer(question.Id, currentUserId, attempt);
+                    answer.Question = _questionsRepository.GetQuestion(answer.QuestionId);
                     answers.Add(answer);
                 }
 
@@ -349,6 +350,7 @@ namespace TestingSystemWeb.Controllers
                 foreach (var question in questions)
                 {
                     var answer = _answersRepository.GetAnswer(question.Id, userId, attempt);
+                    answer.Question = _questionsRepository.GetQuestion(answer.QuestionId);
                     answers.Add(answer);
                 }
 
