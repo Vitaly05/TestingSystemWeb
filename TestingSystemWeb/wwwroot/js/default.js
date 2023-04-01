@@ -27,6 +27,7 @@ function setInputsEvents() {
         })
     
         input.addEventListener("input", () => {
+            input.parentNode.classList.remove("invalid-field")
             checkInputState(input, clearButton)
         })
     })

@@ -191,6 +191,12 @@ button, select {
 }
 
 
+.invalid-field {
+    border-color: #973737 !important;
+    background-color: #FFF5F5 !important;
+}
+
+
 input[type="checkbox"] {
     width: 15px;
     height: 15px;
@@ -978,6 +984,13 @@ input[class="answer"]::placeholder {
 .login button:hover, .login button:focus {
     box-shadow: 0 0 20px #868686;
     letter-spacing: 0.1em;
+}
+
+#error-message {
+    margin-left: 20px;
+    font-family: 'UbuntuRegular';
+    font-size: 20px;
+    color: #973737;
 }
 
 @media (max-width: 1350px) or (max-height: 750px) {

@@ -16,15 +16,18 @@ addEventListener("load", () => {
 document.getElementById("addQuestionButton").addEventListener("click", addQuestion)
 
 document.getElementById("saveTestButton").addEventListener("click", async () => {
-    await fetch(`tests/${testConfigurationType}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(getTestData())
-    }).then(response => {
-        if (response.ok === true) {
-            window.location.href = "/"
-        }
-    })
+    const testData = getTestData()
+    if (fieldsAreValid() && hasAtLeastOneQuetion(testData)) {
+        await fetch(`tests/${testConfigurationType}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(testData)
+        }).then(response => {
+            if (response.ok === true) {
+                window.location.href = "/"
+            }
+        })
+    }
 })
 
 
@@ -229,4 +232,45 @@ function fillQuestionPanel(panel, question) {
         clone.querySelector("#incorrectAnswer").value = incorrectAnswer
         incorrectAnswersPanel.appendChild(clone)
     })
+}
+
+
+
+function fieldsAreValid() {
+    let allFieldsAreValid = true
+
+    document.querySelectorAll("#question").forEach(questionField => {
+        fieldIsValid(questionField) ? undefined : allFieldsAreValid = false
+    })
+    document.querySelectorAll("#answer").forEach(answerField => {
+        fieldIsValid(answerField) ? undefined : allFieldsAreValid = false
+    })
+    document.querySelectorAll("#incorrectAnswer").forEach(answerField => {
+        fieldIsValid(answerField) ? undefined : allFieldsAreValid = false
+    })
+
+    fieldIsValid(document.querySelector("#testName")) ? undefined : allFieldsAreValid = false
+    fieldIsValid(document.querySelector("#testMaxMark")) ? undefined : allFieldsAreValid = false
+    fieldIsValid(document.querySelector("#amountOfAttampts")) ? undefined : allFieldsAreValid = false
+
+    return allFieldsAreValid
+}
+
+function fieldIsValid(field) {
+    if (field.value === null || field.value.trim() === "") {
+        field.parentNode.classList.add("invalid-field")
+        field.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        })
+        
+        return false
+    } else {
+        field.parentNode.classList.remove("invalid-field")
+        return true
+    }
+}
+
+function hasAtLeastOneQuetion(testData) {
+    return testData.questions.length === 0 ? false : true
 }
