@@ -28,6 +28,9 @@ namespace TestingSystemWeb.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
+            await _context.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+
             model.Password = _accountService.EncryptPassword(model.Password);
             var user = _usersRepository.Login(model);
 

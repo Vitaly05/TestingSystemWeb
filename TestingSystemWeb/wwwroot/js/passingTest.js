@@ -4,13 +4,21 @@ let timeToPassTest
 let questionsAmount
 
 document.getElementById("saveAnswersButton").addEventListener("click", () => {
-    saveAnswers()
+    window.removeEventListener("beforeunload", beforeunloadHandler)
+    window.location.href = "/"
 })
 
 
 
-addEventListener("load", () => {
-    questionsModel = JSON.parse(window.sessionStorage.getItem("questionsModel"))
+addEventListener("load", async () => {
+    await fetch(`tests/${window.sessionStorage.getItem("testId")}`).then(async response => {
+        if (response.ok === true) {
+            questionsModel = await response.json()
+        } else {
+            window.location.href = "/"
+        }
+    })
+
     const questions = questionsModel.questions
     questionsAmount = questions.length
 
@@ -30,6 +38,18 @@ addEventListener("load", () => {
         document.querySelector("#time-separator").innerText = "--:--"
     }
 })
+
+window.addEventListener("unload", async e => {
+    e.preventDefault()
+    await saveAnswers()
+})
+
+window.addEventListener("beforeunload", beforeunloadHandler)
+
+function beforeunloadHandler(e) {
+    e.preventDefault();
+    e.returnValue = "";
+}
 
 
 function showTime() {
@@ -89,12 +109,9 @@ async function saveAnswers() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(getAnswersModel())
-    }).then(response => {
-        if (response.ok === true) {
-            window.location.href = "/"
-        }
     })
 }
+
 function getAnswersModel() {
     return {
         test: questionsModel.test,

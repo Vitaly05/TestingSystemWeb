@@ -13,6 +13,14 @@ addEventListener("load", () => {
     loadPage()
 })
 
+window.addEventListener("beforeunload", beforeunloadHandler)
+
+function beforeunloadHandler(e) {
+    e.preventDefault()
+    e.returnValue = ""
+}
+
+
 document.getElementById("addQuestionButton").addEventListener("click", addQuestion)
 
 document.getElementById("saveTestButton").addEventListener("click", async () => {
@@ -24,6 +32,7 @@ document.getElementById("saveTestButton").addEventListener("click", async () => 
             body: JSON.stringify(testData)
         }).then(response => {
             if (response.ok === true) {
+                window.removeEventListener("beforeunload", beforeunloadHandler)
                 window.location.href = "/"
             }
         })

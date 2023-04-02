@@ -14,6 +14,14 @@ addEventListener("load", async () => {
     calculateNotCheckedAnswersAmount()
 })
 
+window.addEventListener("beforeunload", beforeunloadHandler)
+
+function beforeunloadHandler(e) {
+    e.preventDefault();
+    e.returnValue = "";
+}
+
+
 
 document.querySelector("#saveButton").addEventListener("click", async () => {
     await fetch(`tests/${attemptData.userId}/${attemptData.attempt}/setMark`, {
@@ -25,6 +33,7 @@ document.querySelector("#saveButton").addEventListener("click", async () => {
         })
     }).then(response => {
         if (response.ok === true) {
+            window.removeEventListener("beforeunload", beforeunloadHandler)
             window.location.href = "studentsResults"
         }
     })

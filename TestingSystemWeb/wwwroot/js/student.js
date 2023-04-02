@@ -39,7 +39,7 @@ function getTestTemplateClone(testInfo) {
     clone.querySelector("#maxMark").innerText = testInfo.maxMark ?? "Нет"
 
     clone.querySelector(".startTestButton").addEventListener("click", async () => {
-        await startTest(testInfo.test)
+        await startTest(testInfo.test.id, testInfo.passedOnce <  testInfo.test.amountOfAttampts)
     })
 
     clone.querySelector(".getResultsButton").addEventListener("click", async () => {
@@ -54,15 +54,13 @@ function appendTest(testClone) {
 }
 
 
-async function startTest(test) {
-    await fetch(`tests/${test.id}`).then(async response => {
-        if (response.ok === true) {
-            window.sessionStorage.setItem("questionsModel", JSON.stringify(await response.json()))
-            window.location.href = "passingTest"
-        } else {
-            alert("Вы больше не можете пройти этот тест")
-        }
-    })
+async function startTest(testId, canStart) {
+    if (canStart) {
+        window.sessionStorage.setItem("testId", testId)
+        window.location.href = "passingTest"
+    } else {
+        alert("Вы больше не можете пройти этот тест")
+    }
 }
 
 async function getTestResult(test) {
