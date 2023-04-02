@@ -30,6 +30,10 @@ document.querySelector("#saveButton").addEventListener("click", async () => {
     })
 })
 
+document.querySelector("#backButton").addEventListener("click", () => {
+    window.location.href = "studentsResults"
+})
+
 
 
 async function getAnswers(attemptData) {

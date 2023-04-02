@@ -28,3 +28,8 @@ answersModel.forEach(model => {
     }
     document.querySelector(".main-div").appendChild(clone)
 })
+
+
+document.querySelector("#backButton").addEventListener("click", () => {
+    window.location.href = "testResults"
+})
