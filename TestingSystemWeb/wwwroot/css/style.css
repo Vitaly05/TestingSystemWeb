@@ -411,7 +411,7 @@ input[type="checkbox"] {
 
 
 
-#noOneTest {
+#noOneTest, #noOneResult {
     font-family: 'UbuntuRegular';
     color: #BABABA;
     margin: auto;

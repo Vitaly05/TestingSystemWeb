@@ -13,6 +13,10 @@ async function getTestsInfos() {
 }
 
 function displayTests(testsInfos) {
+    if (testsInfos.length === 0) {
+        document.querySelector("#testsPanel").style.display = "none"
+        document.querySelector("#noOneTest").style.display = "flex"
+    }
     testsInfos.reverse()
     testsInfos.forEach(testInfo => {
         displayTest(testInfo)

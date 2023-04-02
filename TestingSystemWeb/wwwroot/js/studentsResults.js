@@ -96,6 +96,12 @@ sortInDescendingButton.addEventListener("click", () => {
 async function getStudentsResults(test) {
     await fetch(`tests/${test.id}/results`).then(async response => {
         allResults = await response.json()
+
+        if (allResults.length === 0) {
+            document.querySelector("#studentsResultsPanel").style.display = "none"
+            document.querySelector("#noOneResult").style.display = "flex"
+        }
+
         allResults.reverse()
         displayStudentsResults()
     })
