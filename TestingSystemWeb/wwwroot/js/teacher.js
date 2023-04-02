@@ -2,7 +2,11 @@ const testsPanel = document.querySelector("#testsPanel")
 
 
 addEventListener("load", async () => {
+    document.querySelector(".progress-bar").style.display = "block"
+    document.querySelector("#testsPanel").style.display = "none"
     await getAllTests()
+    document.querySelector(".progress-bar").style.display = "none"
+    document.querySelector("#testsPanel").style.display = "flex"
 })
 
 document.getElementById("addTestButton").addEventListener("click", () => {

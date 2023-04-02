@@ -1003,3 +1003,104 @@ input[class="answer"]::placeholder {
 .top-panel #mark {
     margin-left: 5px;
 }
+
+
+
+.progress-bar {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    animation: progress-bar 1s linear infinite;
+
+    margin: 20px;
+}
+
+.progress-bar div {
+    position: absolute;
+    border-radius: 50%;
+    width: 13px;
+    height: 13px;
+    transform: scale(0);
+    animation-duration: 2s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+.progress-bar .tl {
+    top: 0;
+    left: 0;
+    background-color: #102A49;
+    animation-name: progress-bar-tl;
+}
+.progress-bar .tr {
+    top: 0;
+    right: 0;
+    background-color: #780000;
+    animation-name: progress-bar-tr;
+}
+.progress-bar .bl {
+    bottom: 0;
+    left: 0;
+    background-color: #780000;
+    animation-name: progress-bar-bl;
+}
+.progress-bar .br {
+    bottom: 0;
+    right: 0;
+    background-color: #102A49;
+    animation-name: progress-bar-br;
+}
+
+@keyframes progress-bar-tl {
+    10% {
+        transform: scale(1)
+    }
+    60%  {
+        transform: scale(1);
+    }
+    70% {
+        transform: scale(0);
+    }
+}
+@keyframes progress-bar-tr {
+    10% {
+        transform: scale(0);
+    }
+    20% {
+        transform: scale(1)
+    }
+    70%  {
+        transform: scale(1);
+    }
+    80% {
+        transform: scale(0);
+    }
+}
+@keyframes progress-bar-bl {
+    20% {
+        transform: scale(0);
+    }
+    30% {
+        transform: scale(1)
+    }
+    80%  {
+        transform: scale(1);
+    }
+    90% {
+        transform: scale(0);
+    }
+}
+@keyframes progress-bar-br {
+    30% {
+        transform: scale(0);
+    }
+    40% {
+        transform: scale(1)
+    }
+    90%  {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(0);
+    }
+}

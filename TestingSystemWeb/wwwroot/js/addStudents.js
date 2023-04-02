@@ -6,10 +6,22 @@ const notAddedStudentsPanel = document.getElementById("notAddedStudentsPanel")
 
 
 addEventListener("load", async () => {
+    addedStudentsPanel.style.display = "none"
+
+    document.querySelector(".progress-bar").style.display = "block"
+    document.querySelector("#notAddedStudentsPanel").style.display = "none"
+    document.querySelector(".group-actions-div").style.display = "none"
+    document.querySelector(".sort-div").style.display = "none"
+    document.querySelector(".type-select").style.display = "none"
+    
     await getStudents()
     await getAllGroups()
 
-    addedStudentsPanel.style.display = "none"
+    document.querySelector(".progress-bar").style.display = "none"
+    document.querySelector("#notAddedStudentsPanel").style.display = "flex"
+    document.querySelector(".group-actions-div").style.display = "flex"
+    document.querySelector(".sort-div").style.display = "flex"
+    document.querySelector(".type-select").style.display = "flex"
 })
 
 

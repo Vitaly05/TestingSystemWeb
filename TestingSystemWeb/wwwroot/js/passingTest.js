@@ -11,6 +11,16 @@ document.getElementById("saveAnswersButton").addEventListener("click", () => {
 
 
 addEventListener("load", async () => {
+    document.querySelector("#progress-bar").style.display = "block"
+    document.querySelector("#questionsPanel").style.display = "none"
+    
+    await loadPage()
+
+    document.querySelector("#progress-bar").style.display = "none"
+    document.querySelector("#questionsPanel").style.display = "grid"
+})
+
+async function loadPage() {
     await fetch(`tests/${window.sessionStorage.getItem("testId")}`).then(async response => {
         if (response.ok === true) {
             questionsModel = await response.json()
@@ -37,7 +47,7 @@ addEventListener("load", async () => {
     } else {
         document.querySelector("#time-separator").innerText = "--:--"
     }
-})
+}
 
 window.addEventListener("unload", async e => {
     e.preventDefault()

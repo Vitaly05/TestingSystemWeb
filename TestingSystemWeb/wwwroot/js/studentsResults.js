@@ -1,7 +1,15 @@
 const currentTest = JSON.parse(window.sessionStorage.getItem("test"))
 
 addEventListener("load", async () => {
+    document.querySelector(".progress-bar").style.display = "block"
+    document.querySelector("#studentsResultsPanel").style.display = "none"
+    document.querySelector(".sort-div").style.display = "none"
+    
     await getStudentsResults(currentTest)
+
+    document.querySelector(".progress-bar").style.display = "none"
+    document.querySelector("#studentsResultsPanel").style.display = "flex"
+    document.querySelector(".sort-div").style.display = "flex"
 })
 
 

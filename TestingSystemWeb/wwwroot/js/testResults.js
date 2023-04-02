@@ -3,11 +3,17 @@ let results
 
 
 addEventListener("load", async () => {
+    document.querySelector(".progress-bar").style.display = "block"
+    document.querySelector("#results-panel").style.display = "none"
+    
     results = await getTestResult(currentTest)
     
     results?.forEach(result => {
         displayResult(result)
     })
+
+    document.querySelector(".progress-bar").style.display = "none"
+    document.querySelector("#results-panel").style.display = "grid"
 })
 
 

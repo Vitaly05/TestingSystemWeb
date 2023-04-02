@@ -1,6 +1,12 @@
 addEventListener("load", async () => {
+    document.querySelector(".progress-bar").style.display = "block"
+    document.querySelector("#testsPanel").style.display = "none"
+    
     const testsInfos = await getTestsInfos()
     displayTests(testsInfos)
+
+    document.querySelector(".progress-bar").style.display = "none"
+    document.querySelector("#testsPanel").style.display = "flex"
 })
 
 
