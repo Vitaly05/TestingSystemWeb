@@ -8,9 +8,13 @@ addEventListener("load", async () => {
     
     results = await getTestResult(currentTest)
     
-    results?.forEach(result => {
-        displayResult(result)
-    })
+    if (results.length === 0) {
+        document.querySelector("#noOneResult").style.display = "block"
+    } else {
+        results?.forEach(result => {
+            displayResult(result)
+        })
+    }
 
     document.querySelector(".progress-bar").style.display = "none"
     document.querySelector("#results-panel").style.display = "grid"

@@ -8,7 +8,6 @@ addEventListener("load", async () => {
     await getStudentsResults(currentTest)
 
     document.querySelector(".progress-bar").style.display = "none"
-    document.querySelector("#studentsResultsPanel").style.display = "flex"
     document.querySelector(".sort-div").style.display = "flex"
 })
 
@@ -106,8 +105,9 @@ async function getStudentsResults(test) {
         allResults = await response.json()
 
         if (allResults.length === 0) {
-            document.querySelector("#studentsResultsPanel").style.display = "none"
             document.querySelector("#noOneResult").style.display = "flex"
+        } else {
+            document.querySelector("#studentsResultsPanel").style.display = "flex"
         }
 
         allResults.reverse()
@@ -124,11 +124,22 @@ function displayStudentsResults() {
         allResults.sort(sortInDescending)
     }
 
+    let hasAtLeastOneStudent = false
+    
     allResults.forEach(result => {
         if (resultsFilter(result)) {
+            hasAtLeastOneStudent = true
             displayStudentResult(result)
         }
     })
+    
+    if (!hasAtLeastOneStudent) {
+        document.querySelector("#studentsResultsPanel").style.display = "none"
+        document.querySelector(".js-all-checked").style.display = "block"
+    } else {
+        document.querySelector("#studentsResultsPanel").style.display = "flex"
+        document.querySelector(".js-all-checked").style.display = "none"
+    }
 }
 
 function sortInAscending(a, b) {

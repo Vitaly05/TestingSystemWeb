@@ -89,14 +89,16 @@
                                 class="icon-button" id="sortInDescending">
                         </div>
                         <div class="group-div unchecked-filter">
-                            <label><input type="checkbox" id="onlyUnchecked">
+                            <label><input type="checkbox" id="onlyUnchecked" autocomplete="off">
                             <span>Только непроверенные</span></label>
                         </div>
                     </div>
                 </div>
 
                 <div class="list-div" id="studentsResultsPanel"></div>
-
+                
+                <span id="noOneResult" class="js-all-checked">Все попытки проверены</span>
+                
                 <div class="center-content-div" id="noOneResult" style="height: 100px; display: none;">
                     Ещё никто не прошёл тест
                 </div>
