@@ -8,6 +8,15 @@
     <link rel="stylesheet" href="css/style.css">
     
     <title>Room - Авторизация</title>
+
+    <style>
+        .progress-bar {
+            display: none; 
+            margin: 0; 
+            height: 37px;
+            width: 37px;
+        }
+    </style>
 </head>
 <body style="height: 100%; background-color: white;">
     <div class="login-main">
@@ -22,7 +31,17 @@
                     <hr>
                     <span id="error-message" style="display: none;">Неверный логин или пароль</span>
                 </div>
-                <button type="submit" id="loginButton">Войти</button>
+                <button type="submit" id="loginButton">
+                    <span id="js-login-text">Войти</span>
+                    <div class="center-content-div">
+                        <div class="progress-bar">
+                            <div class="tl"></div>
+                            <div class="tr"></div>
+                            <div class="bl"></div>
+                            <div class="br"></div>
+                        </div>
+                    </div>
+                </button>
             </div>
         </div>
     </div>

@@ -8,6 +8,10 @@ document.getElementById("loginButton").addEventListener("click", async (e) => {
     
     
     if (fieldsAreValid()) {
+        e.target.disabled = true
+        document.querySelector("#js-login-text").style.display = "none"
+        document.querySelector(".progress-bar").style.display = "block"
+
         await fetch("login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -20,6 +24,10 @@ document.getElementById("loginButton").addEventListener("click", async (e) => {
                 window.localStorage.setItem("username", await response.text())
                 window.location.href = getReturnUrl() ?? "/"
             } else {
+                document.querySelector("#js-login-text").style.display = "block"
+                document.querySelector(".progress-bar").style.display = "none"
+                e.target.disabled = false
+
                 errorMessageElement.style.display = "block"
                 loginInput.focus()
             }
