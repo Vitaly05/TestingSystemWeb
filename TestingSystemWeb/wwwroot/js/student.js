@@ -46,9 +46,15 @@ function getTestTemplateClone(testInfo) {
     clone.querySelector("#passedOnce").innerText = `${testInfo.passedOnce} из ${testInfo.test.amountOfAttampts}`
     clone.querySelector("#maxMark").innerText = testInfo.maxMark ?? "Нет"
 
-    clone.querySelector(".startTestButton").addEventListener("click", async () => {
-        await startTest(testInfo.test.id, testInfo.passedOnce <  testInfo.test.amountOfAttampts)
-    })
+    const canStart = testInfo.passedOnce <  testInfo.test.amountOfAttampts
+    if (canStart) {
+        clone.querySelector(".startTestButton").addEventListener("click", async () => {
+            await startTest(testInfo.test.id, canStart)
+        })
+    } else {
+        clone.querySelector(".startTestButton").disabled = true
+    }
+
 
     clone.querySelector(".getResultsButton").addEventListener("click", async () => {
         await getTestResult(testInfo.test)

@@ -48,6 +48,11 @@ button, select {
 }
 
 
+
+button:disabled {
+    pointer-events: none;
+}
+
 .default-button {
     background-color: #EEEEEE;
     border: 1px solid #949494;

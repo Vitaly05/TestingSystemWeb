@@ -39,7 +39,7 @@ function displayResult(result) {
 
     const checkAttemptButton = clone.getElementById("checkAttemptButton")
     if (result.mark === null) {
-        checkAttemptButton.setAttribute("disabled", true)
+        checkAttemptButton.disabled = true
     }
 
     checkAttemptButton.addEventListener("click", async () => {

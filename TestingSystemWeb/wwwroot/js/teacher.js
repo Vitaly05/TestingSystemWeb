@@ -4,9 +4,13 @@ const testsPanel = document.querySelector("#testsPanel")
 addEventListener("load", async () => {
     document.querySelector(".progress-bar").style.display = "block"
     document.querySelector("#testsPanel").style.display = "none"
+    document.querySelector("#addTestButton").disabled = true
+
     await getAllTests()
+
     document.querySelector(".progress-bar").style.display = "none"
     document.querySelector("#testsPanel").style.display = "flex"
+    document.querySelector("#addTestButton").disabled = false
 })
 
 document.getElementById("addTestButton").addEventListener("click", () => {
