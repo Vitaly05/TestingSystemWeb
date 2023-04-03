@@ -6,7 +6,6 @@ addEventListener("load", async () => {
     displayTests(testsInfos)
 
     document.querySelector(".progress-bar").style.display = "none"
-    document.querySelector("#testsPanel").style.display = "flex"
 })
 
 
@@ -22,6 +21,9 @@ function displayTests(testsInfos) {
     if (testsInfos.length === 0) {
         document.querySelector("#testsPanel").style.display = "none"
         document.querySelector("#noOneTest").style.display = "flex"
+    } else {
+        document.querySelector("#testsPanel").style.display = "flex"
+        document.querySelector("#noOneTest").style.display = "none"
     }
     testsInfos.reverse()
     testsInfos.forEach(testInfo => {
