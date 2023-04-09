@@ -4,65 +4,110 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/svg" href="img/logo.svg">
-      
+
+    <link rel="icon" type="image/svg" href="img/logo.svg">  
     <link rel="stylesheet" href="css/style.css">
+
     <title>Room - Admin panel</title>
 
-    <template id="usersTableRowTemplate">
-        <tr>
-            <td id="login"></td>
-            <td id="surname"></td>
-            <td id="name"></td>
-            <td id="patronymic"></td>
-            <td id="group"></td>
-            <td id="role"></td>
-            <td><button id="removeUserButton">Удалить</button></td>
-        </tr>
+    <template id="userTemplate">
+        <div class="list-item result space-between-div">
+            <div class="user-full-name">
+                <div id="surname"></div>
+                <div id="name"></div>
+                <div id="patronymic"></div>
+            </div>
+            <div class="horizontal-params space-between-div">
+                <div class="center-content-div">
+                    <div>Логин</div>
+                    <div id="login"></div>
+                </div>
+                <hr>
+                <div class="center-content-div">
+                    <div>Группа</div>
+                    <div id="group"></div>
+                </div>
+                <hr>
+                <div class="center-content-div">
+                    <div>Роль</div>
+                    <div id="role"></div>
+                </div>
+            </div>
+            <button class="default-button" id="removeUserButton">
+                <div>
+                    <img src="img/trash.svg" alt="Удалить">
+                    <hr>
+                    <span>Удалить</span>
+                </div>
+            </button>
+        </div>
     </template>
 </head>
-<body onload="loadUsers();">
-    <div>
-        <button id="logoutButton">Выйти</button>
+<body>
+    <div class="main-div">
+
+        <div class="default-block account-info">
+            <div class="group-div">
+                <img src="img/logo.svg" alt="logo" width="38" height="38">
+                <span id="username"></span>
+            </div>
+            <button class="default-button" id="logoutButton">
+                <div>
+                    <img src="img/logout.svg" alt="Выйти">
+                    <hr>
+                    <span>Выйти</span>
+                </div>
+            </button>
+        </div>
+
+        <div class="default-block">
+            <div class="content-block center-content-div">
+                <div class="group-div search-panel">
+                    <div class="default-select">
+                        <select id="searchUsersSelect">
+                            <option value="byLogin">По логину</option>
+                            <option selected value="bySurname">По фамилии</option>
+                            <option value="byGroup">По группе</option>
+                        </select>
+                    </div>
+                    <div class="input-div space-between-div js-input">
+                        <input id="searchInput" placeholder="Поиск">
+                        <input type="image" src="img/cross.svg" id="clearButton"
+                            alt="Отчистить поле" title="Отчистить поле">
+                    </div>
+                    <div class="default-select users-select">
+                        <select id="filterUsersSelect">
+                            <option selected value="all">Все</option>
+                            <option value="student">Студенты</option>
+                            <option value="teacher">Преподаватели</option>
+                            <option value="admin">Администраторы</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="default-block">
+            <div class="content-block">
+                <div class="center-content-div">
+                    <button class="text-button" id="addUserButton">+ Добавить пользователя</button>
+                </div>
+                <div class="center-content-div">
+                    <div class="progress-bar">
+                        <div class="tl"></div>
+                        <div class="tr"></div>
+                        <div class="bl"></div>
+                        <div class="br"></div>
+                    </div>
+                </div>
+                <div class="list-div" id="usersPanel"></div>
+                <span id="noOneUser" style="display: none;">Нет ни одного пользователя, подходящего вашему запросу</span>
+            </div>
+        </div>
+
     </div>
 
-    <div>
-        <div>
-            <span>Показать</span>
-            <select id="filterUsersSelect">
-                <option selected value="all">Всех</option>
-                <option value="student">Студентов</option>
-                <option value="teacher">Преподавателей</option>
-                <option value="admin">Администраторов</option>
-            </select>
-        </div>
-        <div>
-            <span>Поиск</span>
-            <select id="searchUsersSelect">
-                <option value="byLogin">По логину</option>
-                <option selected value="bySurname">По фамилии</option>
-                <option value="byGroup">По группе</option>
-            </select>
-            <input id="searchInput">
-            <button id="resetButton">Сброс</button>
-        </div>
-        <table>
-            <thead>
-                <tr>
-                    <th>Логин</th>
-                    <th>Фамилия</th>
-                    <th>Имя</th>
-                    <th>Отчество</th>
-                    <th>Группа</th>
-                    <th>Роль</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody id="usersTable"></tbody>
-        </table>
-    </div>
-
-    <div>
+    <!-- <div>
         <form id="addUserForm">
             <div>
                 <span>Логин</span>
@@ -98,7 +143,7 @@
             </div>
             <button id="addUserButton">Добавить</button>
         </form>
-    </div>
+    </div> -->
 
     <script src="js/default.js"></script>
     <script src="js/admin.js"></script>

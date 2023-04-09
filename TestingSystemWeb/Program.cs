@@ -60,6 +60,8 @@ app.MapGet("/passingTest", [Authorize(Roles = Role.Student)] async (context) => 
 app.MapGet("/testResults", [Authorize(Roles = Role.Student)] async (context) => await context.Response.SendFileAsync("wwwroot/testResults.html"));
 app.MapGet("/viewingAttempt", [Authorize(Roles = Role.Student)] async (context) => await context.Response.SendFileAsync("wwwroot/viewingAttempt.html"));
 
+app.MapGet("/addUser", [Authorize(Roles = Role.Admin)] async (context) => await context.Response.SendFileAsync("wwwroot/addUser.html"));
+
 app.MapGet("/", [Authorize] async (context) =>
 {
     var role = context.User.Claims

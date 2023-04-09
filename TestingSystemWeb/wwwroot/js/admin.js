@@ -1,25 +1,23 @@
-const usersTable = document.getElementById("usersTable")
+const usersPanel = document.getElementById("usersPanel")
 
-const addUserForm = document.getElementById("addUserForm")
+// const addUserForm = document.getElementById("addUserForm")
 
+
+addEventListener("load", async () => {
+    document.querySelector(".progress-bar").style.display = "block"
+    document.querySelector("#usersPanel").style.display = "none"
+    document.querySelector("#addUserButton").disabled = true
+
+    await loadUsers()
+
+    document.querySelector(".progress-bar").style.display = "none"
+    document.querySelector("#usersPanel").style.display = "flex"
+    document.querySelector("#addUserButton").disabled = false
+})
 
 
 document.getElementById("addUserButton").addEventListener("click", async e => {
-    e.preventDefault()
-
-    const formData = new FormData(addUserForm)
-    const userData = Object.fromEntries(formData.entries());
-
-    await fetch("users/add", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(userData)
-    }).then(response => {
-        if (response.ok === true) {
-            addUserForm.reset()
-            loadUsers()
-        }
-    })
+    window.location.href = "/addUser"
 })
 
 
@@ -86,10 +84,6 @@ searchUserInput.addEventListener("input", () => {
     setUsersFilter(searchMethod)
 })
 
-document.getElementById("resetButton").addEventListener("click", () => {
-    searchUserInput.value = ""
-    setUsersFilter()
-})
 
 document.querySelector("#searchUsersSelect").addEventListener("change", e => {
     setUsersFilter(e.target.value)
@@ -98,6 +92,10 @@ document.querySelector("#searchUsersSelect").addEventListener("change", e => {
 document.getElementById("filterUsersSelect").addEventListener("change", async (e) => {
     const role = e.target.value
     setRolesFilter(role)
+})
+
+document.getElementById("clearButton").addEventListener("click", () => {
+    setUsersFilter()
 })
 
 
@@ -113,38 +111,59 @@ async function loadUsers() {
 }
 
 function displayUsers(users) {
-    usersTable.innerHTML = ""
+    usersPanel.innerHTML = ""
     
+    let thereIsAtLeastOneUser = false
+
     users.forEach(user => {
         if (usersFilter(user) && rolesFilter(user)) {
             displayUser(user)
+            thereIsAtLeastOneUser = true
         }
     })
+
+    if (thereIsAtLeastOneUser) {
+        usersPanel.style.display = "flex"
+        document.querySelector("#noOneUser").style.display = "none"
+    } else {
+        usersPanel.style.display = "none"
+        document.querySelector("#noOneUser").style.display = "block"
+    }
 }
 
 function displayUser(user) {
-    const usersTableRowTemplate = document.getElementById("usersTableRowTemplate")
-    const clone = usersTableRowTemplate.content.cloneNode(true)
+    const userTemplate = document.getElementById("userTemplate")
+    const clone = userTemplate.content.cloneNode(true)
 
     clone.getElementById("login").innerText = user.login
     clone.getElementById("surname").innerText = user.surname
     clone.getElementById("name").innerText = user.name
     clone.getElementById("patronymic").innerText = user.patronymic
-    clone.getElementById("group").innerText = user.group
+
+    let group
+    if (user.group === null || user.group.length === 0) {
+        group = "-"
+    } else {
+        group = user.group
+    }
+    clone.getElementById("group").innerText = group
+    
     clone.getElementById("role").innerText = user.role
 
     clone.getElementById("removeUserButton").addEventListener("click", async () => {
         await removeUser(user)
     })
-    usersTable.appendChild(clone)
+    usersPanel.appendChild(clone)
 }
 
 async function removeUser(user) {
-    await fetch(`users/remove/${user.id}`, {
-        method: "DELETE"
-    }).then(async response => {
-        if (response.ok === true) {
-            await loadUsers();
-        }
-    })
+    if (confirm(`Вы точно хотите удалить пользователя "${user.surname} ${user.name} ${user.patronymic}?"`)) {
+        await fetch(`users/remove/${user.id}`, {
+            method: "DELETE"
+        }).then(async response => {
+            if (response.ok === true) {
+                await loadUsers();
+            }
+        })
+    }
 }

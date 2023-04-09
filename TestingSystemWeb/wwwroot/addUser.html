@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" type="image/svg" href="img/logo.svg">  
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>Room - Admin panel</title>
+</head>
+<body>
+    <div class="main-div">
+
+        <div class="default-block account-info">
+            <div class="group-div">
+                <img src="img/logo.svg" alt="logo" width="38" height="38">
+                <span id="username"></span>
+            </div>
+            <button class="default-button" id="homeButton">
+                <div>
+                    <img src="img/home.svg" alt="На главную">
+                    <hr>
+                    <span>На главную</span>
+                </div>
+            </button>
+        </div>
+
+        <div class="default-block test-params">
+            <div class="content-block center-content-div" id="addTestPanel">
+                <div class="main-params">
+
+                    <form id="addUserForm" autocomplete="off">
+                        <div class="center-content-div">
+                            <span>Логин</span>
+                            <div class="input-div space-between-div js-input">
+                                <input name="login">
+                                <input type="image" src="img/cross.svg" 
+                                    alt="Отчистить поле" title="Отчистить поле">
+                            </div>
+                        </div>
+
+                        <div class="center-content-div">
+                            <span>Пароль</span>
+                            <div class="input-div space-between-div js-input">
+                                <input name="password">
+                                <input type="image" src="img/cross.svg" 
+                                    alt="Отчистить поле" title="Отчистить поле">
+                            </div>
+                        </div>
+
+                        <div class="center-content-div">
+                            <hr class="horizontal-line">
+                        </div>
+
+                        <div class="center-content-div">
+                            <span>Фамилия</span>
+                            <div class="input-div space-between-div js-input">
+                                <input name="surname">
+                                <input type="image" src="img/cross.svg" 
+                                    alt="Отчистить поле" title="Отчистить поле">
+                            </div>
+                        </div>
+
+                        <div class="center-content-div">
+                            <span>Имя</span>
+                            <div class="input-div space-between-div js-input">
+                                <input name="name">
+                                <input type="image" src="img/cross.svg" 
+                                    alt="Отчистить поле" title="Отчистить поле">
+                            </div>
+                        </div>
+
+                        <div class="center-content-div">
+                            <span>Отчество</span>
+                            <div class="input-div space-between-div js-input">
+                                <input name="patronymic">
+                                <input type="image" src="img/cross.svg" 
+                                    alt="Отчистить поле" title="Отчистить поле">
+                            </div>
+                        </div>
+
+                        <div class="center-content-div">
+                            <hr class="horizontal-line">
+                        </div>
+
+                        <div class="center-content-div">
+                            <span>Группа</span>
+                            <div class="input-div space-between-div js-input">
+                                <input name="group">
+                                <input type="image" src="img/cross.svg" 
+                                    alt="Отчистить поле" title="Отчистить поле">
+                            </div>
+                        </div>
+
+                        <div class="center-content-div">
+                            <hr class="horizontal-line">
+                        </div>
+
+                        <div class="center-content-div">
+                            <span>Роль</span>
+                            <div class="center-content-div">
+                                <div class="group-div role-select">
+                                    <div class="radio-select">
+                                        <input type="radio" name="role" 
+                                                value="Teacher"
+                                                id="teacher"><label 
+                                                for="teacher"
+                                                class="radio-label">Преподаватель</label>
+                                    </div>
+                                    <hr class="vert-line">
+                                    <div class="radio-select">
+                                        <input type="radio" name="role" 
+                                                value="Student"
+                                                checked id="student"><label 
+                                                for="student" 
+                                                class="radio-label">Студент</label>
+                                    </div>
+                                    <hr class="vert-line">
+                                    <div class="radio-select">
+                                        <input type="radio" name="role" 
+                                                value="Admin"
+                                                id="admin"><label 
+                                                for="admin" 
+                                                class="radio-label">Администратор</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="center-content-div">
+                            <button class="default-button" id="addUserButton">
+                                <div>
+                                    <img src="img/user-add.svg" alt="Добавить">
+                                    <hr>
+                                    <span>Добавить</span>
+                                </div>
+                            </button>
+                        </div>
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="js/default.js"></script>
+    <script src="js/addUser.js"></script>
+</body>
+</html>

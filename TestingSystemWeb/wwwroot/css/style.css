@@ -416,7 +416,7 @@ input[type="checkbox"] {
 
 
 
-#noOneTest, #noOneResult {
+#noOneTest, #noOneResult, #noOneUser {
     font-family: 'UbuntuRegular';
     color: #BABABA;
     margin: auto;
@@ -1108,4 +1108,30 @@ input[class="answer"]::placeholder {
     100% {
         transform: scale(0);
     }
+}
+
+
+
+.users-select {
+    margin-left: 5px;
+    border-radius: 6px;
+}
+
+#addUserButton {
+    margin-bottom: 15px;
+}
+
+
+.horizontal-line {
+    width: 500px;
+    height: 0px;
+    border: 1px solid #868686;
+    border-bottom: none;
+    margin-top: 25px;
+    margin-bottom: 50px;
+}
+
+.role-select {
+    margin-top: 20px;
+    margin-bottom: 50px;
 }
