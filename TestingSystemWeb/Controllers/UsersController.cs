@@ -39,6 +39,10 @@ namespace TestingSystemWeb.Controllers
         {
             try
             {
+                if (!user.IsValid())
+                    return BadRequest();
+
+
                 user.Password = _accountService.EncryptPassword(user.Password);
                 _usersRepository.AddUser(user);
                 return Ok();

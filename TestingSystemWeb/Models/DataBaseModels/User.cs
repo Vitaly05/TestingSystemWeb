@@ -48,5 +48,20 @@ namespace TestingSystemWeb.Models.DataBaseModels
         {
             return $"{Surname} {Name} {Patronymic}";
         }
+
+        public bool IsValid()
+        {
+            if (string.IsNullOrWhiteSpace(Login) ||
+                string.IsNullOrWhiteSpace(Password) ||
+                string.IsNullOrWhiteSpace(Name) ||
+                string.IsNullOrWhiteSpace(Surname) ||
+                string.IsNullOrWhiteSpace(Patronymic) ||
+                string.IsNullOrWhiteSpace(Role))
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }
