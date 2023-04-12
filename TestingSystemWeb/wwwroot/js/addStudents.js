@@ -211,6 +211,12 @@ function sortInDescending(a, b) {
 }
 
 function displayNotAddedStudents(allStudents) {
+    if (allStudents.notAddedStudents.length === 0) {
+        const clone = document.querySelector("#emptyTemplate").content.cloneNode(true)
+        clone.querySelector("#message").innerText = "Все студенты добавлены"
+        notAddedStudentsPanel.appendChild(clone)
+    }
+
     allStudents.notAddedStudents.forEach(student => {
         if (studentsFilter(student)) {
             displayNotAddedStudent(student)
@@ -218,6 +224,11 @@ function displayNotAddedStudents(allStudents) {
     })
 }
 function displayAddedStudents(allStudents) {
+    if (allStudents.addedStudents.length === 0) {
+        const clone = document.querySelector("#emptyTemplate").content.cloneNode(true)
+        clone.querySelector("#message").innerText = "Ни один студент не добавлен"
+        addedStudentsPanel.appendChild(clone)
+    }
 
     allStudents.addedStudents.forEach(student => {
         if (studentsFilter(student)) {
