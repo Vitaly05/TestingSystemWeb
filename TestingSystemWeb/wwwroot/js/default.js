@@ -30,6 +30,8 @@ function setInputsEvents() {
             input.parentNode.classList.remove("invalid-field")
             checkInputState(input, clearButton)
         })
+
+        input.tabIndex = 1
     })
 }
 
