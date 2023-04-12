@@ -108,10 +108,10 @@ async function getStudentsResults(test) {
             document.querySelector("#noOneResult").style.display = "flex"
         } else {
             document.querySelector("#studentsResultsPanel").style.display = "flex"
+            allResults.reverse()
+            displayStudentsResults()
         }
 
-        allResults.reverse()
-        displayStudentsResults()
     })
 }
 
@@ -133,12 +133,14 @@ function displayStudentsResults() {
         }
     })
     
-    if (!hasAtLeastOneStudent) {
-        document.querySelector("#studentsResultsPanel").style.display = "none"
-        document.querySelector(".js-all-checked").style.display = "block"
-    } else {
-        document.querySelector("#studentsResultsPanel").style.display = "flex"
-        document.querySelector(".js-all-checked").style.display = "none"
+    if (allResults.length !== 0) {
+        if (!hasAtLeastOneStudent) {
+            document.querySelector("#studentsResultsPanel").style.display = "none"
+            document.querySelector("#allResultsChecked").style.display = "block"
+        } else {
+            document.querySelector("#studentsResultsPanel").style.display = "flex"
+            document.querySelector("#allResultsChecked").style.display = "none"
+        }
     }
 }
 
