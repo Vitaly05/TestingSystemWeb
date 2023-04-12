@@ -25,17 +25,21 @@ document.getElementById("addQuestionButton").addEventListener("click", addQuesti
 
 document.getElementById("saveTestButton").addEventListener("click", async () => {
     const testData = getTestData()
-    if (fieldsAreValid() && hasAtLeastOneQuetion(testData)) {
-        await fetch(`tests/${testConfigurationType}`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(testData)
-        }).then(response => {
-            if (response.ok === true) {
-                window.removeEventListener("beforeunload", beforeunloadHandler)
-                window.location.href = "/"
-            }
-        })
+    if (fieldsAreValid()) {
+        if (hasAtLeastOneQuetion(testData)) {
+            await fetch(`tests/${testConfigurationType}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(testData)
+            }).then(response => {
+                if (response.ok === true) {
+                    window.removeEventListener("beforeunload", beforeunloadHandler)
+                    window.location.href = "/"
+                }
+            })
+        } else {
+            alert("Нужно добавить хотя-бы один вопрос")
+        }
     }
 })
 
