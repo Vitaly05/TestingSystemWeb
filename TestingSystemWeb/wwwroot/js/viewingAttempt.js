@@ -24,6 +24,13 @@ answersModel.forEach(model => {
         } else {
             answerPanel.classList.add("uncorrectAnswer")
             answerPanel.classList.remove("correctAnswer")
+
+            const correctAnswerClone = document.querySelector("#correctAnswerTemplate")
+                .content.cloneNode(true)
+            
+            correctAnswerClone.querySelector("#answer").innerText = model.question.answer
+
+            clone.querySelector(".content-block").appendChild(correctAnswerClone)
         }
     }
     document.querySelector(".main-div").appendChild(clone)

@@ -10,15 +10,25 @@
     <title>Room</title>
 
     <template id="questionTemplate">
-        <div class="default-block questionPanel check-answer-panel">
+        <div class="default-block questionPanel check-answer-panel student-attempt">
             <div class="content-block center-content-div">
                 <div class="space-between-div question-number">
                     <span id="questionNumber"></span>
                 </div>
                 <span id="question"></span>
+                <span class="regular-font">Ваш ответ</span>
                 <div class="studentAnswerPanel center-content-div" id="answerPanel">
                     <span id="studentAnswer"></span>
                 </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="correctAnswerTemplate">
+        <div class="center-content-div">
+            <span class="regular-font">Правильный ответ</span>
+            <div class="studentAnswerPanel center-content-div" id="answerPanel">
+                <span id="answer"></span>
             </div>
         </div>
     </template>

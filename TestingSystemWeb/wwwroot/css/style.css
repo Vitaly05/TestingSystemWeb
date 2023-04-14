@@ -1135,3 +1135,13 @@ input[class="answer"]::placeholder {
     margin-top: 20px;
     margin-bottom: 50px;
 }
+
+
+.student-attempt .regular-font {
+    font-family: 'UbuntuRegular';
+    margin: 30px 0 10px 0;
+}
+
+.student-attempt .studentAnswerPanel {
+    margin: 0;
+}
