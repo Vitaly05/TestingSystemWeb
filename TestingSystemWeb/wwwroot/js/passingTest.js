@@ -51,7 +51,7 @@ async function loadPage() {
 
 function timeOut() {
     timerOut = true;
-    saveAnswers();
+    window.location.href = "/"
 }
 
 window.addEventListener("unload", async e => {
