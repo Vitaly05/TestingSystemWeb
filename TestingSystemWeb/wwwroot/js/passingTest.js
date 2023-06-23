@@ -42,11 +42,16 @@ async function loadPage() {
     if (!(timeToPass === null || timeToPass <= 0)) {
         timeToPassTest = timeToPass
         showTime()
-        setTimeout(saveAnswers, timeToPass * 1000);
+        setTimeout(timeOut, timeToPass * 1000);
         setInterval(showTime, 1000)
     } else {
         document.querySelector("#time-separator").innerText = "--:--"
     }
+}
+
+function timeOut() {
+    timerOut = true;
+    saveAnswers();
 }
 
 window.addEventListener("unload", async e => {
@@ -54,9 +59,13 @@ window.addEventListener("unload", async e => {
     await saveAnswers()
 })
 
+var timerOut = false
+
 window.addEventListener("beforeunload", beforeunloadHandler)
 
 function beforeunloadHandler(e) {
+    if (timerOut)
+        return
     e.preventDefault();
     e.returnValue = "";
 }
@@ -119,6 +128,8 @@ async function saveAnswers() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(getAnswersModel())
+    }).then(() => {
+        window.location.href = "/"
     })
 }
 
